@@ -1,3 +1,4 @@
+let mic; //creem 
 function setup() 
 {
   createCanvas(600,400);
@@ -6,7 +7,7 @@ function setup()
 }
 
 function draw() {
-  let vol= mic.getLevel();
+  let vol=mic.getLevel();
   let vulls= map(vol,0,1,0,100);
   let vboca= map(vol,0,1,0,300);
   background(127);
