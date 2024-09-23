@@ -22,16 +22,18 @@ function draw() {
   //Cara
   fill(160,80,0);
   ellipse(300,200,235,300);
+  let leftEyeSize = 40+10*cos(frameCount*0,1);//mida variable segons el temps
+  let rightEyeSize = 40+10*sin(frameCount*0,1);//mida variable segons el temps
   //Ull dret
   fill(255);
-  ellipse(250,150,50,40);
+  ellipse(250,150,50,rightEyeSize);
   fill(84,42,14);
-  ellipse(250,150,15,15);
+  ellipse(250,150,15,rightEyeSize/2,5);
   //Ull esquerre
   fill(255);
-  ellipse(350,150,50,40);
+  ellipse(350,150,50,leftEyeSize);
   fill(214,6,6);
-  ellipse(350,150,15,15);
+  ellipse(350,150,15,leftEyeSize/2,5);
   //Boca
   fill(200,15,15);
   arc(300,250,100,10+vboca,0,PI,CHORD); //La variable "h" determina la alçada de la boca
