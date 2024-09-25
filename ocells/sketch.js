@@ -18,7 +18,7 @@ function draw() {
   vertex(50,50);
   vertex(0,100);
   vertex(50,100);
-  vertex(0,100);
+  vertex(0,100+vpic);
   vertex(50,150);
   vertex(100,250);
   vertex(150,250);
