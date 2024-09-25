@@ -21,27 +21,23 @@ function draw() {
  // Si el número és 0,33 de volum es convertira en 100 de "h" o alçada de la boca o arc.
  // Si el número és 0,67 de volum es convertira en 200 de "h" o alçada de la boca o arc.
   let vboca= map(vol,0,1,0,300);
+  console.log("vulls is "+vulls) //El "console.log" ens serveixen per veure el valor de les variables en cada moment
+  console.log("vol is "+vol)
   background(127);
   //Cara
   fill(160,80,0);
-  ellipse(300,200,235,300);
-  let leftEyeSize = 40+10*cos(frameCount*0,1);//mida variable segons el temps
-  let rightEyeSize = 40+10*sin(frameCount*0,1);//mida variable segons el temps
+  ellipse(cX,cY,235,300);
   //Ull dret
   fill(255);
-  ellipse(250,150,50,rightEyeSize);
+  ellipse(cX-50,cY-50,50,50);
   fill(84,42,14);
-  ellipse(250,150,15,rightEyeSize/2,5);
+  ellipse(cX-50,cY-50,10*sin(frameCount*0.1)+15,15);
   //Ull esquerre
   fill(255);
-  ellipse(350,150,50,leftEyeSize);
+  ellipse(cX-50,cY-50,50,50);
   fill(214,6,6);
-  ellipse(350,150,15,leftEyeSize/2,5);
+  ellipse(cX-50,cY-50,10*cos(frameCount*0.1)+15,15);
   //Boca
   fill(200,15,15);
-  arc(300,250,100,10+vboca,0,PI,CHORD); //La variable "h" determina la alçada de la boca
-  console.log(mic);
-  console.log(vol);
-  console.log(h);
-  // El "console.log" ens serveixen per veure el valor de les variables en cada moment
+  arc(cX,cY+50,100,10+vboca,0,PI,CHORD); //La variable "h" determina la alçada de la boca
 }
