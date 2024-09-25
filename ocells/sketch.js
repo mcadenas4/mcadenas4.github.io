@@ -33,19 +33,3 @@ function draw() {
   vertex(50,50);
   endShape();
 }
-
-  //Ocell dreta
-  beginShape();
-  vertex(370,120); 
-  vertex(360,90);
-  vertex(290,60);
-  vertex(340,20);
-  vertex(280,60);
-  vertex(340,80);
-  vertex(280,90);
-  vertex(420,100);
-  vertex(460,120);
-  endShape();
-  fill(0);
-  ellipse(155,60,8,8);
-}
