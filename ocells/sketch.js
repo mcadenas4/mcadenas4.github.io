@@ -10,7 +10,7 @@ function draw() {
   let ran=noise(0.01 * frameCount);
   let ranX=map(ran, 0,1,0,50)
   vol=mic.getLevel();
-  vpic=map(vol,0,1,0,100);
+  vpic=map(vol,0,1,0,50);
   background(220)
  
   //Ocell esquerra
