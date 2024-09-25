@@ -1,17 +1,20 @@
 let mic; //creem variable gloalper a un micròfon, ara es un espai a la memòria amb un nom.
 function setup() {
- mic=new p5.AudioIn(); // la variable mix és una instància de la "classe entrada audio" (audioIn)
- //Hem creat un nou objecte de laclasse "entrada d àudio" 
  createCanvas(600,400);
- // put setup code here
+ mic=new p5.AudioIn(); //la variable mix és una instància de la "classe entrada audio" (audioIn)
+ //Hem creat un nou objecte de laclasse "entrada d àudio"
+ //put setup code here
+ mic.start();
 }
 
 function draw() {
-  let vol=mic.getLevel(); //Apliquem el mètode "getLevel" que ens donarà el nivell de volum entre 0 i 1
+  let pseuRan= noise(frameCount*0.1); //Apliquem el mètode "getLevel" que ens donarà el nivell de volum entre 0 i 1
  //Registrat pel objecte "mic" que és una entrada de àudio. Aquell número el guardarem en una variable local
  //Perquè afecta nomès al "draw" a diferència de la variable global "mic" que està al principi i afecta a tot el codi.
  //El punt que hi ha entre "mic" i "getLevel" és molt important, s'anomena la sintaxi del punt o "dot syntax" Aquest punt aplica mètode a objectes
  //És un sistema que et permet crear qualseol cosa i que fai qualseol cosa
+  let cX =300;
+  let cY =250;
   let vulls= map(vol,0,1,0,100); //"map"és una funció molt potent que el que fa és que onverteix
  // El que fa es converit els numeros de volum que esan entre 0 i 1, sempre en una escala proporciona o mapejada
  // Entre es números 0 i 300, vol dir que si el volum  fos 0,5 es converteix  150 i s'emmagatzema en "h"
