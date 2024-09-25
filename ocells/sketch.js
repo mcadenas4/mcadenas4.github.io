@@ -1,24 +1,30 @@
 function setup() {
- createCanvas(400,120)
+ createCanvas(700,500)
 }
 
 function draw() {
-  background(204)
+  background(220)
  
   //Ocell esquerra
   beginShape();
-  vertex(50,120); 
-  vertex(100,90);
-  vertex(110,60);
-  vertex(80,20);
-  vertex(210,60);
-  vertex(160,80);
-  vertex(200,90);
-  vertex(140,100);
-  vertex(130,120);
+  vertex(50,50);
+  vertex(0,100);
+  vertex(50,100);
+  vertex(0,100);
+  vertex(50,150);
+  vertex(100,250);
+  vertex(150,250);
+  vertex(250,400);
+  vertex(350,400);
+  vertex(550,350);
+  vertex(500,300);
+  vertex(550,250);
+  vertex(350,100);
+  vertex(200,100);
+  vertex(150,50);
+  vertex(50,50);
   endShape();
-  fill(0);
-  ellipse(155,60,8,8);
+}
 
   //Ocell dreta
   beginShape();
