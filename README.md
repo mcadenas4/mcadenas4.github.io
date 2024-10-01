@@ -6,6 +6,7 @@ Aquest es el codi font de la pagina [mcadenas4.github.io](https://mcadenas4.gith
 ## Repositoris dels altres Alumnes
 [Marti Vidal](https://github.com/mvidal401/mvidal401.github.io)\
 [Miguel Angel Szabo](https://github.com/mszabo4/mszabo4.github.io)\
+[Joel Pizarro](https://github.com/jpizarro4/jpizarro4.github.io)\
 [Gerard Leon](https://github.com/gerardleon21/gerardleon21.github.io)\
 [Jan Barriga](https://github.com/JanBarriga/jbarriga.github.io)\
 [Eric Castro](https://github.com/ecastro4/ecastro4.github.io)\
