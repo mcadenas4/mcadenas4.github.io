@@ -4,6 +4,7 @@ function setup() {
 
 function draw() {
   background(220);
+  fill(247, 186, 124)
 beginShape();
 vertex(6, 501.1875);
 vertex(162, 316.1875);
