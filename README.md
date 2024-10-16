@@ -14,5 +14,5 @@ Aquest es el codi font de la pagina [mcadenas4.github.io](https://mcadenas4.gith
 [Teo Laplana](https://github.com/tlaplana4/tlaplana4.github.io)\
 [Alex Cruz](https://github.com/acruz4pompeu/acruz4pompeu.github.io)\
 [Pedro Alejandro Dieguez](https://github.com/pdieguez4/pdieguez4.github.io)
-[Visualizer]([https://github.com/pdieguez4/pdieguez4.github.io](https://pompeu.neocities.org/p5/mp3view/))
-[Heart Visuaizer]([https://github.com/pdieguez4/pdieguez4.github.io](https://pompeu.neocities.org/p5/begin/))
+[Visualizer][https://github.com/pdieguez4/pdieguez4.github.io](https://pompeu.neocities.org/p5/mp3view/)
+[Heart Visuaizer][https://github.com/pdieguez4/pdieguez4.github.io](https://pompeu.neocities.org/p5/begin/)
