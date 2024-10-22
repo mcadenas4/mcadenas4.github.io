@@ -133,8 +133,8 @@
 
             if (shapeSelect.value === 'wepray') {
                 // Apply a base scale of 0.5 and then dynamic scaling
-                const dynamicScale = 0.5 * scale; // Base scale of 0.5
-                selectedShape.setAttribute('transform', `translate(50, 50) scale(${dynamicScale}) translate(-50, -50)`);
+                const dynamicScale = 0.25 * scale; // Base scale of 0.5
+                selectedShape.setAttribute('transform', `translate(0, 0) scale(${dynamicScale}) translate(-50, -50)`);
             } else {
                 // Apply normal dynamic scaling for other shapes
                 selectedShape.setAttribute('transform', `translate(50, 50) scale(${scale}) translate(-50, -50)`);
