@@ -6,19 +6,70 @@
     <title>SVG Audio Visualizer</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        
         body {
-            font-family: Quantico, sans-serif;
+            font-family: 'Quantico', sans-serif;
             text-align: center;
-            background-color: #293696;
-            color: #708DC7
+            background: linear-gradient(135deg, #1a237e 0%, #293696 100%);
+            color: #fff;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        svg {
-            display: block;
-            margin: 20px auto;
-            background-color: #293696;
+
+        h1 {
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            margin-bottom: 2rem;
         }
+
         .controls {
-            margin: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            margin: 20px auto;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        select, input[type="file"] {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        select option {
+            background: #293696;
+            color: white;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 300px;
+            margin-top: 1rem;
+        }
+
+        svg {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #fff;
         }
     </style>
 </head>
@@ -38,56 +89,21 @@
     </div>
 
     <svg id="svgVisualizer" width="500" height="500" viewBox="-600 -600 1200 1200">
-        <path id="cor" d="M 319.41712,580.54645 542.0765,380.03643 c 86.9341,-104.01997 83.87867,-240.83274 -2.33151,-296.102004 -49.02016,-31.071591 -101.76397,-34.142283 -163.20582,0 C 358.3921,99.55504 335.68592,117.92281 319.41712,145.71949 307.14216,121.48035 283.45051,94.274559 254.13479,78.105647 210.73073,56.764403 161.79946,49.635967 96.757741,83.934426 28.851328,129.75015 -1.1775887,261.14418 95.591985,376.53916 Z" style="display:none;" fill="hsl(200, 100%, 50%)"/>
-        <path id="sol" d="m 317.74135,351.65756 -64.2623,-135.66485 132.09472,82.11294 -1.78506,-101.74864 78.5428,71.40255 41.05647,-148.16029 41.05646,137.44991 73.18762,-67.83242 1.78506,108.88889 151.73042,-71.40255 -76.75774,130.30965 83.898,1.78506 -71.40255,76.75775 171.36612,53.55191 -162.44081,42.84153 58.90711,53.55191 -101.74864,7.14026 91.03826,144.59016 -142.8051,-73.18761 -3.57013,85.68306 -67.83242,-57.12204 -33.91622,151.73041 -58.9071,-158.87067 -73.18761,66.04736 -1.78507,-87.46812 -151.73042,78.5428 91.03826,-146.37523 -96.39345,-3.57012 57.12204,-64.2623 -160.65573,-41.05647 174.93624,-49.98178 -78.5428,-89.25319 z" style="display:none;" fill="hsl(200, 100%, 50%)" />
-        <circle id="circle" cx="50" cy="50" r="25" fill="hsl(200, 100%, 50%)" />
-        <path id="heart" d="M -590.515625 522.19995 C -93.585938 511.789794 57.28125 353.664589 309.140625 352.073824 C 481.46875 350.98992 636.609375 505.348754 799.257812 531.643171 Z M -590.515625 522.19995" fill="hsl(200, 100%, 50%)" style="display:none;" />
-        <path id="wepray" d="M36.5,11.2c0-6.4,5.2-11.4,11.4-11.4c6.4,0,11.4,5.2,11.4,11.4c0,6.4-5.2,11.4-11.4,11.4S36.5,17.4,36.5,11.2z M54.1,24.9 c-2.9-1.6-6.6-0.5-8.2,2.4l-3.2,5.8c-0.4-3-1.2-5.8-1.9-7c-1.6-3.3-3.7-4.6-3.7-4.6c-11.2-6.4-17.2,5.4-17.3,5.8 c-1.1,2.6-2.6,6.9-2.5,15.3c0.4,19.2,11.5,45.1,11.5,45.1H7.3C3.4,87.7,0,90,0,94.2c0,3.7,3.2,6,7,6h29.9c4.5,0,7.9-2.5,8.1-11 l0.3-35.5l11.4-20.8C58.1,30,57,26.4,54.1,24.9z" style="display:none;" fill="hsl(200, 100%, 50%)"/>
-        <path id="cross" d="M35,19L41,19L41,30L52,30L52,36L41,36L41,57L35,57L35,36L24,36L24,30L35,30L35,19Z" style="display:none;" fill="hsl(200, 100%, 50%)">
-        <g id="globos" style="display:none;" fill="hsl(200, 100%, 50%)">
-            <!-- Paths -->
-            <path d="m 294.29508,276.45902 c -23.78142,-90.66668 -149.37705,-101.44261 -176.13115,11.14754 -7.9083,70.32271 55.46311,134.62921 103.67214,127.08197 -2.48276,3.13536 -2.81889,6.35502 -7.52459,8.01724 6.46337,3.02271 12.44781,2.05433 18.12379,-1.48458 -1.57578,-3.18674 -4.54972,-4.62579 -7.09425,-6.60159 55.81962,-13.32167 87.19822,-86.50502 68.95406,-138.16058 z" />
-            <path d="m 225.73771,423.60656 c -7.08331,38.27905 22.20613,45.79474 23.40983,57.96721 5.95062,20.66349 -2.90812,33.46289 14.49181,54.06558 6.93648,10.40437 10.87734,20.80874 8.91803,31.21311 -1.29521,11.59869 0.66764,15.05221 2.22951,19.5082" />
-            <path d="m 394.06558,142.13115 c 5.35478,-7.98077 3.49495,-19.03494 2.78688,-28.98361 C 380.99533,3.8498398 236.76309,-8.2175499 216.2623,119.27869 c -3.92137,54.80305 36.44069,111.28743 80.81967,116.4918 -1.37918,3.07767 -3.15007,5.95948 -6.61178,7.99588 5.41752,2.03192 11.03695,3.60955 18.52388,0.98531 -5.92712,-4.53921 -4.12487,-6.81983 -5.70081,-9.42519 5.191,0.85507 8.19796,0.2541 10.24725,-0.98531" />
-            <path d="M 492.16394,240.78689 C 496.87259,130.12666 338.3935,93.931336 313.80328,229.08197 c -4.19078,47.65389 19.24774,104.11982 74.68853,120.39344 -0.36972,2.81058 -1.41599,5.45201 -4.73771,7.52459 5.3172,1.39786 10.675,2.63333 16.72131,1.11476 -2.53074,-2.60109 -3.96371,-5.20219 -5.01639,-7.80328 49.88598,-2.13309 96.76864,-53.44935 96.70492,-109.52459 z" />
-            <path d="m 301.11157,245.14581 c -1.75746,8.74386 2.54003,20.80134 -4.7295,39.41251" />
-            <path d="m 296.38207,329.48858 c 6.77899,19.18075 9.72904,38.36151 3.94125,57.54226 -6.57118,27.38002 -6.28017,50.64272 -2.36475,71.73077 3.27743,17.97421 7.92665,34.23369 3.153,62.27176 -5.18104,15.69105 -7.43025,28.45026 -6.306,37.83601" />
-            <path d="m 393.33684,359.44208 c -7.41486,13.68896 -15.42787,23.48574 -12.612,55.17752 -0.75782,12.05607 -1.30397,23.90048 -10.24725,44.14201 -4.49485,9.60935 -10.19155,14.41133 -8.67075,48.08326 -0.2305,9.94418 1.15526,17.86805 -7.09426,37.83601 -4.56813,8.14525 -9.00645,16.2905 -9.459,24.43575" />
+        <path id="cor" d="M 319.41712,580.54645 542.0765,380.03643 c 86.9341,-104.01997 83.87867,-240.83274 -2.33151,-296.102004 -49.02016,-31.071591 -101.76397,-34.142283 -163.20582,0 C 358.3921,99.55504 335.68592,117.92281 319.41712,145.71949 307.14216,121.48035 283.45051,94.274559 254.13479,78.105647 210.73073,56.764403 161.79946,49.635967 96.757741,83.934426 28.851328,129.75015 -1.1775887,261.14418 95.591985,376.53916 Z" style="display:none" fill="hsl(200, 100%, 50%)"/>
+        <path id="sol" d="m 317.74135,351.65756 -64.2623,-135.66485 132.09472,82.11294 -1.78506,-101.74864 78.5428,71.40255 41.05647,-148.16029 41.05646,137.44991 73.18762,-67.83242 1.78506,108.88889 151.73042,-71.40255 -76.75774,130.30965 83.898,1.78506 -71.40255,76.75775 171.36612,53.55191 -162.44081,42.84153 58.90711,53.55191 -101.74864,7.14026 91.03826,144.59016 -142.8051,-73.18761 -3.57013,85.68306 -67.83242,-57.12204 -33.91622,151.73041 -58.9071,-158.87067 -73.18761,66.04736 -1.78507,-87.46812 -151.73042,78.5428 91.03826,-146.37523 -96.39345,-3.57012 57.12204,-64.2623 -160.65573,-41.05647 174.93624,-49.98178 -78.5428,-89.25319 z" style="display:none" fill="hsl(200, 100%, 50%)"/>
+        <circle id="circle" cx="0" cy="0" r="250" style="display:none" fill="hsl(200, 100%, 50%)"/>
+        <path id="heart" d="M0,200 v-200 h200 a100,100 0 0,1 0,200 a100,100 0 0,1 -200,-200" style="display:none" fill="hsl(200, 100%, 50%)"/>
+        <path id="wepray" d="M36.5,11.2c0-6.4,5.2-11.4,11.4-11.4c6.4,0,11.4,5.2,11.4,11.4c0,6.4-5.2,11.4-11.4,11.4S36.5,17.4,36.5,11.2z M54.1,24.9 c-2.9-1.6-6.6-0.5-8.2,2.4l-3.2,5.8c-0.4-3-1.2-5.8-1.9-7c-1.6-3.3-3.7-4.6-3.7-4.6c-11.2-6.4-17.2,5.4-17.3,5.8 c-1.1,2.6-2.6,6.9-2.5,15.3c0.4,19.2,11.5,45.1,11.5,45.1H7.3C3.4,87.7,0,90,0,94.2c0,3.7,3.2,6,7,6h29.9c4.5,0,7.9-2.5,8.1-11 l0.3-35.5l11.4-20.8C58.1,30,57,26.4,54.1,24.9z" style="display:none" fill="hsl(200, 100%, 50%)" transform="scale(8)"/>
+        <path id="cross" d="M35,19L41,19L41,30L52,30L52,36L41,36L41,57L35,57L35,36L24,36L24,30L35,30L35,19Z" style="display:none" fill="hsl(200, 100%, 50%)" transform="scale(8)"/>
+        
+        <g id="globos" style="display:none" fill="hsl(200, 100%, 50%)" transform="translate(-400, -400) scale(0.8)">
+            <path d="m 294.29508,276.45902 c -23.78142,-90.66668 -149.37705,-101.44261 -176.13115,11.14754 -7.9083,70.32271 55.46311,134.62921 103.67214,127.08197 -2.48276,3.13536 -2.81889,6.35502 -7.52459,8.01724 6.46337,3.02271 12.44781,2.05433 18.12379,-1.48458 -1.57578,-3.18674 -4.54972,-4.62579 -7.09425,-6.60159 55.81962,-13.32167 87.19822,-86.50502 68.95406,-138.16058 z"/>
+            <path d="m 225.73771,423.60656 c -7.08331,38.27905 22.20613,45.79474 23.40983,57.96721 5.95062,20.66349 -2.90812,33.46289 14.49181,54.06558 6.93648,10.40437 10.87734,20.80874 8.91803,31.21311 -1.29521,11.59869 0.66764,15.05221 2.22951,19.5082"/>
         </g>
-        <g id="pluja" style="display:none;" fill="hsl(200, 100%, 50%)">
-            <!-- Paths -->
+        
+        <g id="pluja" style="display:none" fill="hsl(200, 100%, 50%)" transform="translate(-400, -400) scale(0.8)">
             <path d="M 418.63388,493.45355 C 485.70611,515.09005 593.1011,495.16941 652,415.07104 768.41748,467.00457 963.91367,324.64999 790.95082,238.71038 781.73055,98.847487 628.17892,77.121609 564.71038,121.13661 499.4919,-15.811017 324.71031,-3.6829138 265.43169,128.2623 194.41097,119.54483 139.91707,150.07853 106.88525,231.5847 1.499737,234.3714 -16.329829,445.77866 163.89071,402.60109 c 34.69532,39.76804 80.50545,52.86051 138.95082,35.62842 16.5725,15.60095 24.79179,33.29021 58.78689,44.53552"/>
             <path d="M 279.68306,660.9071 454.2623,283.2459 406.16393,562.92896 498.79781,545.11475 315.31148,885.36612 368.7541,643.0929 Z"/>
-            <path d="m 573.64363,538.65837 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 648.49062,559.9917 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 548.48515,599.21028 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 622.048,618.68023 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 523.51794,659.58733 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 594.36494,675.62011 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 499.14089,718.58733 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 179.94419,493.11191 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 254.79118,514.44524 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 154.78571,553.66382 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 228.34856,573.13377 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 129.8185,614.04087 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 200.6655,630.07365 c -12.79622,-2.67504 -25.77323,14.71737 -16.9235,33.847 13.18862,7.22536 32.69926,-23.93328 16.9235,-33.847 z"/>
-            <path d="m 176.69828,690.85508 c -12.79623,-2.67504 -25.77324,14.71737 -16.92351,33.847 13.18863,7.22536 32.69927,-23.93328 16.92351,-33.847 z"/>
-        </g>
-        <g id="coldplay" style="display:none;" fill="hsl(200, 100%, 50%)">
-                      <!-- Paths -->
-            <path d="M 52.052996,16.980703 C 33.451377,19.950086 17.293884,53.581773 51.100807,66.970622 5.1483425,68.415607 19.416639,10.249047 52.052996,16.980703 Z" />
-            <path d="M 163.7765,20.313364 C 145.96421,56.266758 187.0831,68.34424 199.95968,56.179148 170.72448,84.278014 137.89693,40.104811 163.7765,20.313364 Z" />
-            <!-- Circles -->
-            <circle cx="104.26469" cy="42.055012" r="25.709103" />
-            <circle cx="524.97351" cy="29.359158" r="8.093606" />
-             <!-- Paths -->
-            <path d="m 225.19268,18.250288 c 44.99697,-4.174294 42.27784,55.063459 -0.31739,49.196429 28.37951,-13.011974 19.75892,-41.161638 0.31739,-49.196429 z" />
-            <path d="m 281.21313,30.470046 c 29.49604,-31.44835306 64.49876,15.019663 35.23099,35.548387 12.45541,-19.491564 -5.30028,-48.988541 -35.23099,-35.548387 z" />
-            <path d="m 359.45133,22.217742 c -31.2637,28.678816 20.55628,61.326966 35.54838,34.754896 -22.12538,15.262315 -51.70162,-7.305059 -35.54838,-34.754896 z" />
-            <path d="m 418.48704,50.78341 c 9.07623,-27.461167 38.79822,-24.560657 49.03773,0.793491 4.28895,-36.343906 -52.51059,-42.6516151 -49.03773,-0.793491 z"/>
-            <path d="m 486.25115,21.265553 c 35.63671,-7.300115 44.13556,53.322581 1.90438,48.561636 28.86049,-7.128449 21.61231,-44.49379 -1.90438,-48.561636 z"/>
-        </g>
-    </svg>
         </g>
     </svg>
 
@@ -103,17 +119,16 @@
             circle: document.getElementById('circle'),
             heart: document.getElementById('heart'),
             wepray: document.getElementById('wepray'),
-            cross: document.getElementById('cross'),
-            coldplay: document.getElementById('coldplay')
+            cross: document.getElementById('cross')
         };
 
         let audioContext, analyser, frequencyData;
         let currentShapeIndex = 0;
+        let cycleTimeout;
 
-        // Configuration for each song (easily scalable)
         const songConfig = {
             song1: {
-                shapeOrder: ['globos','cor','pluja','sol'],
+                shapeOrder: ['globos', 'cor', 'pluja', 'sol'],
                 durations: [5000, 5000, 5000, 5000]
             },
             song2: {
@@ -121,13 +136,12 @@
                 durations: [4000, 8000, 6000, 10000]
             }
         };
-        //COPIADLO DE AQUÍ HASTA EL FINAL
-        
+
         fileInput.addEventListener('change', handleFileUpload);
         songSelect.addEventListener('change', resetVisualizer);
         audioPlayer.addEventListener('play', startCycleShapes);
         audioPlayer.addEventListener('pause', stopCycleShapes);
-    
+
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if (file && file.type.startsWith('audio/')) {
@@ -139,50 +153,59 @@
                 alert('Please upload a valid audio file.');
             }
         }
-    
+
         function initAudio() {
+            if (audioContext) audioContext.close();
+            
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioContext.createAnalyser();
             analyser.fftSize = 256;
             frequencyData = new Uint8Array(analyser.frequencyBinCount);
-    
+
             const source = audioContext.createMediaElementSource(audioPlayer);
             source.connect(analyser);
             analyser.connect(audioContext.destination);
-    
+
             visualize();
         }
-    
+
         function visualize() {
             requestAnimationFrame(visualize);
+            if (!analyser) return;
+            
             analyser.getByteFrequencyData(frequencyData);
-    
             const averageFrequency = frequencyData.reduce((a, b) => a + b) / frequencyData.length;
-            const scale = averageFrequency / 255;
-    
-            const selectedShape = shapes[getCurrentShape()];
+            const scale = 0.5 + (averageFrequency / 255) * 0.5;
             const hue = Math.round((averageFrequency / 255) * 360);
-            selectedShape.setAttribute('fill', `hsl(${hue}, 100%, 50%)`);
-            selectedShape.setAttribute('transform', `scale(${scale + 0.5})`);
+            
+            const currentShape = shapes[getCurrentShape()];
+            if (currentShape) {
+                currentShape.style.display = 'block';
+                currentShape.setAttribute('fill', `hsl(${hue}, 100%, 50%)`);
+                if (currentShape.tagName === 'g') {
+                    currentShape.setAttribute('transform', `translate(-400, -400) scale(${scale})`);
+                } else {
+                    currentShape.setAttribute('transform', `scale(${scale})`);
+                }
+            }
         }
-    
+
         function startCycleShapes() {
             const songData = songConfig[songSelect.value];
             updateShapeVisibility();
-    
-            // Avanzar a la siguiente forma después de la duración actual solo si el audio está reproduciéndose
+
             cycleTimeout = setTimeout(() => {
-                currentShapeIndex = (currentShapeIndex + 1) % songData.shapeOrder.length;
                 if (!audioPlayer.paused) {
-                    startCycleShapes(); // Recursión controlada para que avance solo al reproducirse
+                    currentShapeIndex = (currentShapeIndex + 1) % songData.shapeOrder.length;
+                    startCycleShapes();
                 }
             }, songData.durations[currentShapeIndex]);
         }
-    
+
         function stopCycleShapes() {
-            clearTimeout(cycleTimeout); // Detiene el cambio de formas cuando el audio se pausa
+            clearTimeout(cycleTimeout);
         }
-    
+
         function resetVisualizer() {
             clearTimeout(cycleTimeout);
             audioPlayer.currentTime = 0;
@@ -190,18 +213,21 @@
             currentShapeIndex = 0;
             updateShapeVisibility();
         }
-    
+
         function getCurrentShape() {
             return songConfig[songSelect.value].shapeOrder[currentShapeIndex];
         }
-    
+
         function updateShapeVisibility() {
-            Object.keys(shapes).forEach(key => {
-                shapes[key].style.display = key === getCurrentShape() ? 'block' : 'none';
+            Object.values(shapes).forEach(shape => {
+                shape.style.display = 'none';
             });
+            const currentShape = shapes[getCurrentShape()];
+            if (currentShape) currentShape.style.display = 'block';
         }
-    </script>    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+        // Initialize the visualizer
+        updateShapeVisibility();
+    </script>
 </body>
 </html>
