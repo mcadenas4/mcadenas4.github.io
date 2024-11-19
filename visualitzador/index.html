@@ -155,124 +155,166 @@
         const audioPlayer = document.getElementById('audioPlayer');
         const songSelect = document.getElementById('songSelect');
         const shapes = {
-            cor: document.getElementById('cor'),
-            globos: document.getElementById('globos'),
-            pluja: document.getElementById('pluja'),
-            sol: document.getElementById('sol'),
-            creu: document.getElementById('creu'),
-            pluja: document.getElementById('pluja'),
-            tro: document.getElementById('tro'),
-            wave1: document.getElementById('wave1'),
-            wave2: document.getElementById('wave2'),
-            wave3: document.getElementById('wave3'),
-        };
+              cor: document.getElementById('cor'),
+              globos: document.getElementById('globos'),
+              pluja: document.getElementById('pluja'),
+              sol: document.getElementById('sol'),
+              creu: document.getElementById('creu'),
+              pluja: document.getElementById('pluja'),
+              tro: document.getElementById('tro'),
+              wave1: document.getElementById('wave1'),
+              wave2: document.getElementById('wave2'),
+              wave3: document.getElementById('wave3'),
+};
 
-        let audioContext, analyser, frequencyData;
-        let currentShapeIndex = 0;
-        let cycleTimeout;
+let audioContext, analyser, frequencyData;
+let currentShapeIndex = 0;
+let cycleTimeout;
 
-        const songConfig = {
-            song1: {
-                shapeOrder: ['globos', 'cor', 'pluja', 'sol'],
-                durations: [5000, 5000, 5000, 5000]
-            },
-            song2: {
-                shapeOrder: ['creu','pluja','tro'],
-                durations: [5000, 5000, 5000, 5000]
-            },
-            song3: {
-                shapeOrder: ['wave1','wave2','wave3'],
-                durations: [4000, 8000, 6000, 10000]
-        };
+const songConfig = {
+    song1: {
+        url: 'path/to/song1.mp3', // Add actual paths to your songs
+        shapeOrder: ['globos', 'cor', 'pluja', 'sol'],
+        durations: [5000, 5000, 5000, 5000]
+    },
+    song2: {
+        url: 'path/to/song2.mp3',
+        shapeOrder: ['creu','pluja','tro'],
+        durations: [5000, 5000, 5000, 5000]
+    },
+    song3: {
+        url: 'path/to/song3.mp3',
+        shapeOrder: ['wave1','wave2','wave3'],
+        durations: [4000, 8000, 6000, 10000]
+    }
+};
 
-        fileInput.addEventListener('change', handleFileUpload);
-        songSelect.addEventListener('change', resetVisualizer);
-        audioPlayer.addEventListener('play', startCycleShapes);
-        audioPlayer.addEventListener('pause', stopCycleShapes);
+// Initialize audio context on user interaction to comply with browser autoplay restrictions
+let audioContextInitialized = false;
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file && file.type.startsWith('audio/')) {
-                const audioURL = URL.createObjectURL(file);
-                audioPlayer.src = audioURL;
-                audioPlayer.load();
-                initAudio();
-            } else {
-                alert('Please upload a valid audio file.');
-            }
+function initAudioContext() {
+    if (!audioContextInitialized) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioContextInitialized = true;
+    }
+}
+
+fileInput.addEventListener('change', handleFileUpload);
+songSelect.addEventListener('change', loadSelectedSong);
+audioPlayer.addEventListener('play', startCycleShapes);
+audioPlayer.addEventListener('pause', stopCycleShapes);
+
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('audio/')) {
+        const audioURL = URL.createObjectURL(file);
+        audioPlayer.src = audioURL;
+        audioPlayer.load();
+        setupAudioVisualization(audioPlayer);
+    } else {
+        alert('Please upload a valid audio file.');
+    }
+}
+
+function loadSelectedSong() {
+    const selectedSong = songSelect.value;
+    const songData = songConfig[selectedSong];
+    
+    if (songData && songData.url) {
+        initAudioContext();
+        audioPlayer.src = songData.url;
+        audioPlayer.load();
+        setupAudioVisualization(audioPlayer);
+    }
+}
+
+function setupAudioVisualization(audioElement) {
+    // Ensure audio context is initialized
+    initAudioContext();
+
+    // Close existing audio context if it exists
+    if (analyser) {
+        try {
+            analyser.disconnect();
+        } catch(e) {}
+    }
+
+    // Create new analyser
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    frequencyData = new Uint8Array(analyser.frequencyBinCount);
+
+    // Create audio source and connect to audio graph
+    const source = audioContext.createMediaElementSource(audioElement);
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+
+    // Start visualization
+    visualize();
+}
+
+function visualize() {
+    requestAnimationFrame(visualize);
+    if (!analyser) return;
+
+    analyser.getByteFrequencyData(frequencyData);
+    const averageFrequency = frequencyData.reduce((a, b) => a + b) / frequencyData.length;
+    const scale = 0.5 + (averageFrequency / 255) * 0.5;
+    const hue = Math.round((averageFrequency / 255) * 360);
+
+    const currentShape = shapes[getCurrentShape()];
+    if (currentShape) {
+        currentShape.style.display = 'block';
+        currentShape.setAttribute('fill', `hsl(${hue}, 100%, 50%)`);
+        if (currentShape.tagName === 'g') {
+            currentShape.setAttribute('transform', `translate(-400, -400) scale(${scale})`);
+        } else {
+            currentShape.setAttribute('transform', `scale(${scale})`);
         }
+    }
+}
 
-        function initAudio() {
-            if (audioContext) audioContext.close();
+function startCycleShapes() {
+    const songData = songConfig[songSelect.value];
+    updateShapeVisibility();
 
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            analyser = audioContext.createAnalyser();
-            analyser.fftSize = 256;
-            frequencyData = new Uint8Array(analyser.frequencyBinCount);
-
-            const source = audioContext.createMediaElementSource(audioPlayer);
-            source.connect(analyser);
-            analyser.connect(audioContext.destination);
-
-            visualize();
+    cycleTimeout = setTimeout(() => {
+        if (!audioPlayer.paused) {
+            currentShapeIndex = (currentShapeIndex + 1) % songData.shapeOrder.length;
+            startCycleShapes();
         }
+    }, songData.durations[currentShapeIndex]);
+}
 
-        function visualize() {
-            requestAnimationFrame(visualize);
-            if (!analyser) return;
+function stopCycleShapes() {
+    clearTimeout(cycleTimeout);
+}
 
-            analyser.getByteFrequencyData(frequencyData);
-            const averageFrequency = frequencyData.reduce((a, b) => a + b) / frequencyData.length;
-            const scale = 0.5 + (averageFrequency / 255) * 0.5;
-            const hue = Math.round((averageFrequency / 255) * 360);
+function resetVisualizer() {
+    clearTimeout(cycleTimeout);
+    audioPlayer.currentTime = 0;
+    audioPlayer.pause();
+    currentShapeIndex = 0;
+    updateShapeVisibility();
+}
 
-            const currentShape = shapes[getCurrentShape()];
-            if (currentShape) {
-                currentShape.style.display = 'block';
-                currentShape.setAttribute('fill', `hsl(${hue}, 100%, 50%)`);
-                if (currentShape.tagName === 'g') {
-                    currentShape.setAttribute('transform', `translate(-400, -400) scale(${scale})`);
-                } else {
-                    currentShape.setAttribute('transform', `scale(${scale})`);
-                }
-            }
-        }
+function getCurrentShape() {
+    return songConfig[songSelect.value].shapeOrder[currentShapeIndex];
+}
 
-        function startCycleShapes() {
-            const songData = songConfig[songSelect.value];
-            updateShapeVisibility();
+function updateShapeVisibility() {
+    Object.values(shapes).forEach(shape => {
+        shape.style.display = 'none';
+    });
+    const currentShape = shapes[getCurrentShape()];
+    if (currentShape) currentShape.style.display = 'block';
+}
 
-            cycleTimeout = setTimeout(() => {
-                if (!audioPlayer.paused) {
-                    currentShapeIndex = (currentShapeIndex + 1) % songData.shapeOrder.length;
-                    startCycleShapes();
-                }
-            }, songData.durations[currentShapeIndex]);
-        }
+// Initialize the visualizer
+updateShapeVisibility();
 
-        function stopCycleShapes() {
-            clearTimeout(cycleTimeout);
-        }
-
-        function resetVisualizer() {
-            clearTimeout(cycleTimeout);
-            audioPlayer.currentTime = 0;
-            audioPlayer.pause();
-            currentShapeIndex = 0;
-            updateShapeVisibility();
-        }
-
-        function getCurrentShape() {
-            return songConfig[songSelect.value].shapeOrder[currentShapeIndex];
-        }
-
-        function updateShapeVisibility() {
-            Object.values(shapes).forEach(shape => {
-                shape.style.display = 'none';
-            });
-            const currentShape = shapes[getCurrentShape()];
-            if (currentShape) currentShape.style.display = 'block';
-        }
+// Ensure audio context is created on first user interaction
+document.addEventListener('click', initAudioContext, { once: true });
 
         // Initialize the visualizer
         updateShapeVisibility();
