@@ -1,13 +1,66 @@
-//Python és un llenguatge de programació creat per Guido von Rossum al 1991 i actualment un dels llenguatges més utilitzats. Segons l'índex TIOBE de novembre de 2024 està en la 1a posició com a llenguatge de programació. Des de 2021 ha superat en ocasions a altres llenguatges com C, C++, Java i Javascript. Les seves utilitats són àmplies i la facilitat d'ús gran permetent gràcies a les llibreries desponibles fer des de pàgines web a servidors, a aplicacions de qualsevol tipus, incloses laas de IA. Seguirem les normes PEP8 per escriure codi Python.
+// C++ code
+//
+int Temperatura = 0;
 
-//Normes PEP8:
- 1. Les sagnies o identacions han de ser de 4 espais en blanc (evitar tabulacions).
- 2. Es deixen línies en blanc per separar línies de codi: per exemple una línia entre mètodes dins d'una classe i dos línies en blanc entre definicions de funcions i classes (per això el nivell més alt).
- 3. Les línies de codi màxim de 79 caràcters (72 per comentaris i docstrings)
- 4. Les variables i les funcions s'han d'escriure en snake_case.
- 5. Les classes s'escriuen en PasalCase.
- 6. Les constants s'escriuen amb UPPER_CASE.
- 7. Evitar noms d'una lletra excepte per variables temporals com "i" i "j".
- 8. No deixa espais al voltant de (), [] i {}, per exemple: funcio(arg1, arg2).
- 9. Possar espais al voltant de l'operador (x = y + 2).
- 10. Les importacions de moduls han de ser en línies separades començant
+int Enfadado = 0;
+
+int Alegre = 0;
+
+int Triste = 0;
+
+int Amor = 0;
+
+int Tranquilidad = 0;
+
+int Excitado = 0;
+
+void setup()
+{
+  pinMode(A4, INPUT);
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  pinMode(A3, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  Temperatura = analogRead(A4);
+  if (Temperatura >= 20 && Temperatura < 77) {
+    analogWrite(A1, 0);
+    analogWrite(A2, 0);
+    analogWrite(A3, 255);
+    Serial.println("Tristesa");
+  }
+  if (Temperatura >= 77 && Temperatura < 134) {
+    analogWrite(A1, 0);
+    analogWrite(A2, 255);
+    analogWrite(A3, 0);
+    Serial.println("Tranquilidad");
+  }
+  if (Temperatura >= 134 && Temperatura < 191) {
+    analogWrite(A1, 248);
+    analogWrite(A2, 43);
+    analogWrite(A3, 243);
+    Serial.println("Alegria");
+  }
+  if (Temperatura >= 191 && Temperatura < 248) {
+    analogWrite(A1, 255);
+    analogWrite(A2, 0);
+    analogWrite(A3, 128);
+    Serial.println("Excitat");
+  }
+  if (Temperatura >= 248 && Temperatura < 305) {
+    analogWrite(A1, 255);
+    analogWrite(A2, 219);
+    analogWrite(A3, 203);
+    Serial.println("Amor");
+  }
+  if (Temperatura >= 305 && Temperatura <= 358) {
+    analogWrite(A1, 255);
+    analogWrite(A2, 0);
+    analogWrite(A3, 0);
+    Serial.println("Ira");
+  }
+  delay(10); // Delay a little bit to improve simulation performance
+}
