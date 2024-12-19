@@ -1,0 +1,55 @@
+int Temperatura = 0;
+
+void setup()
+{
+  pinMode(A4, INPUT);
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  pinMode(A3, OUTPUT);
+}
+
+void loop()
+{
+  Temperatura = map(analogRead(A4), 0, 1023, 0, 358);
+  if (Temperatura > 20) {
+    analogWrite(A1, 0);
+    analogWrite(A2, 0);
+    analogWrite(A3, 0);
+  if (Temperatura >= 20 && Temperatura < 77) {
+    analogWrite(A1, 0);
+    analogWrite(A2, 0);
+    analogWrite(A3, 255);
+    // Tristeza
+  }
+  if (Temperatura >= 77 && Temperatura < 134) {
+    analogWrite(A1, 0);
+    analogWrite(A2, 255);
+    analogWrite(A3, 0);
+    // Tranquilidad
+  }
+  if (Temperatura >= 134 && Temperatura < 191) {
+    analogWrite(A1, 248);
+    analogWrite(A2, 43);
+    analogWrite(A3, 243);
+    // Alegría
+  }
+  if (Temperatura >= 191 && Temperatura < 248) {
+    analogWrite(A1, 255);
+    analogWrite(A2, 0);
+    analogWrite(A3, 128);
+    // Excitación
+  }
+  if (Temperatura >= 248 && Temperatura < 305) {
+    analogWrite(A1, 255);
+    analogWrite(A2, 219);
+    analogWrite(A3, 203);
+    // Amor
+  }
+  if (Temperatura >= 305 && Temperatura <= 358) {
+    analogWrite(A1, 255);
+    analogWrite(A2, 0);
+    analogWrite(A3, 0);
+    // Ira
+  }
+  delay(100); // Delay mayor para observación perceptible
+}
