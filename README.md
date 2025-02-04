@@ -16,4 +16,4 @@ Aquest es el codi font de la pagina [mcadenas4.github.io](https://mcadenas4.gith
 [Pedro Alejandro Dieguez](https://github.com/pdieguez4/pdieguez4.github.io)\
 [Carla Aranda](https://github.com/caranda4/caranda4.github.io)\
 [Freddy Pineda](https://github.com/fpineda4/fpineda4.github.io)\
-[Carla Marquez](https://github.com/cmarzquez4/cmarzquez4.github.io)
+[Carla Marquez](https://github.com/cmarzque4/cmarzque4.github.io)
