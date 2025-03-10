@@ -332,6 +332,40 @@ void flash(int numFlashes, int d) {
   }
 }
 </code></pre>
+      <p>Puc crear una funció que em serveixi per quatre lletres i només quan la crido he de posar el número de repeticions com parametres
+      o arguments</p>
+<pre><code>void eosz (int numFlashes) {
+  for (int i = 0; i < numFlashes; i ++) {
+    digitalWrite(ledPin, HIGH);
+    delay(200);
+    digitalWrite(ledPin, LOW);
+    delay(200); }}
+    void loop (){
 
+    eosz(1); //Això és la lletra e
+    eosz(3); //Això és la lletra s
+    eosz(2); //Això és la lletra o
+</code></pre>
+    //A continuació crearem una funció que serà valida per als punts repetits i per les linias repetidas amb dos parmetres
+<pre><code>void eosztmo (int numFlashes, int d) {
+  for (int i = 0; i < numFlashes; i ++) {
+    digitalWrite(ledPin, HIGH);
+    delay(d);
+    digitalWrite(ledPin, LOW);
+    delay(d); }}
+    void loop (){
+
+    eosztmo(1, 600); //Això és la t
+    eosztmo(3, 600); //Això és la o
+    eosztmo(3, 200); //Això és la s
+    eosztmo(1, 200); //Això és la e
+</code></pre>
+<h1>Normas internacionals del codi Morse</h1>
+      <ol>
+          <li>Una linia (dash) és igual a tres punts (dots)</li>
+          <li>L'espai entre les parts d'una mateixa lletra és igual a un punt (dot) (S = ···, l'espai entre cada punt és un punt)</li>
+          <li>L'espai entre dues lletres de la mateixa paraula són tres punts (dots) (Per exemple entre la S i la O de SOS)</li>
+          <li>L'espai entre dues paraules és igual a set punts (dots) (Pa·······tomaquet)</li>
+      </ol>
 </body>
 </html>
