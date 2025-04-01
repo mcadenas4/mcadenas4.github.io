@@ -54,15 +54,26 @@ function draw() {
   arc(faceX + 3, faceY -55, 155, 20 + (h * 1.2), PI, 0);
   
   //Sombrero
-  fill(165, 32, 25)
+  fill(165, 32, 25);
   noStroke();
   arc(faceX, faceY - 100, 180, 120, PI, 0)
-  fill(255, 255, 255)
+  fill(255, 255, 255);
   arc(faceX, faceY - 100, 180, 50, 0, PI)
   noFill();
   stroke(0);
   strokeWeight(5);
   arc(faceX, faceY - 100, 180, 120, PI, 0);
+  fill(165, 32, 25);
+  noStroke();
+  ellipse(faceX, faceY - 150, 45, 45);
+  noFill();
+  stroke(0);
+  strokeWeight(5);
+  arc(faceX, faceY - 160, 45, 23, PI, 0);
+  noFill();
+  stroke(0);
+  strokeWeight(5);
+  arc(faceX, faceY - 100, 180, 50, 0, PI);
   
   //Camisa
   fill(255, 255, 255)
