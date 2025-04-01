@@ -45,13 +45,13 @@ function draw() {
 
   // Boca
   fill(0 + (h * 5), 0, 0);
-  arc(faceX, faceY + 60, 140, 40 + h, 0, PI);
+  arc(faceX, faceY + 60, 140, 40 + (1.5 * h), 0, PI);
 
   //Ceja
   noFill();
   stroke(0);
   strokeWeight(5);
-  arc(faceX + 5, faceY -55, 155, 20 + h, PI, 0);
+  arc(faceX + 3, faceY -55, 155, 20 + (h * 1.2), PI, 0);
   
   //Sombrero
   fill(165, 32, 25)
@@ -63,6 +63,27 @@ function draw() {
   stroke(0);
   strokeWeight(5);
   arc(faceX, faceY - 100, 180, 120, PI, 0);
+  
+  //Camisa
+  fill(255, 255, 255)
+  arc(faceX, faceY + 205, 320, 180, PI, 0)
+  
+  //Corbata
+  fill(0, 0, 0);
+  triangle(faceX - 20, faceY + 118, faceX + 20, faceY + 118, faceX, faceY + 138);
+  triangle(faceX - 20, faceY + 180, faceX + 20, faceY + 180, faceX, faceY + 135);
+    triangle(faceX - 20.5, faceY + 184, faceX + 20.5, faceY + 184, faceX, faceY + 500);
+  
+  //Perilla
+  fill(207, 52, 118);
+  noStroke();
+  triangle(faceX - 15, faceY + 90 + h, faceX + 15, faceY + 90 + h, faceX, faceY + 110);
+  
+  //Pin de oro
+  fill(239, 184, 16);
+  noStroke();
+  triangle(faceX + 55 - (h * 0.5), faceY + 160, faceX + 85 + (h * 0.5), faceY + 160, faceX + 70, faceY + 180 + (h * 0.5));
+  triangle(faceX + 55 - (h * 0.5), faceY + 175, faceX + 85 + (h * 0.5), faceY + 175, faceX + 70, faceY + 155 - (h * 0.5));
   
   // Mosca
   fill(255);
