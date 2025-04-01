@@ -79,11 +79,11 @@ function draw() {
   noStroke();
   triangle(faceX - 15, faceY + 90 + h, faceX + 15, faceY + 90 + h, faceX, faceY + 110);
   
-  //Pin de oro
+  //Pin de estrella
   fill(239, 184, 16);
   noStroke();
-  triangle(faceX + 55 - (h * 0.5), faceY + 160, faceX + 85 + (h * 0.5), faceY + 160, faceX + 70, faceY + 180 + (h * 0.5));
-  triangle(faceX + 55 - (h * 0.5), faceY + 175, faceX + 85 + (h * 0.5), faceY + 175, faceX + 70, faceY + 155 - (h * 0.5));
+  triangle(faceX + 55 - (h * 0.3), faceY + 160, faceX + 85 + (h * 0.3), faceY + 160, faceX + 70, faceY + 180 + (h * 0.3));
+  triangle(faceX + 55 - (h * 0.3), faceY + 175, faceX + 85 + (h * 0.3), faceY + 175, faceX + 70, faceY + 155 - (h * 0.3));
   
   // Mosca
   fill(255);
