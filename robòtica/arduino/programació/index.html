@@ -1263,14 +1263,19 @@ la llum en un percentatge que depen del percentatge de temps que ha estat ences 
 
 void setup() {
   pinMode(outputPin, OUTPUT);
-  Serial.begin(9600);
-  Serial.println("Enter Volts 0 to 5");
+  Serial.begin(9600); //Comença la comunicació serie USB entre arduino i l'ordinador a 9600 bauds (són 9600 símbols per segon)
+    //L'objecte Serial és de la classe serial i li apliquem amb la sintaxi del punt el metode begin que té com a parametre o argument un número enter que correspondràals bauds
+  Serial.println("Enter Volts 0 to 5"); //Demana que el usuari que entri per la consola o serial monitor de l'arduino IDE un número entre 0 i 5
+    //Println significa imprimeix una linea i li apliquem en la sintaxi del punt a la classe serial pot rebre diversos parametres, si els posem entre cometes s'escriu tal cual i si no, escriu el valor de la variable.
 }
 
-void loop() {
-  if (Serial.available() > 0) {
-    float volts = Serial.parseFloat();
-    int pwmValue = volts * 255.0 / 5.0;
+void loop() { //És un sistema que no s'atura mai, es repeteix fins que desconecto el arduino
+  if (Serial.available() > 0) { //Serial.available és un mètode que espera caràcters, major a 0 és que hi ha un caràcter
+    float volts = Serial.parseFloat(); //parseFloat és una funció o mètode que s'aplica a l'objecte serial i la seva funció és parsejar o analitzar el contingut de caràcter que arriba per port serial i si és de tipus decimal o floating point number (número amb coma flotant) o variable tipo float. Les variables float inclouen les variables int o integer números sencers. També existeix parseInt que només acceptaria números enters.
+    //Volt emmagatzema el número decimal que escriu el usuari.
+    //El float volts que fa? Crea un espai a la memoria del ordinador anomenat volts que haurà de ser del tipus floating point number que emmagatzemarà el que li arribi del port serial escrit per l'usuari.
+    int pwmValue = volts * 255.0 / 5.0; //Els volts no serveixen directament perquè volem no valors entre 0 i 5 sino entre o i 255. És entre 0 i 255 perquè és el número de bits (2^8 és igual a 256). Faig una regla de 3 i multiplico el valor per 255 i divideixo entre 5.
+    //Per exepmle si l'usuari inserta 2,5 tindras 2,5 * 255 / 5 = 127,5. Aquest valor es transformarà en 127 perquè ha de ser integer i es guardarà en pwm Value.
     analogWrite(outputPin, pwmValue);
   }
 }
