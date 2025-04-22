@@ -1187,7 +1187,9 @@ l'apaguem perqué la variable switchOpen que estava a 1 es transforma a !switchO
      digitalWrite(ledPin, ! switchOpen);
     }
     </code></pre>
-<iframe width="725" height="453" src="https://www.tinkercad.com/embed/6kmvYJBnQFx?editbtn=1" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe><p> Toggles. </p>
+<p> Clica a la imatge següent per veure la simulació </p>
+<a href = "https://www.tinkercad.com/things/6kmvYJBnQFx-circuit-54-monk" target = "_blank"> <img src = "54.png"> </a>
+<p> Toggles. </p>
 <pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
     const int inputPin = 5;
     const int ledPin = 13;
@@ -1204,7 +1206,7 @@ l'apaguem perqué la variable switchOpen que estava a 1 es transforma a !switchO
   }
 }
 </code></pre>
-<a href = "https://www.tinkercad.com/things/dUFK8vzcSWr-circuit-54-s-monk" target = "_blank"> <img src = "55.png" width="800" height="294"> </a>
+<a href = "https://www.tinkercad.com/things/ijQ7CKiIRbu-circuit-55-monk" target = "_blank"> <img src = "55.png"> </a>
 
 <p>solució amb llibreria </p>
 <pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
@@ -1225,10 +1227,8 @@ l'apaguem perqué la variable switchOpen que estava a 1 es transforma a !switchO
     }
     }
 </code></pre>
-</div>
-<div class="content-container">
 <pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
-    #include <Bounce2.h>
+         #include <Bounce2.h>
         const int inputPin = 5;
         const int ledPin = 13;
         int ledValue = LOW;
@@ -1245,19 +1245,60 @@ l'apaguem perqué la variable switchOpen que estava a 1 es transforma a !switchO
         if (bouncer.update() && bouncer.read() == LOW) {
           ledValue = ! ledValue;
           digitalWrite(ledPin, ledValue);
+        // El rebot de contacte (Contact Bounce) esta present en reles (Interruptors que canvia de estat depenent de l'electricitat), interruptors, contactes de bateria. Tots aquests
+        // Estan fets per metalls elastics, de forma que quan yo apreto un interruptor mecanic, el metall rebota diverses vegades sobre el contacte, provocant una inestabilitat al
+        // contacte
         }
         }
- </code></pre>
-    </div>
-    
+ </code>
+</pre>
+<p> Algunes sortides d'arduino i altres microcontroladors són PWM (Pulse Width Modulation). Com podem veure a la imatge de sota, es tracta
+de una modulació de l'ample del pols. Es a dir, es modula el temps que es 0 o que es 1, aconseguint que en 0 s'apagui i en 1 s'encengui.
+Nosaltres no observem que s'encengui o que s'apagui perque es molt rapid el canvi i la nostra visió no ens permet veure-ho. Nosaltres veiem
+la llum en un percentatge que depen del percentatge de temps que ha estat ences la sortida </p>
+<img src = "pwm.png">
 
+<pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
+    const int outputPin = 3;
 
+void setup() {
+  pinMode(outputPin, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Enter Volts 0 to 5");
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    float volts = Serial.parseFloat();
+    int pwmValue = volts * 255.0 / 5.0;
+    analogWrite(outputPin, pwmValue);
+  }
+}
+</code></pre>
+<p> El "const int outputPin" defineix el pin de sortida constant que no es pot canviar. Després de definir
+el pin de sortida 3 i en output (sortida) i la velocitat bauds (9600), el codi demana que escrigui a la consola
+del programa Arduino IDE: Enter volts 0-5.</p>
+<p> Al loop principal comprova que hi hagi caràcters escrits a la consola, després agafa el valor que hem 
+donat i el guarda en la variable volts. El valor pot ser en decimals perquè posa float ("Floating point number").
+El mètode parseFloat l'apliquem amb la sintaxi del punt al objecte Serial (Que es posa en majúscula, normalment
+seria una classe en majúscula) i agafa el valor de la consola sèrie</p>
+<p> La variable pwmValue és entera (int o "integer") i el que fa és convertir el valor de volts (0-5) a valors
+de 0-255, que és el numero de bits (2^8=256). Si fos un ESP32-S3 de 14 bits tal com indica el data
+sheet o fulla de caracteristiques de el ESP32-S3la linea de codi seria:
+"Serial.println("Enter Volts 0-3.3")
+"int pwmValue = volts * 16384.0 / 3.3" </p>
+
+<p> El ESP32-S3 te l'avantatge de tenir més resolució, es a dir,  pot donar 16384 valors diferents entre 0-3,3 volts
+Aixó pot que no es noti en un led, peró es nota en un motor, on l'ESP32 permet accedir a més velocitats diferents. Els
+motors poden arribar a 16 bits, que es 2^16 o 65536 valors diferents, depenent del tipus de motor, pot ser observat o no
+</p>
+</div>
+        
     <!-- Scripts necessaris -->
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-
+        
 </body>
-
 </html>
