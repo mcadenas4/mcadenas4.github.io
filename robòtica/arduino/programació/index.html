@@ -1276,7 +1276,7 @@ void loop() { //És un sistema que no s'atura mai, es repeteix fins que desconec
     //El float volts que fa? Crea un espai a la memoria del ordinador anomenat volts que haurà de ser del tipus floating point number que emmagatzemarà el que li arribi del port serial escrit per l'usuari.
     int pwmValue = volts * 255.0 / 5.0; //Els volts no serveixen directament perquè volem no valors entre 0 i 5 sino entre o i 255. És entre 0 i 255 perquè és el número de bits (2^8 és igual a 256). Faig una regla de 3 i multiplico el valor per 255 i divideixo entre 5.
     //Per exepmle si l'usuari inserta 2,5 tindras 2,5 * 255 / 5 = 127,5. Aquest valor es transformarà en 127 perquè ha de ser integer i es guardarà en pwm Value.
-    analogWrite(outputPin, pwmValue);
+    analogWrite(outputPin, pwmValue); //analogWrite és una funció predefinida al llenguatge Arduino, derivada de C++ i és també una biblioteca de processing, té 2 argument o parametres, el pin on està connectat i el valor que volem escriure en el pin (0, 255), que farà que el LED s'encengui de forma proporcional als volts que l'usuari ha escrit. 
   }
 }
 </code></pre>
@@ -1297,6 +1297,54 @@ sheet o fulla de caracteristiques de el ESP32-S3la linea de codi seria:
 Aixó pot que no es noti en un led, peró es nota en un motor, on l'ESP32 permet accedir a més velocitats diferents. Els
 motors poden arribar a 16 bits, que es 2^16 o 65536 valors diferents, depenent del tipus de motor, pot ser observat o no
 </p>
+        
+<pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
+const int analogPin = 0; //El pin 0 en Arduino és el pin A0 (analog)
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int reading = analogRead(analogPin); //analogRead llegeix els valors analogics del analogPin de 0 a 1023
+  float voltage = reading / 204.6; //1023 / 5 = 204,6 Dividim 1023 (2^10 - 1 per a Arduino) entre 5 (volts d'Arduino)
+    //Ara ens interesa els volts perquè jo connecto un sensor per exemple de temperatura (de 0 a 100 graus, d'humitat 0% a 100%) i els valors de 0 a 1023 no tenen sentit, perquè si fos un altre ESP32 seria de 0 a 4095 i el valor 500 en el primer cas estaria per la meitat i en el segon cas seria menys. Si utilitzem voltatge tenim una mesura real del que està passant en el sensor i buscarem la relació entre els volts i la temperatura / humitat a la fulla de característiques (datasheet), una vegada tenim la relació farem un regla de 3 o un mapejat
+  Serial.print("Reading="); //Quan posso entre cometes el print em surt tal qual la paraula reading = que significa lectura
+  Serial.print(reading); //reading no té cometes i és una variable que conté valors entre 0 i 1023
+  Serial.print("\t\tVolts="); // \t deixa un espai de tabulador
+  Serial.println(voltage); //Ens donarà el valor en volts al costat de Volts=
+    //Com quedarà en el cas de reading 512?
+    //Reading = 512       Volts = 2,5 //espera mig segon per fer una altre lectura
+    //Reading = 256       Volts = 1,25
+  delay(500);
+}
+</code></pre>
+
+<pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int number = random(1, 7); //Escull un número enter aleatoriament de 1 al 7
+    //Els número aleatoris són importants per exemple en controls de qüalitat perquè ens asegurem de tot no està decidit per ningú
+  Serial.println(number); //Perquè fer println i no fem print perquè volem que surti una línea sobre una altre
+  delay(500); //Espera 500 mil·lisegons
+}
+</code></pre>
+
+<pre><button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button><code class="language-arduino">
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(0)); //Seed significa llavor i té com argument un número, si per exemple poso randomSeed (4) sempre em sortirà la mateixa cadena de números aleatoris.
+}
+
+void loop() {
+  int number = random(1, 7);
+  Serial.println(number);
+  delay(500); 
+}
+</code></pre>
 </div>
         
     <!-- Scripts necessaris -->
