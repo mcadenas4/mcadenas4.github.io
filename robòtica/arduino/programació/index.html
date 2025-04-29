@@ -1374,6 +1374,37 @@ void loop() {
     <li><strong>\(X_0\)</strong> = llavor inicial (seed).</li>
   </ul>
 
+  <h3>Exemple realista</h3>
+  <ul>
+    <li>\(a = 1103515245\)</li>
+    <li>\(c = 12345\)</li>
+    <li>\(m = 2^{31}\)</li>
+    <li>\(X_0 = 1\)</li>
+  </ul>
+  <ol>
+    <li>
+      \(X_1 = (1103515245 \times 1 + 12345) \bmod 2^{31} = 1103527590 \bmod 2^{31} = ?\)
+    </li>
+    <li>
+      \(X_2 = (1103515245 \times ? + 12345) \bmod 2^{31} = ? \bmod 2^{31} = ?\)
+    </li>
+    <li>
+      \(X_3 = (1103515245 \times ? + 12345) \bmod 2^{31} = ?  \bmod 2^{31} = ?\)
+    </li>
+    <li>
+      \(X_4 = (1103515245 \times ? + 12345) \bmod 2^{31} = ? \bmod 2^{31} = ?\)
+    </li>
+    <li>
+      \(X_5 = (1103515245 \times ? + 12345) \bmod 2^{31} = ? \bmod 2^{31} = ?\)
+    </li>
+  </ol>
+  <p><strong>Seqüència completa:</strong> ?, ?, ?, ?, ?, ?</p>
+        
+  <p>
+    Aquesta seqüència de valors entre 0 i \(m-1\) és previsible si es coneix la llavor inicial  
+    — per això és <em>pseudo</em>aleatòria.
+  </p>
+        
   <h3>Exemple Numèric Pas a Pas</h3>
   <p>Suposem:</p>
   <ul>
