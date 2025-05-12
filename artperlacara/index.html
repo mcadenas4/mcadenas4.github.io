@@ -1,0 +1,235 @@
+<!DOCTYPE html> <!-- Indica que el document és HTML5 -->
+<html lang = "ca">
+    <head> <!-- La secció head conté metadades i enllaços a fitxers externs -->
+        <meta charset="UTF-8"> <!-- Defineix la codificació de caràcters a UTF-8, que suporta accents i símbols especials -->
+        <title>Art geomètric amb expressió facial</title> <!-- Defineix el títol de la pàgina que apareixerà a la pestanya del navegador -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.js"></script> <!-- Aquesta és la biblioteca p5.js, que facilita la creació de gràfics i animacions en el navegador -->
+        <script src="https://cdn.jsdelivr.net/gh/ml5js/Intro-ML-Arts-IMA@ml5-build-10-7-19/ml5_build/ml5.min.js"></script> <!-- Aquesta és la biblioteca ml5.js, que ens permet utilitzar models d'intel·ligència artificial com la detecció facial -->
+        <style> /* Inici  del codi CSS per donar estil a la pàgina */
+            body{
+                margin: 0; /* no marges externs */
+                padding: 0; /* no espais externs */
+                background-color: #f4f4f4; /* Fons de color gris */
+                display: flex; /* fa servir flexbox per alinear */
+                justify-content: center; /*centra horitzontalment */
+                align-items: center; /* La pàgina està centrada i es distribueixen els elements en columnes */
+                height: 100vh; /* alçada tota pantalla */
+            }
+
+            #loading-screen{
+                position: fixed; /* La pantalla de càrrega es manté fixa en tot moment a la finestra del navegador */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.9); /* Fons blanc amb lleugera transparència */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center; /* Centra el contingut de la pantalla (loader i text) */
+                font-family: Arial, sans-serif;
+                font-size: 18px;
+                color: #333; /* Text gris fosc per a bona llegibilitat */
+                z-index: 10; /* per sobre de tot */
+            }
+
+            /* rodona animada de càrrega */
+            .loader {
+                width: 50px;
+                height: 50px;
+                border: 6px solid #3498db; /* Marge de 6 píxels de grosor amb color blau (part de la vora) */
+                border-top: 6px solid transparent; /* La part superior és transparent per fer l'efecte giratori */
+                border-radius: 50%; /* Fa el loader circular */ 
+                animation: spin 1s linear infinite; /* Aplica una animació per girar l'element indefinidament */
+                margin-bottom: 10px;
+            }
+
+            /*Declaració de la keyframe de l'animació per girar l'element loader */
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Pantalla de càrrega: s'exhibeix mentre es carreguen els models de detecció facial -->
+        <div id="loading-screen">
+            <div class="loader"></div>
+            <p>Carrega models, si us plau, espera...</p>
+        </div>
+        <script>
+            // Variables globals
+            let faceapi, detections = [], video;
+            let modelsMostrats = false;
+
+            // Mida virtual que es manté proporcional a qualsevol pantalla
+            const VIRTUAL_W = 800;
+            const VIRTUAL_H = 600;
+
+            // Funció que es crida al començar
+            function setup() {
+                createCanvas(windowWidth, windowHeight); // Crea una zona de dibuix de la mida de la finestra
+                video = createCapture(VIDEO); // Activa la webcam
+                video.size(480, 480); // Estableix la mida del vídeo
+                video.hide(); // Amaga el vídeo per defecte POSIBLE ERROR
+
+                // Configura els paràmetres del reconeixement facial
+                const options = {
+                    withLandmarks: true,
+                    withExpressions: true,
+                    withDescriptors: false
+                };
+                faceapi = ml5.faceApi(video, options, modelReady); // Inicialitza el model amb la webcam
+            }
+
+            // Redimensiona el canvas si canvia la mida de la finestra
+            function windowResized() {
+                resizeCanvas(windowWidth, windowHeight);
+            }
+
+            // Quan el model està carregat correctament
+            function modelReady() {
+                faceapi.detect(gotResults); // comença a detectar cares
+            }
+            
+            // Quan hi ha resultats del model
+            function gotResults(err, result) {
+                if (err) return console.error(err); // mostra error si hi ha i l'escriu a la consola
+                detections = result; // desa les dades de la detecció
+                if (!modelsMostrats) { // Si no hi ha models
+                    document.getElementById("loading-screen").style.display = "none"; // No mostrar pantalla de càrrega
+                    modelsMostrats = true;
+                }
+                faceapi.detect(gotResults); // torna a detectar de forma continua
+            }
+            
+            // Funció de dibuix
+            function draw() {
+                background(255); // fons blanc
+                
+                // Inicialitzem l'estat emocional detectat
+                let dominant = "neutral", intensity = 0;
+                if (detections.length > 0) {
+                    let expr = detections[0].expressions;
+                    dominant = Object.keys(expr).reduce((a, b) => expr[a] > expr[b] ? a : b); 
+                    /* Condicional terciari: el signe d'interrogació pregunta el que hi ha abans i si és veritat fa el que hi ha abans dels 2 punts, i si és fals fa el que hi ha després dels 2 punts */
+                    /* La funció fletxa => és una forma molt ràpida de crear una funció i utilitzar uns arguments,
+                    en aquest cas a i b, que corresponen a qualsevol de les 7 expressions de la cara
+                    i compararles entre si. Com pot ser que a i b tinguin 7 valors? Perquè fa una iteració, sobretot a
+                    les claus (keys) o expressions. expr[a] i expr[b] correspon a qualsevol parell d'expresions, per exemple
+                    trist i content, i te valors entre 0 i 1 cadascuna, puc estar al 0,8 sobre 1 de felicitat i a 0,2 
+                    sobre 1 de tristesa i amb la funció fletxa => aplico un condicional terciari per comparar quin és el
+                    valor més gran. En aquest cas el valor més gran és el dominant.*/
+                    intensity = expr[dominant]; /* El valor més gran el guardo a intensity. Aquesta variable no només ens serveix
+                    per saber si estic molt trist o molt content, també serveix per canviar els vertex a tristesa per exemple*/
+                }
+                
+                // Calcular escala i marges per centrar el dibuix virtual a la pantalla
+                let scaleFactor = min(width / VIRTUAL_W, height / VIRTUAL_H);
+                let offsetX = (width - VIRTUAL_W * scaleFactor) / 2;
+                let offsetY = (height - VIRTUAL_H * scaleFactor) / 2;
+                
+                // Aplicar transformacions per mantenir el dibuix centrat i escalat
+                push(); // desa l'estat de transformació
+                translate(offsetX, offsetY); // desplaça l'origen
+                scale(scaleFactor); // redimensiona proporcionalment
+                drawArt(dominant, intensity); // dibuixa la figura segons l'expressió
+                pop(); // recupera l'estat anterior
+
+                // Mostra el text amb l'expressió dominant (fora de transformacions)
+                noStroke();
+                fill(44,169,225);
+                textSize(32);
+                textAlign(CENTER, TOP);
+                text("Expressió: " + dominant, width / 2, 10);
+
+                // Mostra el vídeo si hi ha detecció
+                if (detections.length > 0) {
+                    image(video, width - 140, height - 140, 120, 120);
+                }
+            }
+            
+            // Dibuixa diferents figures depenent de l'estat emocional
+            function drawArt(dominant, intensity) {
+                noFill();
+                strokeWeight(4);
+                
+                switch (dominant) {
+                    case 'happy':
+                    stroke(255,200,0); // groc
+                    beginShape();
+                    for (let a = 0; a < TWO_PI; a += PI/8) {
+                        let r = 100 + 25 * sin(a * 8);
+                        let x = VIRTUAL_W/2 + r * cos(a);
+                        let y = VIRTUAL_H/2 + r * sin(a);
+                        vertex(x, y); // vèrtex positiu
+                    }
+                    endShape(CLOSE);
+                    break;
+                    case 'sad':
+                        stroke(50,100,200,150); // blau
+                        beginShape();
+                        for (let x = 0; x <= 400; x += 40)
+                        vertex(200 + x, 300 + 100 * intensity);
+                        for (let x = 400; x >= 0; x -= 40)
+                        vertex(200 + x, 300 - 50 * intensity);
+                    endShape(CLOSE);
+                    break;
+                    case 'angry':
+                        stroke(200,0,0,150); // vermell
+                        beginShape();
+                        for (let i = 0; i < 16; i++) {
+                            let angle = map(i, 0, 16, 0, TWO_PI);
+                            let r = i % 2 ? 100 : 175;
+                            let x = VIRTUAL_W/2 + r * cos(angle);
+                            let y = VIRTUAL_H/2 + r * sin(angle);
+                            vertex(x, y);
+                        }
+                    endShape(CLOSE);
+                    break;
+                    case 'fearful':
+                        stroke(100,100,100,150); // gris
+                        beginShape();
+                        for (let x = 0; x <= VIRTUAL_W; x += 10) {
+                            let y = VIRTUAL_H/2 + 50 * sin((x - VIRTUAL_W/2) * 0.05) * intensity;
+                            vertex(x, y);
+                        }
+                    endShape();
+                    break;
+                    case 'surprised':
+                        stroke(0,150,255,150); // blau clar
+                        beginShape();
+                        for (let i = 0; i < 20; i++) {
+                            let angle = random(TWO_PI);
+                            let r = 50 + 100 * intensity;
+                            let x = VIRTUAL_W/2 + r * cos(angle);
+                            let y = VIRTUAL_H/2 + r * sin(angle);
+                            vertex(x, y);
+                        }
+                    endShape(CLOSE);
+                    break;
+                    case 'disgusted':
+                        stroke(0,150,0,150); // verd
+                        beginShape();
+                        for (let i = 0; i < 12; i++) {
+                            let angle = map(i, 0, 12, 0, TWO_PI);
+                            let r = 75 + random(-50, 50) * intensity;
+                            let x = VIRTUAL_W/2 + r * cos(angle);
+                            let y = VIRTUAL_H/2 + r * sin(angle);
+                            vertex(x, y);
+                        }
+                    endShape(CLOSE);
+                    break;
+                    default:
+                        stroke(150,150,150,150); // gris suau
+                        beginShape();
+                        vertex(0, 0);
+                        vertex(VIRTUAL_W, 0);
+                        vertex(VIRTUAL_W, VIRTUAL_H);
+                        vertex(0, VIRTUAL_H);
+                        endShape(CLOSE);
+                }
+            }
+        </script>
+    </body>
+</html>
