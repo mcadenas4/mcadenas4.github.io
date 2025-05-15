@@ -353,10 +353,29 @@
           <li>El segon argument és "La freqüència" i s'expresa en Herz (Hz)</li>
           <li>El tercer argument és optatiu i expresa "El temps de durada"</li>
         </ul> 
-        <img
+        <img src="arduino_musica.webp">
+        <img src="nomenclatura_internacional.png>
+        <img src="sol.jpg">
+        #define NOTE_G4 391,995
+        #define NOTE_A4 440,000
+          
+          int solsolet[]{
+          NOTE_G4, NOTE_A4, NOTE_G4, NOTE_G4, NOTE_A4, NOTE_G4
+          }
+          durades[]{
+          250, 250, 250, 125, 125, 125
+          }
         void setup() {
-        tone(4, 500);
+        
         }
         
-        void loop() {}
+        void loop() {
+          int numNotes= sizeof(solsolet)/sizeof(solsolet[0]);
+          //Calculem el número de notes dividint el número de bytes totals de la canço que ho calcula la
+          funció "sizeof" entre el número de bytes de una de les notes (en aquest cas la primera). En aquest
+          exemple tenim 5 notes i cada nota ocuparà un número enter que es igual a 2 bytes en arduino. Per
+          tant el noi de la mare ocupa 10 bytes que dividit entre el tamany de la primera nota que son
+          2 bytes dona 5 notes musicals. El número 5 el guardem a la variable numNotes
+          // L'avantatge que té aquest codi és que sempre contarà les notes i puc canviar quan vulgí la cancó
+        }
       </code></pre>
