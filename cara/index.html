@@ -18,8 +18,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #f8f9fa, #ffe4b5);
-            color: #333;
+            background: linear-gradient(to right, #0a0a0a, #1a1a2e); /* Dark blue/black gradient */
+            color: #e0e0e0; /* Light grey for text */
             margin: 0;
             padding: 0;
         }
@@ -29,9 +29,9 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(45deg, #ff6b6b, #ff3d3d);
+            background: linear-gradient(45deg, #000033, #1a0033); /* Dark blue to dark purple gradient */
             padding: 10px 20px;
-            border-bottom: 4px solid #ffdd40;
+            border-bottom: 4px solid #8a2be2; /* Blue-violet border */
             z-index: 10;
         }
 
@@ -47,7 +47,7 @@
         }
 
         .navbar-brand:hover {
-            color: #000 !important;
+            color: #b0c4de !important; /* Light steel blue on hover */
         }
 
         .navbar-brand img {
@@ -56,7 +56,7 @@
         }
 
         .nav-link {
-            color: #ffffff !important;
+            color: #e0e0e0 !important; /* Light grey for nav links */
             font-weight: 600;
             margin-right: 15px;
             position: relative;
@@ -64,14 +64,14 @@
         }
 
         .nav-link:hover {
-            color: #ffdd40 !important;
+            color: #9370db !important; /* Medium purple on hover */
         }
 
         .nav-link::after {
             content: '';
             width: 0%;
             height: 3px;
-            background-color: #ffdd40;
+            background-color: #9370db; /* Medium purple underline */
             position: absolute;
             bottom: -5px;
             left: 0;
@@ -83,7 +83,7 @@
         }
 
         .dropdown-menu {
-            background-color: #cc3f33;
+            background-color: #330066; /* Dark purple for dropdown background */
             border: none;
             border-radius: 10px;
         }
@@ -94,7 +94,7 @@
         }
 
         .dropdown-item:hover {
-            background-color: #ff7f50;
+            background-color: #4b0082; /* Indigo on hover */
             color: #ffffff;
         }
 
@@ -102,16 +102,16 @@
             margin: 120px auto 50px auto;
             padding: 40px;
             max-width: 900px;
-            background-color: #ffffff;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: #1a1a1a; /* Dark black for content background */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Darker shadow */
             border-radius: 15px;
-            border-left: 8px solid #ffdd40;
-            border-right: 8px solid #ffdd40;
+            border-left: 8px solid #483d8b; /* Dark slate blue border */
+            border-right: 8px solid #483d8b; /* Dark slate blue border */
             animation: fadeIn 1.2s ease-in-out;
         }
 
         h1 {
-            color: #ff4500;
+            color: #8a2be2; /* Blue-violet for headings */
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
@@ -131,28 +131,28 @@
         }
 
         ul li {
-            background-color: #ffe4b5;
+            background-color: #2a2a2a; /* Slightly lighter dark for list items */
             margin-bottom: 10px;
             padding: 10px 15px;
-            border-left: 5px solid #ff7f50;
+            border-left: 5px solid #6a5acd; /* Slate blue border */
             border-radius: 8px;
             font-size: 1.1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         ul li:hover {
-            background-color: #f1f3f5;
+            background-color: #3a3a3a; /* Even lighter dark on hover */
         }
 
         a {
-            color: #ff4500;
+            color: #8a2be2; /* Blue-violet for links */
             font-weight: 600;
             transition: color 0.3s ease;
             text-decoration: underline;
         }
 
         a:hover {
-            color: #ff7f50;
+            color: #9370db; /* Medium purple on hover */
         }
 
         @keyframes fadeIn {
@@ -187,38 +187,29 @@
 
         table {
             width: 50%;
-            /* Ocupa el 50% de la anchura de la página */
             border-collapse: collapse;
-            /* Evita que aparezcan dobles líneas en las filas */
             margin: 20px auto;
-            /* Margen de 20px en la parte superior y centra la tabla */
         }
 
         th,
         td {
-            border: 1px solid #ddd;
-            /* Añade un borde fino de un píxel de color gris claro a todas las celdas (th y td) */
+            border: 1px solid #333; /* Darker border for table cells */
             padding: 10px;
-            /* Espacio interno dentro de cada celda */
             text-align: center;
-            /* Centra el texto dentro de cada celda */
         }
 
         thead {
-            background: #f4f4f4;
-            /* Cambia el color de fondo del thead a gris claro */
+            background: #2a2a2a; /* Darker grey for table header */
             font-weight: bold;
-            /* Hace que la cabecera de la tabla esté en negrita */
+            color: #e0e0e0; /* Light text for table header */
         }
 
         tbody tr:nth-child(even) {
-            /* Aplica estilo a las filas pares */
-            background-color: #f9f9f9;
+            background-color: #1f1f1f; /* Slightly darker for even rows */
         }
 
         tbody tr:hover {
-            /* Cambia el color de fondo al pasar el ratón por encima */
-            background-color: #e2e2e2;
+            background-color: #3a3a3a; /* Darker grey on hover */
         }
 
         .button-container {
@@ -226,43 +217,42 @@
             justify-content: center;
             align-items: center;
             left: 50%;
-            background: linear-gradient(135deg, #ffe0b2, #ffccbc);
-            /* Fondo degradado */
+            background: linear-gradient(135deg, #330066, #4b0082); /* Purple gradient for button container */
         }
 
         .custom-button {
-            background-color: #e63946;
+            background-color: #483d8b; /* Dark slate blue for button */
             color: white;
             border: none;
             padding: 18px 36px;
-            /* Botón más grande */
             font-size: 20px;
             font-family: 'Arial', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             border-radius: 50px;
-            /* Bordes más redondeados */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .custom-button:hover {
-            background-color: #ff6f61;
+            background-color: #6a5acd; /* Slate blue on hover */
             transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
         }
 
         pre {
-            background: #f4f4f4;
+            background: #2a2a2a; /* Dark background for code blocks */
             padding: 10px;
             overflow-x: auto;
             position: relative;
+            border-radius: 8px;
         }
 
         code {
             font-family: monospace;
+            color: #e0e0e0; /* Light text for code */
         }
 
         .copy-btn {
@@ -273,7 +263,7 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
-            color: #007bff;
+            color: #9370db; /* Medium purple for copy button */
         }
     </style>
     <script>
@@ -288,7 +278,6 @@
 </head>
 
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="https://mcadenas4.github.io">
@@ -300,7 +289,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul.n class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="https://mcadenas4.github.io">Inici</a>
                     </li>
@@ -336,26 +325,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://mcadenas4.github.io/enllaços">Enllaços</a>
                     </li>
-                </ul.n>
+                </ul>
             </div>
         </div>
     </nav>
-    <!-- Contingut principal -->
     <div class="content-container">
-      <h1>Cares interactives</h1>
-      <p>Escull la cara que vols obrir:</p>
-      <li><a href="https://mcadenas4.github.io/cara/cara0">Cara inicial</a></li>
-      <li><a href="https://mcadenas4.github.io/cara/cara1">Cara 1</a></li>
-      <li><a href="https://mcadenas4.github.io/cara/cara2">Cara 2</a></li>
-      <li><a href="https://mcadenas4.github.io/cara/cara3">Cara 3</a></li>
-      <li><a href="https://mcadenas4.github.io/cara/cara4">Cara 4</a></li>
-      <li><a href="https://mcadenas4.github.io/cara/cara5">Cara 5</a></li>
-        
+        <h1>Cares interactives</h1>
+        <p>Escull la cara que vols obrir:</p>
+        <li><a href="https://mcadenas4.github.io/cara/cara0">Cara inicial</a></li>
+        <li><a href="https://mcadenas4.github.io/cara/cara1">Cara 1</a></li>
+        <li><a href="https://mcadenas4.github.io/cara/cara2">Cara 2</a></li>
+        <li><a href="https://mcadenas4.github.io/cara/cara3">Cara 3</a></li>
+        <li><a href="https://mcadenas4.github.io/cara/cara4">Cara 4</a></li>
+        <li><a href="https://mcadenas4.github.io/cara/cara5">Cara 5</a></li>
+
     </div>
 
-    <!-- Scripts necessaris -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 </body>
+
 </html>
