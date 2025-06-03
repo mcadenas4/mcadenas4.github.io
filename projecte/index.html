@@ -19,8 +19,10 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #f8f9fa, #ffe4b5);
-      color: #333;
+      /* Star Wars theme: Black and Red gradient background */
+      background: linear-gradient(to bottom, #000000, #4d0000);
+      color: #e0e0e0;
+      /* Light grey for text for contrast on dark background */
       margin: 0;
       padding: 0;
     }
@@ -30,9 +32,11 @@
       top: 0;
       left: 0;
       width: 100%;
-      background: linear-gradient(45deg, #ff6b6b, #ff3d3d);
+      /* Keep existing red gradient or make it more intense Star Wars red */
+      background: linear-gradient(45deg, #ff0000, #800000);
       padding: 10px 20px;
-      border-bottom: 4px solid #ffdd40;
+      border-bottom: 4px solid #ffd700;
+      /* Gold/yellow for border like Star Wars title crawl */
       z-index: 10;
     }
 
@@ -48,7 +52,8 @@
     }
 
     .navbar-brand:hover {
-      color: #000 !important;
+      color: #ffdd40 !important;
+      /* Change hover color to gold/yellow */
     }
 
     .navbar-brand img {
@@ -65,14 +70,16 @@
     }
 
     .nav-link:hover {
-      color: #ffdd40 !important;
+      color: #ffd700 !important;
+      /* Change hover color to gold/yellow */
     }
 
     .nav-link::after {
       content: '';
       width: 0%;
       height: 3px;
-      background-color: #ffdd40;
+      background-color: #ffd700;
+      /* Gold/yellow for hover underline */
       position: absolute;
       bottom: -5px;
       left: 0;
@@ -84,7 +91,8 @@
     }
 
     .dropdown-menu {
-      background-color: #cc3f33;
+      background-color: #330000;
+      /* Darker red/black for dropdown */
       border: none;
       border-radius: 10px;
     }
@@ -95,7 +103,8 @@
     }
 
     .dropdown-item:hover {
-      background-color: #ff7f50;
+      background-color: #800000;
+      /* Red for dropdown item hover */
       color: #ffffff;
     }
 
@@ -103,16 +112,21 @@
       margin: 120px auto 50px auto;
       padding: 40px;
       max-width: 900px;
-      background-color: #ffffff;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      background-color: #1a1a1a;
+      /* Dark background for content area */
+      box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+      /* Red glowing shadow */
       border-radius: 15px;
-      border-left: 8px solid #ffdd40;
-      border-right: 8px solid #ffdd40;
+      border-left: 8px solid #ff0000;
+      /* Red border */
+      border-right: 8px solid #ff0000;
+      /* Red border */
       animation: fadeIn 1.2s ease-in-out;
     }
 
     h1 {
-      color: #ff4500;
+      color: #ffd700;
+      /* Gold/yellow for main title */
       font-family: 'Montserrat', sans-serif;
       font-size: 2.5rem;
       font-weight: 700;
@@ -120,10 +134,24 @@
       text-align: center;
     }
 
+    h2 {
+      color: #ff0000;
+      /* Red for subtitles */
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+
     p {
       font-size: 1.1rem;
       line-height: 1.6;
       margin-bottom: 20px;
+      color: #e0e0e0;
+      /* Ensure text is light on dark background */
     }
 
     ul {
@@ -132,28 +160,33 @@
     }
 
     ul li {
-      background-color: #ffe4b5;
+      background-color: #333333;
+      /* Dark grey for list item background */
       margin-bottom: 10px;
       padding: 10px 15px;
-      border-left: 5px solid #ff7f50;
+      border-left: 5px solid #ff0000;
+      /* Red border for list items */
       border-radius: 8px;
       font-size: 1.1rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     ul li:hover {
-      background-color: #f1f3f5;
+      background-color: #4d4d4d;
+      /* Slightly lighter grey on hover */
     }
 
     a {
-      color: #ff4500;
+      color: #ffd700;
+      /* Gold/yellow for links */
       font-weight: 600;
       transition: color 0.3s ease;
       text-decoration: underline;
     }
 
     a:hover {
-      color: #ff7f50;
+      color: #ff0000;
+      /* Red for link hover */
     }
 
     @keyframes fadeIn {
@@ -188,38 +221,34 @@
 
     table {
       width: 50%;
-      /* Ocupa el 50% de la anchura de la página */
       border-collapse: collapse;
-      /* Evita que aparezcan dobles líneas en las filas */
       margin: 20px auto;
-      /* Margen de 20px en la parte superior y centra la tabla */
     }
 
     th,
     td {
-      border: 1px solid #ddd;
-      /* Añade un borde fino de un píxel de color gris claro a todas las celdas (th y td) */
+      border: 1px solid #666;
+      /* Darker border for table cells */
       padding: 10px;
-      /* Espacio interno dentro de cada celda */
       text-align: center;
-      /* Centra el texto dentro de cada celda */
+      color: #e0e0e0;
+      /* Light text color for table content */
     }
 
     thead {
-      background: #f4f4f4;
-      /* Cambia el color de fondo del thead a gris claro */
+      background: #330000;
+      /* Dark red for table header */
       font-weight: bold;
-      /* Hace que la cabecera de la tabla esté en negrita */
     }
 
     tbody tr:nth-child(even) {
-      /* Aplica estilo a las filas pares */
-      background-color: #f9f9f9;
+      background-color: #222222;
+      /* Darker shade for even rows */
     }
 
     tbody tr:hover {
-      /* Cambia el color de fondo al pasar el ratón por encima */
-      background-color: #e2e2e2;
+      background-color: #444444;
+      /* Lighter dark shade on hover */
     }
 
     .button-container {
@@ -227,54 +256,68 @@
       justify-content: center;
       align-items: center;
       left: 50%;
-      background: linear-gradient(135deg, #ffe0b2, #ffccbc);
-      /* Fondo degradado */
+      background: linear-gradient(135deg, #4d0000, #800000);
+      /* Dark red gradient for button container */
     }
 
     .custom-button {
-      background-color: #e63946;
+      background-color: #cc0000;
+      /* Star Wars red button */
       color: white;
       border: none;
       padding: 18px 36px;
-      /* Botón más grande */
       font-size: 20px;
       font-family: 'Arial', sans-serif;
       cursor: pointer;
       transition: all 0.3s ease;
       border-radius: 50px;
-      /* Bordes más redondeados */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
       font-weight: bold;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
     .custom-button:hover {
-      background-color: #ff6f61;
+      background-color: #ff3333;
+      /* Brighter red on hover */
       transform: scale(1.05);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     }
 
     pre {
-      background: #f4f4f4;
+      background: #0d0d0d;
+      /* Very dark background for code blocks */
       padding: 10px;
       overflow-x: auto;
       position: relative;
+      border-radius: 5px;
+      border: 1px solid #ff0000;
+      /* Red border for code blocks */
     }
 
     code {
       font-family: monospace;
+      color: #00ff00;
+      /* Green text for code, reminiscent of terminal/data streams */
     }
 
     .copy-btn {
       position: absolute;
       top: 5px;
       right: 5px;
-      background: none;
+      background: #333;
+      /* Dark background for copy button */
       border: none;
       cursor: pointer;
       font-size: 16px;
-      color: #007bff;
+      color: #ffd700;
+      /* Gold/yellow for copy icon */
+      padding: 5px 8px;
+      border-radius: 3px;
+    }
+
+    .copy-btn:hover {
+      background-color: #555;
     }
   </style>
   <script>
