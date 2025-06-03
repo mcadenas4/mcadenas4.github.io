@@ -9,16 +9,55 @@
     body {
       padding: 0;
       margin: 0;
-      background-color: #1b1b1b;
+      /* Degradado de negro a un azul oscuro/morado profundo */
+      background: linear-gradient(to bottom, #0a0a0a, #1a0033, #000022); 
+      color: #e0e0e0; /* Color de texto claro para contraste */
+      min-height: 100vh; /* Asegura que el degradado cubra toda la altura */
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Centra el contenido horizontalmente */
+      justify-content: center; /* Centra el contenido verticalmente */
+      font-family: 'Poppins', sans-serif; /* Mantiene la fuente Poppins */
+    }
+
+    main {
+      /* Estilo del contenedor principal para que parezca una "ventana" en el espacio */
+      background-color: rgba(20, 0, 40, 0.8); /* Morado oscuro semitransparente */
+      border: 2px solid #6a0dad; /* Borde morado vibrante */
+      box-shadow: 0 0 20px rgba(106, 13, 173, 0.7); /* Resplandor morado */
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px; /* Altura mínima para el área de p5.js */
+      width: 90%;
+      max-width: 800px;
+      transition: all 0.5s ease-in-out;
+    }
+
+    main:hover {
+        box-shadow: 0 0 30px rgba(106, 13, 173, 0.9), 0 0 15px rgba(0, 0, 255, 0.5); /* Resplandor morado y azul */
+        transform: scale(1.02); /* Ligero zoom al pasar el ratón */
+    }
+
+    /* Puedes añadir más estilos aquí si tu sketch.js genera elementos HTML */
+    p {
+        color: #b366ff; /* Morado claro para los párrafos */
+        font-size: 1.1rem;
+        text-align: center;
+        margin-top: 20px;
     }
   </style>
   <script src="../p5.min.js"></script>
-  <!-- <script src="../addons/p5.sound.js"></script> -->
   <script src="sketch.js"></script>
 </head>
 
 <body>
   <main>
+    <p>Este es el lienzo de p5.js con un toque oscuro y futurista.</p>
   </main>
 </body>
 
