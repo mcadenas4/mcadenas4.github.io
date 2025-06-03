@@ -9,8 +9,9 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #f8f9fa, #ffe4b5);
-            color: #333;
+            /* Astronomy theme: Deep space gradient - dark blue/black to deep purple/indigo */
+            background: linear-gradient(to bottom, #00000a, #0a0a20);
+            color: #e0e0e0; /* Light grey for text for contrast on dark background */
             margin: 0;
             padding: 0;
         }
@@ -20,9 +21,10 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(45deg, #ff6b6b, #ff3d3d);
+            /* Navbar background: Cosmic blue gradient */
+            background: linear-gradient(45deg, #100020, #000033);
             padding: 10px 20px;
-            border-bottom: 4px solid #ffdd40;
+            border-bottom: 4px solid #00bfff; /* Deep sky blue for border, like starlight */
             z-index: 10;
         }
 
@@ -38,7 +40,7 @@
         }
 
         .navbar-brand:hover {
-            color: #000 !important;
+            color: #87ceeb !important; /* Sky blue for hover */
         }
 
         .navbar-brand img {
@@ -55,14 +57,14 @@
         }
 
         .nav-link:hover {
-            color: #ffdd40 !important;
+            color: #87ceeb !important; /* Sky blue for hover */
         }
 
         .nav-link::after {
             content: '';
             width: 0%;
             height: 3px;
-            background-color: #ffdd40;
+            background-color: #87ceeb; /* Sky blue for hover underline */
             position: absolute;
             bottom: -5px;
             left: 0;
@@ -74,7 +76,7 @@
         }
 
         .dropdown-menu {
-            background-color: #cc3f33;
+            background-color: #050010; /* Even darker blue-black for dropdown */
             border: none;
             border-radius: 10px;
         }
@@ -85,7 +87,7 @@
         }
 
         .dropdown-item:hover {
-            background-color: #ff7f50;
+            background-color: #1a237e; /* Dark indigo blue for dropdown item hover */
             color: #ffffff;
         }
 
@@ -93,16 +95,16 @@
             margin: 120px auto 50px auto;
             padding: 40px;
             max-width: 900px;
-            background-color: #ffffff;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: #151525; /* Dark bluish grey for content area */
+            box-shadow: 0 10px 20px rgba(0, 191, 255, 0.3); /* Deep sky blue glowing shadow */
             border-radius: 15px;
-            border-left: 8px solid #ffdd40;
-            border-right: 8px solid #ffdd40;
+            border-left: 8px solid #00bfff; /* Deep sky blue border */
+            border-right: 8px solid #00bfff; /* Deep sky blue border */
             animation: fadeIn 1.2s ease-in-out;
         }
 
         h1 {
-            color: #ff4500;
+            color: #87ceeb; /* Sky blue for main title */
             font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
@@ -110,10 +112,21 @@
             text-align: center;
         }
 
+        h2 {
+            color: #00bfff; /* Deep sky blue for subtitles */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
         p {
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 20px;
+            color: #e0e0e0; /* Ensure text is light on dark background */
         }
 
         ul {
@@ -122,28 +135,28 @@
         }
 
         ul li {
-            background-color: #ffe4b5;
+            background-color: #252535; /* Slightly lighter dark blue-grey for list item background */
             margin-bottom: 10px;
             padding: 10px 15px;
-            border-left: 5px solid #ff7f50;
+            border-left: 5px solid #00bfff; /* Deep sky blue border for list items */
             border-radius: 8px;
             font-size: 1.1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         ul li:hover {
-            background-color: #f1f3f5;
+            background-color: #353545; /* Slightly lighter dark blue-grey on hover */
         }
 
         a {
-            color: #ff4500;
+            color: #87ceeb; /* Sky blue for links */
             font-weight: 600;
             transition: color 0.3s ease;
             text-decoration: underline;
         }
 
         a:hover {
-            color: #ff7f50;
+            color: #00bfff; /* Deeper sky blue for link hover */
         }
 
         @keyframes fadeIn {
@@ -177,28 +190,29 @@
         }
 
         table {
-            width: 50%; /* Ocupa el 50% de la anchura de la página */
-            border-collapse: collapse; /* Evita que aparezcan dobles líneas en las filas */
-            margin: 20px auto; /* Margen de 20px en la parte superior y centra la tabla */
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
         }
 
         th, td {
-            border: 1px solid #ddd; /* Añade un borde fino de un píxel de color gris claro a todas las celdas (th y td) */
-            padding: 10px; /* Espacio interno dentro de cada celda */
-            text-align: center; /* Centra el texto dentro de cada celda */
+            border: 1px solid #444; /* Darker border for table cells */
+            padding: 10px;
+            text-align: center;
+            color: #e0e0e0; /* Light text color for table content */
         }
 
         thead {
-            background: #f4f4f4; /* Cambia el color de fondo del thead a gris claro */
-            font-weight: bold; /* Hace que la cabecera de la tabla esté en negrita */
+            background: #1a237e; /* Dark indigo blue for table header */
+            font-weight: bold;
         }
 
-        tbody tr:nth-child(even) { /* Aplica estilo a las filas pares */
-            background-color: #f9f9f9;
+        tbody tr:nth-child(even) {
+            background-color: #0d0d1d; /* Very dark shade for even rows */
         }
 
-        tbody tr:hover { /* Cambia el color de fondo al pasar el ratón por encima */
-            background-color: #e2e2e2;
+        tbody tr:hover {
+            background-color: #333343; /* Lighter dark shade on hover */
         }
 
         .button-container {
@@ -206,35 +220,38 @@
             justify-content: center;
             align-items: center;
             left: 50%;
-            background: linear-gradient(135deg, #ffe0b2, #ffccbc); /* Fondo degradado */
+            /* Background for button container: Cosmic blue gradient */
+            background: linear-gradient(135deg, #1a237e, #4169e1);
         }
 
         .custom-button {
-            background-color: #e63946;
+            background-color: #4169e1; /* Royal blue button */
             color: white;
             border: none;
-            padding: 18px 36px; /* Botón más grande */
+            padding: 18px 36px;
             font-size: 20px;
             font-family: 'Arial', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
-            border-radius: 50px; /* Bordes más redondeados */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
             font-weight: bold;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .custom-button:hover {
-            background-color: #ff6f61;
+            background-color: #00bfff; /* Deep sky blue on hover */
             transform: scale(1.05);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
         }
 
+        /* Note: Original code didn't have pre/code/copy-btn styles. 
+           If you want to add them for consistency with previous aesthetics, 
+           they would follow a similar dark theme with bright accents. */
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="https://mcadenas4.github.io">
@@ -246,7 +263,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul.n class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="https://mcadenas4.github.io">Inici</a>
                     </li>
@@ -282,33 +299,31 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://mcadenas4.github.io/enllaços">Enllaços</a>
                     </li>
-                </ul.n>
+                </ul>
             </div>
         </div>
     </nav>
-    <div class = content-container>
-        <h1>Experiment de Vera Rubin, fòrmules de forces gravitació, força centripeta, velocitat de rotació, efecte Doppler i 
+    <div class="content-container">
+        <h1>Experiment de Vera Rubin, fòrmules de forces gravitació, força centripeta, velocitat de rotació, efecte Doppler i
             espectres d'hidrogen</h1>
-            <button class="custom-button" onclick='location.href="https://mcadenas4.github.io/astronomia/animacio/"'>VEURE ANIMACIÓ</button>
-            
-                       
-            <p>Apunts a mà de l'altre dia</p>
-            <h2>Des de planetes a cefeides</h2> <p></p>
-            <p>Els planetes són els cossos que tenen més brillantor del cel perquè estan més a prop i eren considerats Deus perquè es
+        <button class="custom-button" onclick='location.href="https://mcadenas4.github.io/astronomia/animacio/"'>VEURE ANIMACIÓ</button>
+        
+        <p>Apunts a mà de l'altre dia</p>
+        <h2>Des de planetes a cefeides</h2> <p></p>
+        <p>Els planetes són els cossos que tenen més brillantor del cel perquè estan més a prop i eren considerats Deus perquè es
             podien moure pel cel (planeta significa "errant" "vagabund"). La brillantor dels estels va ser classificat per Hiparc
             fa 2500 anys en una escala de l'1 al 6 (les més brillants són un 1 i les menys brillants un 6). Pogson al 1856 va proposar
-            una escala diferent. Una estrella de magnitud 2 és <sup>5</sup>&radic;100 ≈ 2,512 vegades menys brillant que la de magnitud 
+            una escala diferent. Una estrella de magnitud 2 és <sup>5</sup>&radic;100 ≈ 2,512 vegades menys brillant que la de magnitud
             1 i una estrella de magnitud 6 seria exactament 100 vegades menys brillant que una estrella de magnitud 1. Alguns
             planetes o estrelles molt brillants sortiran números de 0 o negatius i les estrelles molt débils de brillantor seran
             superiors a 6. Aquesta brillantor observada des de la Terra s'anomena magnitud aparent (m) i la magnitud real que es
-            produiria si estigués en ella es diu magnitud absoluta (M) i acostuma a ser molt negativa. Comparant M i m puc saber 
+            produiria si estigués en ella es diu magnitud absoluta (M) i acostuma a ser molt negativa. Comparant M i m puc saber
             distancies.</p>
-            <img src="magnitud.png" width="800" height="269">
-            <p>La fòrmula matemàtica que relaciona distància i magnituds és la següent: $$d = 10^(((M-m) \ over 5)+1)$$</p>
-    
+        <img src="magnitud.png" width="800" height="269" alt="Gràfic de magnitud astronòmica">
+        <p>La fòrmula matemàtica que relaciona distància i magnituds és la següent: $$d = 10^{\left(\frac{M-m}{5}\right)+1}$$</p>
+        
     </div>
     
-    <!-- Scripts necessaris -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
