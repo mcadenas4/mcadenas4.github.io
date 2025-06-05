@@ -1,157 +1,1959 @@
 <!DOCTYPE html>
+<!-- Indica al navegador que aquest document és HTML5 -->
 <html lang="ca">
-<head>
-  <meta charset="UTF-8">
-  <title>Art Geomètric Amb Expressió Facial</title>
-  <!-- Llibreria p5.js per fer gràfics interactius -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.js"></script>
-  <!-- Llibreria ml5.js per reconeixement facial amb machine learning -->
-  <script src="https://cdn.jsdelivr.net/gh/ml5js/Intro-ML-Arts-IMA@ml5-build-10-7-19/ml5_build/ml5.min.js"></script>
-  <style>
-    /* Estil general del cos de la pàgina */
-    body {
-      margin: 0; /* sense marges externs */
-      padding: 0; /* sense espais interns */
-      background-color: #f4f4f4; /* color de fons gris clar */
-      display: flex; /* fa servir flexbox per alinear */
-      justify-content: center; /* centra horitzontalment */
-      align-items: center; /* centra verticalment */
-      height: 100vh; /* alçada de tota la pantalla */
-    }
+  <!-- L'atribut "lang" especifica que el contingut està en català -->
 
-    /* Pantalla de càrrega quan els models encara es carreguen */
-    #loading-screen {
-      position: fixed; /* fixa la posició a la pantalla */
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255,255,255,0.9); /* blanc amb transparència */
-      display: flex;
-      flex-direction: column; /* columna vertical */
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-      color: #333; /* gris fosc */
-      z-index: 10; /* per sobre de tot */
-    }
+  <head>
+    <!-- La secció <head> conté metadades, enllaços a scripts i definicions d'estils -->
+    
+    <meta charset="UTF-8">
+    <!-- Defineix la codificació de caràcters com UTF-8, assegurant la correcta visualització de tots els símbols -->
 
-    /* Rodona animada de càrrega */
-    .loader {
-      width: 50px;
-      height: 50px;
-      border: 6px solid #3498db; /* blau */
-      border-top: 6px solid transparent;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 10px;
-    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Defineix el viewport perquè la pàgina s'adapti a dispositius mòbils:
+         - width=device-width: l'amplada coincideix amb la de l'aparell
+         - initial-scale=1.0: escala inicial de 100% -->
 
-    /* Animació de gir */
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
-</head>
-<body>
-  <!-- Div visible mentre es carreguen els models -->
-  <div id="loading-screen">
-    <div class="loader"></div>
-    <p>Carregant models, si us plau, espera...</p>
-  </div>
-  <script>
-    // Variables globals
-    let faceapi, detections = [], video;
-    let modelsMostrats = false;
+    <title>Art Facial</title>
+    <!-- Estableix el títol de la pàgina, que apareixerà a la pestanya del navegador -->
 
-    // Mida virtual que es manté proporcional a qualsevol pantalla
-    const VIRTUAL_W = 800;
-    const VIRTUAL_H = 600;
+    <!-- Carrega la biblioteca p5.js per al dibuix interactiu i la gestió del canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.3/p5.js"></script>
+    <!-- Carrega la biblioteca ml5.js, que conté models de machine learning com la detecció facial -->
 
-    // Funció que es crida al començar
-    function setup() {
-      createCanvas(windowWidth, windowHeight); // crea una zona de dibuix de la mida de la finestra
-      video = createCapture(VIDEO);            // activa la webcam
-      video.size(480, 480);                    // estableix la mida del vídeo
-      video.hide();                            // amaga el vídeo per defecte
+    <script src="https://cdn.jsdelivr.net/gh/ml5js/Intro-ML-Arts-IMA@ml5-build-10-7-19/ml5_build/ml5.min.js"></script>
+    <!-- Aquest script carrega ml5.js en una versió compilada, utilitzada per la detecció facial -->
 
-      // Configura els paràmetres del reconeixement facial
-      const options = {
-        withLandmarks: true,
-        withExpressions: true,
-        withDescriptors: false
-      };
-      faceapi = ml5.faceApi(video, options, modelReady); // inicialitza el model amb la webcam
-    }
-
-    // Redimensiona el canvas si canvia la mida de la finestra
-    function windowResized() {
-      resizeCanvas(windowWidth, windowHeight);
-    }
-
-    // Quan el model està carregat correctament
-    function modelReady() {
-      faceapi.detect(gotResults); // comença a detectar cares
-    }
-
-    // Quan hi ha resultats del model
-    function gotResults(err, result) {
-      if (err) return console.error(err); // mostra error si hi ha
-      detections = result; // desa les dades de la detecció
-      if (!modelsMostrats) {
-        document.getElementById("loading-screen").style.display = "none";
-        modelsMostrats = true;
-      }
-      faceapi.detect(gotResults); // torna a detectar de forma continua
-    }
-
-    // Funció de dibuix
-    function draw() {
-      background(255); // fons blanc
-
-      // Inicialitzem l'estat emocional detectat
-      let dominant = "neutral", intensity = 0;
-      if (detections.length > 0) {
-        let expr = detections[0].expressions;
-        dominant = Object.keys(expr).reduce((a, b) => expr[a] > expr[b] ? a : b);
-        intensity = expr[dominant];
+    <style>
+      /*--------------------------------------------------
+      ESTILS PER A TOTA LA PÀGINA
+      --------------------------------------------------*/
+      body {
+        margin: 0;         /* Elimina els marges per utilitzar tota la finestra */
+        padding: 0;        /* També elimina qualsevol farcit (padding) per defecte */
+        overflow: hidden;  /* Evita que apareguin barres de desplaçament si algun element surt de la finestra */
+        background: #f0f0f0;/* Estableix un fons gris molt clar; "f0f0f0" és un to suau de gris */
       }
 
-      // Calcular escala i marges per centrar el dibuix virtual a la pantalla
-      let scaleFactor = min(width / VIRTUAL_W, height / VIRTUAL_H);
-      let offsetX = (width - VIRTUAL_W * scaleFactor) / 2;
-      let offsetY = (height - VIRTUAL_H * scaleFactor) / 2;
-
-      // Aplicar transformacions per mantenir el dibuix centrat i escalat
-      push(); // desa l'estat de transformació
-      translate(offsetX, offsetY); // desplaça l'origen
-      scale(scaleFactor); // redimensiona proporcionalment
-      drawArt(dominant, intensity); // dibuixa la figura segons l'expressió
-      pop(); // recupera l'estat anterior
-
-      // Mostra el text amb l'expressió dominant (fora de transformacions)
-      noStroke();
-      fill(44,169,225);
-      textSize(32);
-      textAlign(CENTER, TOP);
-      text("Expressió: " + dominant, width / 2, 10);
-
-      // Mostra el vídeo si hi ha detecció
-      if (detections.length > 0) {
-        image(video, width - 140, height - 140, 120, 120);
+      /*--------------------------------------------------
+      ESTILS PER A LA PANTALLA DE CÀRREGA (LOADING SCREEN)
+      --------------------------------------------------*/
+      #loading-screen {
+        position: fixed;   /* L'element es manté fix a la finestra, sense moure's amb el desplaçament */
+        top: 0;            /* S'ubica a la part superior de la finestra */
+        left: 0;           /* S'ubica a la cantonada esquerra */
+        width: 100%;       /* Ocupa tot l'amplada de la finestra */
+        height: 100%;      /* Ocupa tota l'altura de la finestra */
+        background: rgba(255,255,255,0.95);
+        /* Defineix un fons blanc amb una opacitat lleugerament inferior al 100% (0.95) */
+        display: flex;     /* Utilitza Flexbox per alinear els elements dins del contenidor */
+        flex-direction: column; /* Organitza els elements verticalment (en columna) */
+        justify-content: center; /* Centra els elements verticalment dins del contenidor */
+        align-items: center;     /* Centra els elements horitzontalment */
+        font-family: Arial, sans-serif; /* Defineix la font del text: Arial com a principal i altres sans-serif si Arial no està disponible */
+        z-index: 1000;     /* Assegura que aquest element aparegui per sobre de tot el contingut de la pàgina */
       }
-    }
 
-    // Dibuixa diferents figures depenent de l'estat emocional
-    function drawArt(dominant, intensity) {
-      noFill();
-      strokeWeight(4);
+      /*--------------------------------------------------
+      ESTILS PER AL CERCLE GIRATORI (LOADER)
+      --------------------------------------------------*/
+      .loader {
+        width: 40px;           /* Amplada de 40 píxels */
+        height: 40px;          /* Alçada de 40 píxels per obtenir un quadrat */
+        border: 5px solid #3498db;
+        /* Aplica un contorn de 5 píxels d'amplada amb un color blau (hexadecimal #3498db) */
+        border-top-color: transparent;
+        /* Defineix que la part superior del contorn sigui transparent per crear l'efecte de gir */
+        border-radius: 50%;    /* Arrodoneix les cantonades per transformar l'element en un cercle */
+        animation: spin 1s linear infinite;
+        /* Assigna l'animació "spin":
+             - Durada: 1 segon
+             - Tipus: linear (moviment constant)
+             - Iteració: infinite, és a dir, es repeteix indefinidament */
+      }
 
-      switch (dominant) {
-        case 'happy':
+      /*--------------------------------------------------
+      ANIMACIÓ PER GIRAR EL CERCLE
+      --------------------------------------------------*/
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+        /* La transformació final és una rotació completa de 360 graus */
+      }
+
+      /*--------------------------------------------------
+      ESTILS PER ALS PARÀGRAFS DINS DEL LOADING SCREEN
+      --------------------------------------------------*/
+      #loading-screen p {
+        margin-top: 15px;    /* Afegeix un espai de 15 píxels per sobre del paràgraf */
+        font-size: 1.1em;    /* Defineix la mida del text com 1.1 vegades la mida base del navegador */
+        color: #333;         /* Estableix el color del text com un gris fosc ("#333") */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--
+      Contingut visible de la pàgina. Aquí mostrarem primer la pantalla de càrrega,
+      que després s'amagarà quan es carreguin els models.
+    -->
+    <div id="loading-screen">
+      <!-- Aquest element conté el cercle giratori -->
+      <div class="loader"></div>
+      <!-- I un missatge per informar a l'usuari que es carreguen els models -->
+      <p>Carregant models...</p>
+    </div>
+
+    <script>
+      //--------------------------------------------------
+      // VARIABLES GLOBALES
+      //--------------------------------------------------
+      let faceapi, detections = [], video;
+      // "faceapi" serà l'objecte que ens gestionarà la detecció facial.
+      // "detections" és una matriu (array) que emmagatzemarà les deteccions facials.
+      // "video" guardarà el flux de vídeo capturat des de la càmera.
+      
+      let modelsReady = false;
+      // Variable booleana que indicarà si els models han estat carregats correctament (comença en false).
+
+      let currentExpression = { dominant: 'neutral', intensity: 0 };
+      // Objecte que emmagatzema l'expressió facial actual:
+      // "dominant" indica l'expressió més marcada (inicialment "neutral")
+      // "intensity" indica la intensitat de l'expressió (valors entre 0 i 1).
+
+      // Variable per a una transició suau de la intensitat detectada
+      let smoothIntensity = 0;
+      // Això permet interpolar suaument entre l'estat anterior i el nou.
+
+      //--------------------------------------------------
+      // VARIABLES PER AL FONS – GRADIENT DINÀMIC
+      //--------------------------------------------------
+      let currentGradientStart, currentGradientEnd;
+      // Colors actius per al gradient actual del fons.
+
+      let targetGradientStart, targetGradientEnd;
+      // Colors objectiu per al gradient, segons l’emoció detectada; s'interpolaran fins aconseguir la transició suau.
+
+      //--------------------------------------------------
+      // FUNCIÓ PER OBTINDRE ELS COLORS DEL GRADIENT
+      //--------------------------------------------------
+      function getGradientForEmotion(emotion) {
+        // Aquesta funció rep com a paràmetre l'emoció i retorna un objecte amb dos colors: start i end.
+        switch (emotion) {
+          case 'happy':
+            return { start: color(255, 223, 186), end: color(255, 183, 77) };
+            // Per l'emoció "happy", s'utilitzen tons càlids i suaus (taronges i taronja clar).
+          case 'sad':
+            return { start: color(173, 216, 230), end: color(100, 149, 237) };
+            // Per "sad", es trien tons blaus que evoquen tranquil·litat o tristesa.
+          case 'angry':
+            return { start: color(255, 160, 122), end: color(255, 69, 0) };
+            // Per "angry", tons vermells i taronges intensos, que denoten passió o agressivitat.
+          case 'disgusted':
+            return { start: color(144, 238, 144), end: color(34, 139, 34) };
+            // Per "disgusted", s'utilitzen tons verds que poden evocar repulsió.
+          case 'surprised':
+            return { start: color(216, 191, 216), end: color(147, 112, 219) };
+            // Per "surprised", colors suaus lilàs o malva per evocar sorpresa.
+          default:
+            return { start: color(240, 240, 240), end: color(200, 200, 200) };
+            // Per qualsevol altra emoció (incloent "neutral"), s'utilitzen tons grisos.
+        }
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ PER DIBUIXAR UN GRADIENT VERTICAL
+      //--------------------------------------------------
+      function setGradient(x, y, w, h, c1, c2, axis = 'y') {
+        // Aquesta funció pinta un gradient dins d'un rectangle definit per la posició (x,y) i dimensions (w, h).
+        // "c1" i "c2" són els colors inicial i final.
+        // "axis" indica si el gradient és vertical ('y') o horitzontal ('x'); per defecte és vertical.
+        noFill();    // No omplim cap forma, ja que pintarem línia per línia.
+        if (axis === 'y') {  // Si el gradient és vertical...
+          for (let i = y; i <= y + h; i++) {
+            // Per cada fila en el rectangle...
+            let inter = map(i, y, y + h, 0, 1);
+            // Interpola un valor entre 0 i 1 depenent de la posició actual.
+            let c = lerpColor(c1, c2, inter);
+            // Calcula el color intermig fent una interpolació (lerp) entre c1 i c2 basat en "inter".
+            stroke(c); 
+            // Defineix el color de la línia amb el color calculat.
+            line(x, i, x + w, i);
+            // Dibuixa una línia horitzontal per l'altura corresponent.
+          }
+        } else if (axis === 'x') { // Si el gradient és horitzontal...
+          for (let i = x; i <= x + w; i++) {
+            let inter = map(i, x, x + w, 0, 1);
+            let c = lerpColor(c1, c2, inter);
+            stroke(c);
+            line(i, y, i, y + h);
+            // Dibuixa línies verticals per cada posició (x) que formen el gradient horitzontal.
+          }
+        }
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ SETUP (p5.js)
+      //--------------------------------------------------
+      function setup() {
+        // Aquesta funció s'executa una sola vegada quan la pàgina es carrega.
+        createCanvas(windowWidth, windowHeight);
+        // Crea el canvas de p5.js amb l'amplada i alçada iguals a la finestra.
+
+        // Establim el gradient inicial segons l'emoció "neutral"
+        let neutralGrad = getGradientForEmotion('neutral');
+        currentGradientStart = neutralGrad.start; // Color de començament del gradient
+        currentGradientEnd = neutralGrad.end;     // Color final del gradient
+
+        // CONFIGURACIÓ DEL VÍDEO:
+        video = createCapture(VIDEO);
+        // Inicia la captura del vídeo utilitzant la càmera del dispositiu.
+        video.size(320, 240);
+        // Defineix una mida inicial per al vídeo.
+        video.hide();
+        // Amaga l'element HTML del vídeo ja que el dibuix es realitza al canvas.
+        video.elt.muted = true;
+        // Assegura que el vídeo no emeti so.
+        video.elt.playsinline = true;
+        // Permet que el vídeo es reprodueixi "in-line", principalment en dispositius mòbils.
+
+        // OPCIONS PER AL MODEL FACIAL:
+        const options = {
+          withLandmarks: true,    /* Detecta punts de referència facials (ulls, nas, boca, etc.) */
+          withExpressions: true,  /* Detecta expressions facials (com happy, sad, angry, etc.) */
+          withDescriptors: false  /* No es necessita informació addicional com descriptors en aquest exemple */
+        };
+
+        // INICIALITZACIÓ DE faceapi
+        faceapi = ml5.faceApi(video, options, () => {
+          // Aquesta funció callback s'executa quan el model ha estat carregat correctament.
+          modelsReady = true;  // Marquem que els models estan preparats.
+          // Amaguem la pantalla de càrrega perquè el model ja està llest.
+          document.getElementById('loading-screen').style.display = 'none';
+          // Inicia la detecció facial, passant la funció gotResults com a callback per rebre resultats.
+          faceapi.detect(gotResults);
+        });
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ windowResized (p5.js)
+      //--------------------------------------------------
+      function windowResized() {
+        // Aquesta funció s'executa cada cop que la finestra redimensiona.
+        resizeCanvas(windowWidth, windowHeight);
+        // Ajusta el canvas a la nova mida de la finestra.
+        video.size(max(160, width / 4), max(120, height / 4));
+        // També redimensiona la càmera, assegurant un mínim perquè el vídeo no es faci massa petit.
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ gotResults - Callback de detecció facial
+      //--------------------------------------------------
+      function gotResults(err, results) {
+        // Aquesta funció s'executa cada cop que ml5.faceApi retorna resultats.
+        if (err) {
+          // En cas d'error, imprimeix-lo a la consola.
+          console.error(err);
+          // Mostra un missatge d'error en la pantalla de càrrega indicant un problema amb la càmera.
+          document.getElementById('loading-screen').innerHTML =
+            '<p style="color: red">Error! Comprova la càmera i actualitza.</p>';
+          return;
+          // Finalitza l'execució de la funció en cas d'error.
+        }
+        // Guarda les deteccions en la variable global "detections".
+        detections = results;
+        // Si hi ha deteccions (almenys una cara detectada), actualitza l'expressió actual.
+        if (detections.length > 0) updateCurrentExpression();
+        // Torna a cridar la detecció facial per obtenir resultats contínus.
+        faceapi.detect(gotResults);
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ updateCurrentExpression
+      //--------------------------------------------------
+      function updateCurrentExpression() {
+        // Aquesta funció recorre totes les deteccions facials i actualitza l'expressió dominant.
+        let maxIntensity = 0; // Inicialitza la intensitat màxima trobada en 0.
+        detections.forEach(face => {
+          // Per cadascuna de les cares detectades...
+          const expr = face.expressions;
+          // "expr" conté un objecte amb les diferents expressions detectades i la seva intensitat.
+          const dominant = Object.keys(expr).reduce((a, b) => expr[a] > expr[b] ? a : b);
+          // Determina quina expressió té la intensitat més alta utilitzant reduce.
+          if (expr[dominant] > maxIntensity) {
+            // Si la intensitat de l'expressió dominant és més gran que la màxima trobada...
+            currentExpression = {
+              dominant: dominant,
+              intensity: expr[dominant]
+            };
+            // Actualitza l'objecte currentExpression amb el nom i la intensitat de l'expressió dominant.
+            maxIntensity = expr[dominant];
+            // Actualitza el valor màxim per comparar en futures deteccions.
+          }
+        });
+        // Actualitza els colors del gradient objectiu segons l'emoció dominant detectada.
+        let grad = getGradientForEmotion(currentExpression.dominant);
+        targetGradientStart = grad.start;
+        targetGradientEnd = grad.end;
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ draw (p5.js)
+      //--------------------------------------------------
+      function draw() {
+        // Aquesta funció s'executa constantment (frame per frame) per actualitzar el dibuix.
+        
+        // Interpolació suau de l'intensitat: actualitza smoothIntensity per aconseguir una transició fluida.
+        smoothIntensity = lerp(smoothIntensity, currentExpression.intensity, 0.1);
+
+        // Actualització suau dels colors del gradient:
+        if (targetGradientStart && targetGradientEnd) {
+          // Si els colors objectiu han estat definits...
+          currentGradientStart = lerpColor(currentGradientStart, targetGradientStart, 0.1);
+          // Interpola el color de començament del gradient cap a l'objectiu.
+          currentGradientEnd = lerpColor(currentGradientEnd, targetGradientEnd, 0.1);
+          // Interpola el color final del gradient de manera similar.
+        }
+
+        // Dibuixa el fons dinàmic pintant un gradient vertical que cobreix tot el canvas.
+        setGradient(0, 0, width, height, currentGradientStart, currentGradientEnd, 'y');
+
+        // Dibuixa l'art interactiu al centre del canvas:
+        push();
+        // Guarda l'estat actual del context gràfic.
+        translate(width / 3, height/8);
+        // Trasllada el sistema de coordenades perquè (0,0) sigui el centre de la finestra.
+        const scaleFactor = min(width, height) / 800;
+        // Calcula un factor d'escala per adaptar els dibuixos a la mida de la finestra.
+        scale(scaleFactor);
+        // Aplica l'escala calculada.
+        drawArt();
+        // Crida la funció que dibuixa l'art segons l'expressió facial.
+        pop();
+        // Restaura l'estat inicial del context gràfic, per no afectar altres dibuixos.
+
+        // Dibuixa la interfície (HUD) amb informació textual (emoticon i percentatge).
+        drawHUD();
+        // Dibuixa una previsualització petita del vídeo en una cantonada.
+        drawVideoPreview();
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ drawArt
+      //--------------------------------------------------
+      function drawArt() {
+        // Aquesta funció dibuixa formes artístiques basades en l'expressió facial detectada.
+        const { dominant } = currentExpression;
+        // Extreu la clau "dominant" de l'objecte currentExpression (indicant l'emoció més forta).
+        const t = frameCount * 0.05;
+        // "t" és una variable que canvia amb el temps per animar els moviments, depenent del nombre de frames.
+        const centerX = 0;
+        const centerY = 0;
+        // Com que hem traslladat el sistema de coordenades al centre, (0,0) és el centre.
+        const baseSize = 200 * smoothIntensity;
+        // Defineix una mida base per al dibuix que depèn de la intensitat suau interpolada.
+        strokeWeight(map(smoothIntensity, 0, 1, 1, 4));
+        // Estableix el gruix de la línia variant entre 1 i 4 píxels en funció de la intensitat.
+        noFill();
+        // Per defecte, no omple les formes tret que s'indiqui.
+
+        // Utilitza un "switch" per determinar quina forma dibuixar segons l'expressió dominant.
+        switch (dominant) {
+
+          case 'happy':
+          stroke(0)
+  //SATURN
+  background(81, 209, 246);
+  strokeWeight(3);
+  beginShape();
+  noStroke();
+  fill(255, 255, 0);
+vertex(0, 134.1875);
+vertex(18, 147.1875);
+vertex(23, 125.1875);
+vertex(52, 131.1875);
+vertex(47, 113.1875);
+vertex(99, 112.1875);
+vertex(74, 96.1875);
+vertex(136, 90.1875);
+vertex(111, 74.1875);
+vertex(143, 58.1875);
+vertex(119, 43.1875);
+vertex(119, 43.1875);
+vertex(148, 28.1875);
+vertex(125, 14.1875);
+vertex(151, 0);
+vertex(0, 0);
+endShape();
+  beginShape();
+  fill(200, 175, 135);
   stroke(0)
+  strokeWeight(3);
+vertex(599, 968.1875);
+vertex(494, 1003.1875);
+vertex(430, 997.1875);
+vertex(413, 975.1875);
+vertex(422, 938.1875);
+vertex(434, 910.1875);
+vertex(460, 874.1875);
+vertex(477, 856.1875);
+vertex(485, 829.1875);
+vertex(484, 818.1875);
+vertex(478, 809.1875);
+vertex(461, 808.1875);
+vertex(437, 817.1875);
+vertex(402, 835.1875);
+vertex(344, 849.1875);
+vertex(278, 851.1875);
+vertex(241, 857.1875);
+vertex(247, 885.1875);
+vertex(265, 914.1875);
+vertex(249, 934.1875);
+vertex(193, 950.1875);
+vertex(153, 963.1875);
+vertex(116, 966.1875);
+vertex(98, 962.1875);
+vertex(104, 956.1875);
+vertex(118, 948.1875);
+vertex(121, 935.1875);
+vertex(99, 893.1875);
+vertex(77, 853.1875);
+vertex(65, 831.1875);
+vertex(56, 810.1875);
+vertex(56, 794.1875);
+vertex(61, 780.1875);
+vertex(75, 775.1875);
+vertex(108, 758.1875);
+vertex(133, 744.1875);
+vertex(170, 735.1875);
+vertex(196, 728.1875);
+vertex(217, 724.1875);
+vertex(261, 701.1875);
+vertex(299, 684.1875);
+vertex(316, 678.1875);
+vertex(347, 668.1875);
+vertex(357, 650.1875);
+vertex(356, 616.1875);
+vertex(319, 601.1875);
+vertex(290, 591.1875);
+vertex(271, 579.1875);
+vertex(191, 533.1875);
+vertex(167, 498.1875);
+vertex(171, 476.1875);
+vertex(198, 443.1875);
+vertex(209, 406.1875);
+vertex(213, 377.1875);
+vertex(213, 345.1875);
+vertex(208, 320.1875);
+vertex(187, 292.1875);
+vertex(178, 267.1875);
+vertex(175, 224.1875);
+vertex(176, 190.1875);
+vertex(184, 172.1875);
+vertex(199, 166.1875);
+vertex(214, 162.1875);
+vertex(233, 151.1875);
+vertex(251, 150.1875);
+vertex(272, 159.1875);
+vertex(285, 174.1875);
+vertex(290, 200.1875);
+vertex(293, 230.1875);
+vertex(289, 269.1875);
+vertex(286, 294.1875);
+vertex(298, 311.1875);
+vertex(320, 303.1875);
+vertex(345, 289.1875);
+vertex(375, 266.1875);
+vertex(409, 245.1875);
+vertex(452, 226.1875);
+vertex(494, 219.1875);
+vertex(527, 216.1875);
+vertex(556, 237.1875);
+vertex(590, 270.1875);
+vertex(599, 276.1875);
+endShape();
+
+  //Ull
+  beginShape();
+  fill(255);
+vertex(182, 216.1875);
+vertex(185, 206.1875);
+vertex(190, 202.1875);
+vertex(199, 199.1875);
+vertex(204, 206.1875);
+vertex(197, 217.1875);
+vertex(186, 222.1875);
+endShape();
+  
+  //Ull
+  beginShape();
+  fill(255);
+vertex(234, 193.1875);
+vertex(237, 187.1875);
+vertex(246, 179.1875);
+vertex(255, 182.1875);
+vertex(258, 190.1875);
+vertex(257, 198.1875);
+vertex(249, 199.1875);
+vertex(242, 199.1875);
+vertex(233, 199.1875);
+endShape();
+  
+  //Pupila
+  beginShape();
+  fill(0);
+vertex(196, 215.1875);
+vertex(191, 210.1875);
+vertex(191, 205.1875);
+vertex(194, 205.1875);
+vertex(199, 204.1875);
+vertex(202, 210.1875);
+vertex(200, 212.1875);
+vertex(195, 215.1875);
+endShape();
+  
+  //Pupila
+  beginShape();
+  fill(0);
+vertex(242, 194.1875);
+vertex(243, 191.1875);
+vertex(247, 191.1875);
+vertex(250, 191.1875);
+vertex(251, 194.1875);
+vertex(251, 197.1875);
+vertex(245, 196.1875);
+vertex(241, 196.1875);
+endShape();
+  
+//Cabell
+stroke(100)
+  beginShape();
+fill(100)
+  vertex(402, 370.1875);
+vertex(424, 389.1875);
+vertex(399, 334.1875);
+vertex(422, 350.1875);
+vertex(408, 311.1875);
+vertex(445, 344.1875);
+vertex(421, 296.1875);
+vertex(394, 272.1875);
+vertex(376, 242.1875);
+vertex(361, 235.1875);
+vertex(350, 214.1875);
+vertex(339, 189.1875);
+vertex(316, 162.1875);
+vertex(302, 145.1875);
+vertex(275, 136.1875);
+vertex(235, 132.1875);
+vertex(201, 135.1875);
+vertex(173, 148.1875);
+vertex(153, 160.1875);
+vertex(131, 180.1875);
+vertex(120, 197.1875);
+vertex(109, 233.1875);
+vertex(113, 274.1875);
+vertex(134, 285.1875);
+vertex(129, 300.1875);
+vertex(146, 293.1875);
+vertex(148, 313.1875);
+vertex(160, 307.1875);
+vertex(150, 340.1875);
+vertex(175, 331.1875);
+vertex(172, 363.1875);
+vertex(188, 352.1875);
+vertex(170, 396.1875);
+vertex(188, 385.1875);
+vertex(188, 414.1875);
+vertex(197, 412.1875);
+vertex(210, 421.1875);
+vertex(228, 414.1875);
+vertex(242, 421.1875);
+vertex(260, 396.1875);
+vertex(264, 403.1875);
+vertex(269, 373.1875);
+vertex(268, 357.1875);
+vertex(261, 336.1875);
+vertex(244, 318.1875);
+vertex(235, 306.1875);
+vertex(215, 306.1875);
+vertex(207, 298.1875);
+vertex(191, 261.1875);
+vertex(185, 242.1875);
+vertex(180, 205.1875);
+vertex(187, 176.1875);
+vertex(197, 166.1875);
+vertex(215, 163.1875);
+vertex(231, 159.1875);
+vertex(242, 154.1875);
+vertex(263, 161.1875);
+vertex(279, 173.1875);
+vertex(286, 197.1875);
+vertex(295, 223.1875);
+vertex(293, 253.1875);
+vertex(281, 277.1875);
+vertex(280, 288.1875);
+vertex(301, 314.1875);
+vertex(312, 323.1875);
+vertex(331, 323.1875);
+vertex(357, 342.1875);
+vertex(397, 369.1875);
+endShape();
+  
+  //Nas
+  beginShape();
+  noStroke()
+  fill(160, 135, 95);
+vertex(234, 227.1875);
+vertex(224, 229.1875);
+vertex(219, 230.1875);
+vertex(210, 236.1875);
+vertex(202, 232.1875);
+vertex(200, 219.1875);
+vertex(205, 211.1875);
+endShape();
+  
+  //Boca
+  beginShape();
+  fill(0);
+vertex(212, 270.1875 - (smoothIntensity * 10));
+vertex(223, 270.1875 - (smoothIntensity * 10));
+vertex(231, 268.1875 - (smoothIntensity * 10));
+vertex(243, 265.1875 - (smoothIntensity * 10));
+vertex(259, 261.1875 - (smoothIntensity * 10));
+vertex(252, 270.1875 + (smoothIntensity * 10));
+vertex(237, 272.1875 + (smoothIntensity * 10));
+vertex(220, 274.1875 + (smoothIntensity * 10));
+vertex(203, 269.1875 - (smoothIntensity * 10));
+endShape();
+  
+  //Fill
+  beginShape();
+  fill(240, 215, 175);
+vertex(342, 325.1875);
+vertex(344, 308.1875);
+vertex(347, 292.1875);
+vertex(364, 281.1875);
+vertex(383, 279.1875);
+vertex(394, 291.1875);
+vertex(393, 316.1875);
+vertex(377, 331.1875);
+vertex(366, 342.1875);
+vertex(376, 344.1875);
+vertex(392, 359.1875);
+vertex(405, 382.1875);
+vertex(399, 403.1875);
+vertex(401, 420.1875);
+vertex(407, 451.1875);
+vertex(413, 494.1875);
+vertex(407, 522.1875);
+vertex(398, 521.1875);
+vertex(395, 504.1875);
+vertex(389, 450.1875);
+vertex(388, 405.1875);
+vertex(383, 421.1875);
+vertex(378, 461.1875);
+vertex(378, 484.1875);
+vertex(384, 513.1875);
+vertex(388, 528.1875);
+vertex(393, 548.1875);
+vertex(394, 567.1875);
+vertex(385, 582.1875);
+vertex(383, 598.1875);
+vertex(383, 618.1875);
+vertex(380, 634.1875);
+vertex(379, 645.1875);
+vertex(379, 654.1875);
+vertex(378, 674.1875);
+vertex(379, 696.1875);
+vertex(380, 719.1875);
+vertex(375, 734.1875);
+vertex(371, 754.1875);
+vertex(366, 767.1875);
+vertex(359, 768.1875);
+vertex(351, 770.1875);
+vertex(353, 753.1875);
+vertex(353, 721.1875);
+vertex(351, 697.1875);
+vertex(351, 682.1875);
+vertex(353, 667.1875);
+vertex(354, 655.1875);
+vertex(348, 629.1875);
+vertex(347, 609.1875);
+vertex(347, 591.1875);
+vertex(344, 576.1875);
+vertex(342, 567.1875);
+vertex(335, 560.1875);
+vertex(333, 551.1875);
+vertex(333, 556.1875);
+vertex(333, 567.1875);
+vertex(332, 581.1875);
+vertex(333, 592.1875);
+vertex(333, 606.1875);
+vertex(339, 627.1875);
+vertex(340, 632.1875);
+vertex(342, 646.1875);
+vertex(346, 655.1875);
+vertex(346, 664.1875);
+vertex(346, 678.1875);
+vertex(345, 692.1875);
+vertex(349, 720.1875);
+vertex(349, 739.1875);
+vertex(349, 757.1875);
+vertex(344, 768.1875);
+vertex(337, 772.1875);
+vertex(332, 771.1875);
+vertex(331, 767.1875);
+vertex(328, 753.1875);
+vertex(329, 745.1875);
+vertex(327, 719.1875);
+vertex(322, 694.1875);
+vertex(319, 673.1875);
+vertex(324, 655.1875);
+vertex(315, 641.1875);
+vertex(307, 615.1875);
+vertex(308, 587.1875);
+vertex(301, 569.1875);
+vertex(289, 554.1875);
+vertex(288, 525.1875);
+vertex(288, 509.1875);
+vertex(295, 501.1875);
+vertex(302, 488.1875);
+vertex(295, 447.1875);
+vertex(287, 409.1875);
+vertex(282, 385.1875);
+vertex(279, 404.1875);
+vertex(279, 433.1875);
+vertex(273, 470.1875);
+vertex(264, 495.1875);
+vertex(252, 499.1875);
+vertex(256, 472.1875);
+vertex(257, 448.1875);
+vertex(262, 420.1875);
+vertex(265, 389.1875);
+vertex(272, 354.1875);
+vertex(278, 337.1875);
+vertex(288, 331.1875);
+vertex(308, 323.1875);
+vertex(322, 320.1875);
+endShape();
+ beginShape();
+  fill(0);
+vertex(358, 301.1875);
+vertex(372, 310.1875);
+vertex(379, 314.1875);
+vertex(372, 317.1875);
+vertex(358, 319.1875);
+vertex(354, 319.1875);
+vertex(353, 310.1875);
+vertex(353, 299.1875);
+endShape();
+  beginShape();
+  fill(255);
+vertex(364, 288.1875);
+vertex(368, 291.1875);
+vertex(374, 291.1875);
+vertex(378, 285.1875);
+vertex(373, 278.1875);
+vertex(363, 279.1875);
+vertex(359, 282.1875);
+   endShape();
+  beginShape();
+vertex(383, 298.1875);
+vertex(386, 301.1875);
+vertex(392, 301.1875);
+vertex(398, 294.1875);
+vertex(394, 288.1875);
+vertex(385, 288.1875);
+vertex(383, 291.1875);
+  endShape();
+  
+    //Braç esquerra saturn
+  beginShape();
+  stroke(3)
+  fill(200, 175, 135);
+vertex(236, 381.1875);
+vertex(179, 428.1875);
+vertex(158, 452.1875);
+vertex(121, 497.1875);
+vertex(84, 541.1875);
+vertex(80, 559.1875);
+vertex(86, 596.1875);
+vertex(96, 633.1875);
+vertex(129, 634.1875);
+vertex(175, 619.1875);
+vertex(225, 589.1875);
+vertex(268, 567.1875);
+vertex(282, 557.1875);
+vertex(280, 536.1875);
+vertex(287, 504.1875);
+vertex(304, 492.1875);
+vertex(311, 478.1875);
+vertex(309, 467.1875);
+vertex(295, 464.1875);
+vertex(309, 464.1875);
+vertex(310, 452.1875);
+vertex(292, 445.1875);
+vertex(309, 445.1875);
+vertex(313, 440.1875);
+vertex(307, 433.1875);
+vertex(293, 428.1875);
+vertex(310, 434.1875);
+vertex(313, 429.1875);
+vertex(315, 419.1875);
+vertex(310, 414.1875);
+vertex(294, 408.1875);
+vertex(287, 406.1875);
+vertex(282, 406.1875);
+vertex(275, 412.1875);
+vertex(266, 427.1875);
+vertex(265, 438.1875);
+vertex(265, 457.1875);
+vertex(265, 472.1875);
+vertex(249, 486.1875);
+vertex(222, 503.1875);
+vertex(198, 504.1875);
+vertex(182, 499.1875);
+vertex(186, 472.1875);
+endShape();
+  
+  //Braç dret saturn
+  beginShape();
+  stroke(3)
+  fill(200, 175, 135);
+vertex(595, 524.1875);
+vertex(519, 513.1875);
+vertex(454, 496.1875);
+vertex(401, 498.1875);
+vertex(355, 509.1875);
+vertex(336, 510.1875);
+vertex(330, 501.1875);
+vertex(339, 493.1875);
+vertex(353, 488.1875);
+vertex(326, 491.1875);
+vertex(327, 483.1875);
+vertex(328, 473.1875);
+vertex(342, 473.1875);
+vertex(322, 468.1875);
+vertex(315, 463.1875);
+vertex(314, 454.1875);
+vertex(325, 452.1875);
+vertex(342, 453.1875);
+vertex(327, 449.1875);
+vertex(317, 443.1875);
+vertex(316, 433.1875);
+vertex(322, 424.1875);
+vertex(338, 426.1875);
+vertex(356, 426.1875);
+vertex(368, 421.1875);
+vertex(384, 421.1875);
+vertex(399, 420.1875);
+vertex(388, 414.1875);
+vertex(388, 414.1875);
+vertex(390, 406.1875);
+vertex(414, 413.1875);
+vertex(416, 417.1875);
+vertex(439, 432.1875);
+vertex(451, 439.1875);
+vertex(459, 443.1875);
+vertex(496, 447.1875);
+vertex(529, 449.1875);
+vertex(567, 449.1875);
+vertex(578, 434.1875);
+vertex(571, 407.1875);
+vertex(558, 363.1875);
+endShape();
+            break;
+
+          case 'sad':
+          stroke(0)
+  //SATURN
+  background(60, 64, 100);
+  strokeWeight(3);
+  fill(200, 175, 135);
+  beginShape();
+vertex(599, 968.1875);
+vertex(494, 1003.1875);
+vertex(430, 997.1875);
+vertex(413, 975.1875);
+vertex(422, 938.1875);
+vertex(434, 910.1875);
+vertex(460, 874.1875);
+vertex(477, 856.1875);
+vertex(485, 829.1875);
+vertex(484, 818.1875);
+vertex(478, 809.1875);
+vertex(461, 808.1875);
+vertex(437, 817.1875);
+vertex(402, 835.1875);
+vertex(344, 849.1875);
+vertex(278, 851.1875);
+vertex(241, 857.1875);
+vertex(247, 885.1875);
+vertex(265, 914.1875);
+vertex(249, 934.1875);
+vertex(193, 950.1875);
+vertex(153, 963.1875);
+vertex(116, 966.1875);
+vertex(98, 962.1875);
+vertex(104, 956.1875);
+vertex(118, 948.1875);
+vertex(121, 935.1875);
+vertex(99, 893.1875);
+vertex(77, 853.1875);
+vertex(65, 831.1875);
+vertex(56, 810.1875);
+vertex(56, 794.1875);
+vertex(61, 780.1875);
+vertex(75, 775.1875);
+vertex(108, 758.1875);
+vertex(133, 744.1875);
+vertex(170, 735.1875);
+vertex(196, 728.1875);
+vertex(217, 724.1875);
+vertex(261, 701.1875);
+vertex(299, 684.1875);
+vertex(316, 678.1875);
+vertex(347, 668.1875);
+vertex(357, 650.1875);
+vertex(356, 616.1875);
+vertex(319, 601.1875);
+vertex(290, 591.1875);
+vertex(271, 579.1875);
+vertex(191, 533.1875);
+vertex(167, 498.1875);
+vertex(171, 476.1875);
+vertex(198, 443.1875);
+vertex(209, 406.1875);
+vertex(213, 377.1875);
+vertex(213, 345.1875);
+vertex(208, 320.1875);
+vertex(187, 292.1875);
+vertex(178, 267.1875);
+vertex(175, 224.1875);
+vertex(176, 190.1875);
+vertex(184, 172.1875);
+vertex(199, 166.1875);
+vertex(214, 162.1875);
+vertex(233, 151.1875);
+vertex(251, 150.1875);
+vertex(272, 159.1875);
+vertex(285, 174.1875);
+vertex(290, 200.1875);
+vertex(293, 230.1875);
+vertex(289, 269.1875);
+vertex(286, 294.1875);
+vertex(298, 311.1875);
+vertex(320, 303.1875);
+vertex(345, 289.1875);
+vertex(375, 266.1875);
+vertex(409, 245.1875);
+vertex(452, 226.1875);
+vertex(494, 219.1875);
+vertex(527, 216.1875);
+vertex(556, 237.1875);
+vertex(590, 270.1875);
+vertex(599, 276.1875);
+endShape();
+
+  //Ull
+  beginShape();
+  fill(255);
+vertex(182, 216.1875);
+vertex(185, 206.1875);
+vertex(190, 202.1875);
+vertex(199, 199.1875);
+vertex(204, 206.1875);
+vertex(197, 217.1875);
+vertex(186, 222.1875);
+endShape();
+  
+  //Ull
+  beginShape();
+  fill(255);
+vertex(234, 193.1875);
+vertex(237, 187.1875);
+vertex(246, 179.1875);
+vertex(255, 182.1875);
+vertex(258, 190.1875);
+vertex(257, 198.1875);
+vertex(249, 199.1875);
+vertex(242, 199.1875);
+vertex(233, 199.1875);
+endShape();
+  
+  //Pupila
+  beginShape();
+  fill(0);
+vertex(196, 215.1875);
+vertex(191, 210.1875);
+vertex(191, 205.1875);
+vertex(194, 205.1875);
+vertex(199, 204.1875);
+vertex(202, 210.1875);
+vertex(200, 212.1875);
+vertex(195, 215.1875);
+endShape();
+  
+  //Pupila
+  beginShape();
+  fill(0);
+vertex(242, 194.1875);
+vertex(243, 191.1875);
+vertex(247, 191.1875);
+vertex(250, 191.1875);
+vertex(251, 194.1875);
+vertex(251, 197.1875);
+vertex(245, 196.1875);
+vertex(241, 196.1875);
+endShape();
+  
+//Cabell
+stroke(100)
+  beginShape();
+fill(100)
+  vertex(402, 370.1875);
+vertex(424, 389.1875);
+vertex(399, 334.1875);
+vertex(422, 350.1875);
+vertex(408, 311.1875);
+vertex(445, 344.1875);
+vertex(421, 296.1875);
+vertex(394, 272.1875);
+vertex(376, 242.1875);
+vertex(361, 235.1875);
+vertex(350, 214.1875);
+vertex(339, 189.1875);
+vertex(316, 162.1875);
+vertex(302, 145.1875);
+vertex(275, 136.1875);
+vertex(235, 132.1875);
+vertex(201, 135.1875);
+vertex(173, 148.1875);
+vertex(153, 160.1875);
+vertex(131, 180.1875);
+vertex(120, 197.1875);
+vertex(109, 233.1875);
+vertex(113, 274.1875);
+vertex(134, 285.1875);
+vertex(129, 300.1875);
+vertex(146, 293.1875);
+vertex(148, 313.1875);
+vertex(160, 307.1875);
+vertex(150, 340.1875);
+vertex(175, 331.1875);
+vertex(172, 363.1875);
+vertex(188, 352.1875);
+vertex(170, 396.1875);
+vertex(188, 385.1875);
+vertex(188, 414.1875);
+vertex(197, 412.1875);
+vertex(210, 421.1875);
+vertex(228, 414.1875);
+vertex(242, 421.1875);
+vertex(260, 396.1875);
+vertex(264, 403.1875);
+vertex(269, 373.1875);
+vertex(268, 357.1875);
+vertex(261, 336.1875);
+vertex(244, 318.1875);
+vertex(235, 306.1875);
+vertex(215, 306.1875);
+vertex(207, 298.1875);
+vertex(191, 261.1875);
+vertex(185, 242.1875);
+vertex(180, 205.1875);
+vertex(187, 176.1875);
+vertex(197, 166.1875);
+vertex(215, 163.1875);
+vertex(231, 159.1875);
+vertex(242, 154.1875);
+vertex(263, 161.1875);
+vertex(279, 173.1875);
+vertex(286, 197.1875);
+vertex(295, 223.1875);
+vertex(293, 253.1875);
+vertex(281, 277.1875);
+vertex(280, 288.1875);
+vertex(301, 314.1875);
+vertex(312, 323.1875);
+vertex(331, 323.1875);
+vertex(357, 342.1875);
+vertex(397, 369.1875);
+endShape();
+  
+  //Nas
+  beginShape();
+  noStroke()
+  fill(160, 135, 95);
+vertex(234, 227.1875);
+vertex(224, 229.1875);
+vertex(219, 230.1875);
+vertex(210, 236.1875);
+vertex(202, 232.1875);
+vertex(200, 219.1875);
+vertex(205, 211.1875);
+endShape();
+  
+  //Boca
+  beginShape();
+  fill(0)
+vertex(201, 247.1875);
+vertex(216, 248.1875);
+vertex(226, 244.1875);
+vertex(242, 243.1875);
+vertex(254, 249.1875);
+vertex(260, 262.1875);
+vertex(263, 274.1875);
+vertex(253, 285.1875);
+vertex(235, 296.1875);
+vertex(224, 297.1875);
+vertex(215, 289.1875);
+vertex(207, 280.1875);
+vertex(203, 269.1875);
+vertex(199, 254.1875);
+vertex(199, 249.1875);
+endShape();
+  
+  //Fill
+  beginShape();
+  fill(240, 215, 175);
+vertex(247, 262.1875);
+vertex(229, 261.1875);
+vertex(224, 260.1875);
+vertex(220, 273.1875);
+vertex(229, 298.1875);
+vertex(244, 331.1875);
+vertex(269, 362.1875);
+vertex(272, 386.1875);
+vertex(280, 403.1875);
+vertex(285, 448.1875);
+vertex(289, 489.1875);
+vertex(287, 530.1875);
+vertex(284, 537.1875);
+vertex(284, 549.1875);
+vertex(292, 560.1875);
+vertex(295, 562.1875);
+vertex(297, 582.1875);
+vertex(301, 607.1875);
+vertex(303, 620.1875);
+vertex(309, 642.1875);
+vertex(313, 651.1875);
+vertex(315, 662.1875);
+vertex(317, 678.1875);
+vertex(317, 694.1875);
+vertex(317, 710.1875);
+vertex(324, 725.1875);
+vertex(326, 734.1875);
+vertex(326, 747.1875);
+vertex(324, 761.1875);
+vertex(330, 768.1875);
+vertex(342, 771.1875);
+vertex(346, 768.1875);
+vertex(347, 751.1875);
+vertex(348, 733.1875);
+vertex(348, 712.1875);
+vertex(344, 678.1875);
+vertex(340, 652.1875);
+vertex(335, 633.1875);
+vertex(333, 611.1875);
+vertex(330, 587.1875);
+vertex(330, 574.1875);
+vertex(333, 568.1875);
+vertex(334, 556.1875);
+vertex(334, 556.1875);
+vertex(337, 565.1875);
+vertex(343, 570.1875);
+vertex(347, 581.1875);
+vertex(347, 600.1875);
+vertex(343, 621.1875);
+vertex(342, 638.1875);
+vertex(345, 651.1875);
+vertex(348, 665.1875);
+vertex(348, 679.1875);
+vertex(346, 697.1875);
+vertex(346, 716.1875);
+vertex(346, 736.1875);
+vertex(348, 752.1875);
+vertex(352, 763.1875);
+vertex(359, 766.1875);
+vertex(366, 766.1875);
+vertex(371, 760.1875);
+vertex(372, 750.1875);
+vertex(375, 732.1875);
+vertex(378, 714.1875);
+vertex(382, 698.1875);
+vertex(381, 682.1875);
+vertex(374, 670.1875);
+vertex(371, 659.1875);
+vertex(371, 644.1875);
+vertex(374, 630.1875);
+vertex(379, 614.1875);
+vertex(379, 600.1875);
+vertex(382, 585.1875);
+vertex(382, 578.1875);
+vertex(386, 568.1875);
+vertex(389, 554.1875);
+vertex(389, 547.1875);
+vertex(389, 530.1875);
+vertex(386, 526.1875);
+vertex(382, 515.1875);
+vertex(378, 509.1875);
+vertex(379, 457.1875);
+vertex(385, 415.1875);
+vertex(395, 398.1875);
+vertex(399, 382.1875);
+vertex(401, 366.1875);
+vertex(396, 357.1875);
+vertex(388, 347.1875);
+vertex(380, 344.1875);
+vertex(373, 343.1875);
+vertex(368, 336.1875);
+vertex(353, 326.1875);
+vertex(342, 319.1875);
+vertex(334, 318.1875);
+vertex(323, 319.1875);
+vertex(315, 321.1875);
+vertex(301, 321.1875);
+vertex(293, 309.1875);
+vertex(282, 299.1875);
+vertex(268, 286.1875);
+vertex(258, 271.1875);
+endShape();
+  
+  //Llagrimes
+  beginShape();
+  fill(34, 189, 235);
+  beginShape();
+vertex(190, 226.1875);
+vertex(193, 251.1875);
+vertex(197, 268.1875);
+vertex(207, 291.1875);
+vertex(210, 281.1875);
+vertex(198, 242.1875);
+vertex(199, 229.1875);
+vertex(198, 220.1875);
+endShape();
+  beginShape();
+vertex(200, 1025.1875);
+vertex(193, 987.1875);
+vertex(284, 971.1875);
+vertex(304, 1001.1875);
+vertex(254, 1040.1875);
+vertex(206, 1036.1875);
+endShape();
+  beginShape();
+vertex(241, 203.1875);
+vertex(259, 217.1875);
+vertex(268, 224.1875);
+vertex(269, 241.1875);
+vertex(275, 266.1875);
+vertex(279, 275.1875);
+vertex(282, 257.1875);
+vertex(278, 235.1875);
+vertex(274, 215.1875);
+vertex(263, 207.1875);
+vertex(256, 200.1875);
+endShape();
+  beginShape();
+vertex(211, 323.1875);
+vertex(209, 333.1875);
+vertex(205, 350.1875);
+vertex(217, 360.1875);
+vertex(228, 353.1875);
+vertex(227, 337.1875);
+vertex(219, 322.1875);
+endShape();
+  beginShape();
+vertex(215, 382.1875);
+vertex(211, 394.1875);
+vertex(210, 405.1875);
+vertex(219, 407.1875);
+vertex(225, 399.1875);
+vertex(221, 383.1875);
+endShape();
+  beginShape();
+vertex(238, 305.1875);
+vertex(239, 285.1875);
+vertex(248, 275.1875);
+vertex(252, 295.1875);
+vertex(252, 319.1875);
+vertex(262, 334.1875);
+vertex(257, 344.1875);
+vertex(248, 332.1875);
+vertex(239, 317.1875);
+endShape();
+  beginShape();
+vertex(266, 286.1875);
+vertex(271, 313.1875);
+vertex(283, 333.1875);
+vertex(292, 350.1875);
+vertex(299, 340.1875);
+vertex(301, 330.1875);
+vertex(304, 323.1875);
+vertex(300, 317.1875);
+vertex(293, 311.1875);
+vertex(286, 305.1875);
+vertex(279, 297.1875);
+vertex(270, 290.1875);
+endShape();
+beginShape();
+vertex(201 - (smoothIntensity * 20), 343.1875 + (smoothIntensity * 50));
+vertex(196 - (smoothIntensity * 20), 354.1875 + (smoothIntensity * 50));
+vertex(196 - (smoothIntensity * 20), 361.1875 + (smoothIntensity * 50));
+vertex(196 - (smoothIntensity * 20), 369.1875 + (smoothIntensity * 50));
+vertex(204 - (smoothIntensity * 20), 374.1875 + (smoothIntensity * 50));
+vertex(208 + (smoothIntensity * 10), 376.1875 + (smoothIntensity * 50));
+vertex(211 + (smoothIntensity * 20), 375.1875 + (smoothIntensity * 50));
+vertex(215 + (smoothIntensity * 20), 371.1875 + (smoothIntensity * 50));
+vertex(215 + (smoothIntensity * 20), 359.1875 + (smoothIntensity * 50));
+vertex(215 + (smoothIntensity * 20), 350.1875 + (smoothIntensity * 50));
+vertex(213 + (smoothIntensity * 20), 344.1875 + (smoothIntensity * 50));
+vertex(209 + (smoothIntensity * 20), 339.1875 + (smoothIntensity * 50));
+vertex(206 + (smoothIntensity * 20), 334.1875 + (smoothIntensity * 50));
+vertex(202 - (smoothIntensity * 20), 340.1875 + (smoothIntensity * 50));
+endShape();
+  beginShape();
+  fill(139, 0, 0);
+vertex(377, 404.1875);
+vertex(381, 386.1875);
+vertex(385, 372.1875);
+vertex(381, 361.1875);
+vertex(375, 359.1875);
+vertex(367, 353.1875);
+vertex(358, 344.1875);
+vertex(351, 342.1875);
+vertex(345, 333.1875);
+vertex(331, 327.1875);
+vertex(325, 324.1875);
+vertex(331, 320.1875);
+vertex(347, 322.1875);
+vertex(359, 330.1875);
+vertex(368, 340.1875);
+vertex(379, 351.1875);
+vertex(389, 357.1875);
+vertex(392, 368.1875);
+vertex(390, 390.1875);
+vertex(382, 403.1875);
+endShape();
+  beginShape();
+vertex(345, 343.1875);
+vertex(319, 363.1875);
+vertex(303, 374.1875);
+vertex(303, 374.1875);
+vertex(295, 387.1875);
+vertex(295, 402.1875);
+vertex(311, 402.1875);
+vertex(324, 386.1875);
+vertex(337, 369.1875);
+vertex(353, 352.1875);
+vertex(366, 343.1875);
+vertex(354, 334.1875);
+endShape();  
+  
+    //Braç esquerra saturn
+  beginShape();
+  stroke(3)
+  fill(200, 175, 135);
+vertex(236, 381.1875);
+vertex(179, 428.1875);
+vertex(158, 452.1875);
+vertex(121, 497.1875);
+vertex(84, 541.1875);
+vertex(80, 559.1875);
+vertex(86, 596.1875);
+vertex(96, 633.1875);
+vertex(129, 634.1875);
+vertex(175, 619.1875);
+vertex(225, 589.1875);
+vertex(268, 567.1875);
+vertex(282, 557.1875);
+vertex(280, 536.1875);
+vertex(287, 504.1875);
+vertex(304, 492.1875);
+vertex(311, 478.1875);
+vertex(309, 467.1875);
+vertex(295, 464.1875);
+vertex(309, 464.1875);
+vertex(310, 452.1875);
+vertex(292, 445.1875);
+vertex(309, 445.1875);
+vertex(313, 440.1875);
+vertex(307, 433.1875);
+vertex(293, 428.1875);
+vertex(310, 434.1875);
+vertex(313, 429.1875);
+vertex(315, 419.1875);
+vertex(310, 414.1875);
+vertex(294, 408.1875);
+vertex(287, 406.1875);
+vertex(282, 406.1875);
+vertex(275, 412.1875);
+vertex(266, 427.1875);
+vertex(265, 438.1875);
+vertex(265, 457.1875);
+vertex(265, 472.1875);
+vertex(249, 486.1875);
+vertex(222, 503.1875);
+vertex(198, 504.1875);
+vertex(182, 499.1875);
+vertex(186, 472.1875);
+endShape();
+  
+  //Braç dret saturn
+  beginShape();
+  stroke(3)
+  fill(200, 175, 135);
+vertex(595, 524.1875);
+vertex(519, 513.1875);
+vertex(454, 496.1875);
+vertex(401, 498.1875);
+vertex(355, 509.1875);
+vertex(336, 510.1875);
+vertex(330, 501.1875);
+vertex(339, 493.1875);
+vertex(353, 488.1875);
+vertex(326, 491.1875);
+vertex(327, 483.1875);
+vertex(328, 473.1875);
+vertex(342, 473.1875);
+vertex(322, 468.1875);
+vertex(315, 463.1875);
+vertex(314, 454.1875);
+vertex(325, 452.1875);
+vertex(342, 453.1875);
+vertex(327, 449.1875);
+vertex(317, 443.1875);
+vertex(316, 433.1875);
+vertex(322, 424.1875);
+vertex(338, 426.1875);
+vertex(356, 426.1875);
+vertex(368, 421.1875);
+vertex(384, 421.1875);
+vertex(399, 420.1875);
+vertex(388, 414.1875);
+vertex(388, 414.1875);
+vertex(390, 406.1875);
+vertex(414, 413.1875);
+vertex(416, 417.1875);
+vertex(439, 432.1875);
+vertex(451, 439.1875);
+vertex(459, 443.1875);
+vertex(496, 447.1875);
+vertex(529, 449.1875);
+vertex(567, 449.1875);
+vertex(578, 434.1875);
+vertex(571, 407.1875);
+vertex(558, 363.1875);
+endShape();
+
+            break;
+
+          case 'angry':
+          stroke(0)
+  //SATURN
+  background(90, 64, 66);
+  strokeWeight(3);
+  fill(200, 175, 135);
+  beginShape();
+vertex(599, 968.1875);
+vertex(494, 1003.1875);
+vertex(430, 997.1875);
+vertex(413, 975.1875);
+vertex(422, 938.1875);
+vertex(434, 910.1875);
+vertex(460, 874.1875);
+vertex(477, 856.1875);
+vertex(485, 829.1875);
+vertex(484, 818.1875);
+vertex(478, 809.1875);
+vertex(461, 808.1875);
+vertex(437, 817.1875);
+vertex(402, 835.1875);
+vertex(344, 849.1875);
+vertex(278, 851.1875);
+vertex(241, 857.1875);
+vertex(247, 885.1875);
+vertex(265, 914.1875);
+vertex(249, 934.1875);
+vertex(193, 950.1875);
+vertex(153, 963.1875);
+vertex(116, 966.1875);
+vertex(98, 962.1875);
+vertex(104, 956.1875);
+vertex(118, 948.1875);
+vertex(121, 935.1875);
+vertex(99, 893.1875);
+vertex(77, 853.1875);
+vertex(65, 831.1875);
+vertex(56, 810.1875);
+vertex(56, 794.1875);
+vertex(61, 780.1875);
+vertex(75, 775.1875);
+vertex(108, 758.1875);
+vertex(133, 744.1875);
+vertex(170, 735.1875);
+vertex(196, 728.1875);
+vertex(217, 724.1875);
+vertex(261, 701.1875);
+vertex(299, 684.1875);
+vertex(316, 678.1875);
+vertex(347, 668.1875);
+vertex(357, 650.1875);
+vertex(356, 616.1875);
+vertex(319, 601.1875);
+vertex(290, 591.1875);
+vertex(271, 579.1875);
+vertex(191, 533.1875);
+vertex(167, 498.1875);
+vertex(171, 476.1875);
+vertex(198, 443.1875);
+vertex(209, 406.1875);
+vertex(213, 377.1875);
+vertex(213, 345.1875);
+vertex(208, 320.1875);
+vertex(187, 292.1875);
+vertex(178, 267.1875);
+vertex(175, 224.1875);
+vertex(176, 190.1875);
+vertex(184, 172.1875);
+vertex(199, 166.1875);
+vertex(214, 162.1875);
+vertex(233, 151.1875);
+vertex(251, 150.1875);
+vertex(272, 159.1875);
+vertex(285, 174.1875);
+vertex(290, 200.1875);
+vertex(293, 230.1875);
+vertex(289, 269.1875);
+vertex(286, 294.1875);
+vertex(298, 311.1875);
+vertex(320, 303.1875);
+vertex(345, 289.1875);
+vertex(375, 266.1875);
+vertex(409, 245.1875);
+vertex(452, 226.1875);
+vertex(494, 219.1875);
+vertex(527, 216.1875);
+vertex(556, 237.1875);
+vertex(590, 270.1875);
+vertex(599, 276.1875);
+endShape();
+
+  //Ull
+  beginShape();
+  fill(255);
+vertex(182, 216.1875);
+vertex(185, 206.1875);
+vertex(190, 202.1875);
+vertex(199, 199.1875);
+vertex(204, 206.1875);
+vertex(197, 217.1875);
+vertex(186, 222.1875);
+endShape();
+  
+  //Ull
+  beginShape();
+  fill(255);
+vertex(234, 193.1875);
+vertex(237, 187.1875);
+vertex(246, 179.1875);
+vertex(255, 182.1875);
+vertex(258, 190.1875);
+vertex(257, 198.1875);
+vertex(249, 199.1875);
+vertex(242, 199.1875);
+vertex(233, 199.1875);
+endShape();
+  
+  //Pupila
+  beginShape();
+  fill(0 + (smoothIntensity * 240), 0, 0);
+vertex(196, 215.1875);
+vertex(191, 210.1875);
+vertex(191, 205.1875);
+vertex(194, 205.1875);
+vertex(199, 204.1875);
+vertex(202, 210.1875);
+vertex(200, 212.1875);
+vertex(195, 215.1875);
+endShape();
+  
+  //Pupila
+  beginShape();
+  fill(0 + (smoothIntensity * 240), 0, 0);
+vertex(242, 194.1875);
+vertex(243, 191.1875);
+vertex(247, 191.1875);
+vertex(250, 191.1875);
+vertex(251, 194.1875);
+vertex(251, 197.1875);
+vertex(245, 196.1875);
+vertex(241, 196.1875);
+endShape();
+  
+//Cabell
+stroke(100)
+  beginShape();
+fill(100)
+  vertex(402, 370.1875);
+vertex(424, 389.1875);
+vertex(399, 334.1875);
+vertex(422, 350.1875);
+vertex(408, 311.1875);
+vertex(445, 344.1875);
+vertex(421, 296.1875);
+vertex(394, 272.1875);
+vertex(376, 242.1875);
+vertex(361, 235.1875);
+vertex(350, 214.1875);
+vertex(339, 189.1875);
+vertex(316, 162.1875);
+vertex(302, 145.1875);
+vertex(275, 136.1875);
+vertex(235, 132.1875);
+vertex(201, 135.1875);
+vertex(173, 148.1875);
+vertex(153, 160.1875);
+vertex(131, 180.1875);
+vertex(120, 197.1875);
+vertex(109, 233.1875);
+vertex(113, 274.1875);
+vertex(134, 285.1875);
+vertex(129, 300.1875);
+vertex(146, 293.1875);
+vertex(148, 313.1875);
+vertex(160, 307.1875);
+vertex(150, 340.1875);
+vertex(175, 331.1875);
+vertex(172, 363.1875);
+vertex(188, 352.1875);
+vertex(170, 396.1875);
+vertex(188, 385.1875);
+vertex(188, 414.1875);
+vertex(197, 412.1875);
+vertex(210, 421.1875);
+vertex(228, 414.1875);
+vertex(242, 421.1875);
+vertex(260, 396.1875);
+vertex(264, 403.1875);
+vertex(269, 373.1875);
+vertex(268, 357.1875);
+vertex(261, 336.1875);
+vertex(244, 318.1875);
+vertex(235, 306.1875);
+vertex(215, 306.1875);
+vertex(207, 298.1875);
+vertex(191, 261.1875);
+vertex(185, 242.1875);
+vertex(180, 205.1875);
+vertex(187, 176.1875);
+vertex(197, 166.1875);
+vertex(215, 163.1875);
+vertex(231, 159.1875);
+vertex(242, 154.1875);
+vertex(263, 161.1875);
+vertex(279, 173.1875);
+vertex(286, 197.1875);
+vertex(295, 223.1875);
+vertex(293, 253.1875);
+vertex(281, 277.1875);
+vertex(280, 288.1875);
+vertex(301, 314.1875);
+vertex(312, 323.1875);
+vertex(331, 323.1875);
+vertex(357, 342.1875);
+vertex(397, 369.1875);
+endShape();
+  
+  //Nas
+  beginShape();
+  noStroke()
+  fill(160, 135, 95);
+vertex(234, 227.1875);
+vertex(224, 229.1875);
+vertex(219, 230.1875);
+vertex(210, 236.1875);
+vertex(202, 232.1875);
+vertex(200, 219.1875);
+vertex(205, 211.1875);
+endShape();
+  
+  //Boca
+  beginShape();
+  fill(0)
+vertex(201, 247.1875);
+vertex(216, 248.1875);
+vertex(226, 244.1875);
+vertex(242, 243.1875);
+vertex(254, 249.1875);
+vertex(260, 262.1875);
+vertex(263, 274.1875);
+vertex(253, 285.1875);
+vertex(235, 296.1875);
+vertex(224, 297.1875);
+vertex(215, 289.1875);
+vertex(207, 280.1875);
+vertex(203, 269.1875);
+vertex(199, 254.1875);
+vertex(199, 249.1875);
+endShape();
+  
+  //Fill
+  beginShape();
+  fill(240, 215, 175);
+vertex(247, 262.1875);
+vertex(229, 261.1875);
+vertex(224, 260.1875);
+vertex(220, 273.1875);
+vertex(229, 298.1875);
+vertex(244, 331.1875);
+vertex(269, 362.1875);
+vertex(272, 386.1875);
+vertex(280, 403.1875);
+vertex(285, 448.1875);
+vertex(289, 489.1875);
+vertex(287, 530.1875);
+vertex(284, 537.1875);
+vertex(284, 549.1875);
+vertex(292, 560.1875);
+vertex(295, 562.1875);
+vertex(297, 582.1875);
+vertex(301, 607.1875);
+vertex(303, 620.1875);
+vertex(309, 642.1875);
+vertex(313, 651.1875);
+vertex(315, 662.1875);
+vertex(317, 678.1875);
+vertex(317, 694.1875);
+vertex(317, 710.1875);
+vertex(324, 725.1875);
+vertex(326, 734.1875);
+vertex(326, 747.1875);
+vertex(324, 761.1875);
+vertex(330, 768.1875);
+vertex(342, 771.1875);
+vertex(346, 768.1875);
+vertex(347, 751.1875);
+vertex(348, 733.1875);
+vertex(348, 712.1875);
+vertex(344, 678.1875);
+vertex(340, 652.1875);
+vertex(335, 633.1875);
+vertex(333, 611.1875);
+vertex(330, 587.1875);
+vertex(330, 574.1875);
+vertex(333, 568.1875);
+vertex(334, 556.1875);
+vertex(334, 556.1875);
+vertex(337, 565.1875);
+vertex(343, 570.1875);
+vertex(347, 581.1875);
+vertex(347, 600.1875);
+vertex(343, 621.1875);
+vertex(342, 638.1875);
+vertex(345, 651.1875);
+vertex(348, 665.1875);
+vertex(348, 679.1875);
+vertex(346, 697.1875);
+vertex(346, 716.1875);
+vertex(346, 736.1875);
+vertex(348, 752.1875);
+vertex(352, 763.1875);
+vertex(359, 766.1875);
+vertex(366, 766.1875);
+vertex(371, 760.1875);
+vertex(372, 750.1875);
+vertex(375, 732.1875);
+vertex(378, 714.1875);
+vertex(382, 698.1875);
+vertex(381, 682.1875);
+vertex(374, 670.1875);
+vertex(371, 659.1875);
+vertex(371, 644.1875);
+vertex(374, 630.1875);
+vertex(379, 614.1875);
+vertex(379, 600.1875);
+vertex(382, 585.1875);
+vertex(382, 578.1875);
+vertex(386, 568.1875);
+vertex(389, 554.1875);
+vertex(389, 547.1875);
+vertex(389, 530.1875);
+vertex(386, 526.1875);
+vertex(382, 515.1875);
+vertex(378, 509.1875);
+vertex(379, 457.1875);
+vertex(385, 415.1875);
+vertex(395, 398.1875);
+vertex(399, 382.1875);
+vertex(401, 366.1875);
+vertex(396, 357.1875);
+vertex(388, 347.1875);
+vertex(380, 344.1875);
+vertex(373, 343.1875);
+vertex(368, 336.1875);
+vertex(353, 326.1875);
+vertex(342, 319.1875);
+vertex(334, 318.1875);
+vertex(323, 319.1875);
+vertex(315, 321.1875);
+vertex(301, 321.1875);
+vertex(293, 309.1875);
+vertex(282, 299.1875);
+vertex(268, 286.1875);
+vertex(258, 271.1875);
+endShape();
+  
+  //Sang
+  beginShape();
+  fill(139, 0, 0);
+  beginShape();
+vertex(238, 305.1875);
+vertex(239, 285.1875);
+vertex(248, 275.1875);
+vertex(252, 295.1875);
+vertex(252, 319.1875);
+vertex(262, 334.1875);
+vertex(257, 344.1875);
+vertex(248, 332.1875);
+vertex(239, 317.1875);
+endShape();
+  beginShape();
+vertex(266, 286.1875);
+vertex(271, 313.1875);
+vertex(283, 333.1875);
+vertex(292, 350.1875);
+vertex(299, 340.1875);
+vertex(301, 330.1875);
+vertex(304, 323.1875);
+vertex(300, 317.1875);
+vertex(293, 311.1875);
+vertex(286, 305.1875);
+vertex(279, 297.1875);
+vertex(270, 290.1875);
+endShape();
+  beginShape();
+vertex(377, 404.1875);
+vertex(381, 386.1875);
+vertex(385, 372.1875);
+vertex(381, 361.1875);
+vertex(375, 359.1875);
+vertex(367, 353.1875);
+vertex(358, 344.1875);
+vertex(351, 342.1875);
+vertex(345, 333.1875);
+vertex(331, 327.1875);
+vertex(325, 324.1875);
+vertex(331, 320.1875);
+vertex(347, 322.1875);
+vertex(359, 330.1875);
+vertex(368, 340.1875);
+vertex(379, 351.1875);
+vertex(389, 357.1875);
+vertex(392, 368.1875);
+vertex(390, 390.1875);
+vertex(382, 403.1875);
+endShape();
+  
+  
+    //Braç esquerra saturn
+  beginShape();
+  stroke(3)
+  fill(200, 175, 135);
+vertex(236, 381.1875);
+vertex(179, 428.1875);
+vertex(158, 452.1875);
+vertex(121, 497.1875);
+vertex(84, 541.1875);
+vertex(80, 559.1875);
+vertex(86, 596.1875);
+vertex(96, 633.1875);
+vertex(129, 634.1875);
+vertex(175, 619.1875);
+vertex(225, 589.1875);
+vertex(268, 567.1875);
+vertex(282, 557.1875);
+vertex(280, 536.1875);
+vertex(287, 504.1875);
+vertex(304, 492.1875);
+vertex(311, 478.1875);
+vertex(309, 467.1875);
+vertex(295, 464.1875);
+vertex(309, 464.1875);
+vertex(310, 452.1875);
+vertex(292, 445.1875);
+vertex(309, 445.1875);
+vertex(313, 440.1875);
+vertex(307, 433.1875);
+vertex(293, 428.1875);
+vertex(310, 434.1875);
+vertex(313, 429.1875);
+vertex(315, 419.1875);
+vertex(310, 414.1875);
+vertex(294, 408.1875);
+vertex(287, 406.1875);
+vertex(282, 406.1875);
+vertex(275, 412.1875);
+vertex(266, 427.1875);
+vertex(265, 438.1875);
+vertex(265, 457.1875);
+vertex(265, 472.1875);
+vertex(249, 486.1875);
+vertex(222, 503.1875);
+vertex(198, 504.1875);
+vertex(182, 499.1875);
+vertex(186, 472.1875);
+endShape();
+  
+  //Braç dret saturn
+  beginShape();
+  stroke(3)
+  fill(200, 175, 135);
+vertex(595, 524.1875);
+vertex(519, 513.1875);
+vertex(454, 496.1875);
+vertex(401, 498.1875);
+vertex(355, 509.1875);
+vertex(336, 510.1875);
+vertex(330, 501.1875);
+vertex(339, 493.1875);
+vertex(353, 488.1875);
+vertex(326, 491.1875);
+vertex(327, 483.1875);
+vertex(328, 473.1875);
+vertex(342, 473.1875);
+vertex(322, 468.1875);
+vertex(315, 463.1875);
+vertex(314, 454.1875);
+vertex(325, 452.1875);
+vertex(342, 453.1875);
+vertex(327, 449.1875);
+vertex(317, 443.1875);
+vertex(316, 433.1875);
+vertex(322, 424.1875);
+vertex(338, 426.1875);
+vertex(356, 426.1875);
+vertex(368, 421.1875);
+vertex(384, 421.1875);
+vertex(399, 420.1875);
+vertex(388, 414.1875);
+vertex(388, 414.1875);
+vertex(390, 406.1875);
+vertex(414, 413.1875);
+vertex(416, 417.1875);
+vertex(439, 432.1875);
+vertex(451, 439.1875);
+vertex(459, 443.1875);
+vertex(496, 447.1875);
+vertex(529, 449.1875);
+vertex(567, 449.1875);
+vertex(578, 434.1875);
+vertex(571, 407.1875);
+vertex(558, 363.1875);
+endShape();
+            break;
+
+          case 'surprised':
+          stroke(0)
   //SATURN
   background(81, 209, 246);
   strokeWeight(3);
@@ -654,15 +2456,10 @@ vertex(578, 434.1875);
 vertex(571, 407.1875);
 vertex(558, 363.1875);
 endShape();
-          break;
+            break;
 
-        case 'sad':
-          function setup() {
-  createCanvas(600, 1099);
-}
-
-function draw() {
-  stroke(0)
+          case 'sad':
+          stroke(0)
   //SATURN
   background(60, 64, 100);
   strokeWeight(3);
@@ -894,205 +2691,115 @@ endShape();
   //Boca
   beginShape();
   fill(0)
-vertex(201, 247.1875);
-vertex(216, 248.1875);
-vertex(226, 244.1875);
-vertex(242, 243.1875);
-vertex(254, 249.1875);
-vertex(260, 262.1875);
-vertex(263, 274.1875);
-vertex(253, 285.1875);
-vertex(235, 296.1875);
-vertex(224, 297.1875);
-vertex(215, 289.1875);
-vertex(207, 280.1875);
-vertex(203, 269.1875);
-vertex(199, 254.1875);
-vertex(199, 249.1875);
+vertex(219 - (smoothIntensity * 10), 264.1875);
+vertex(222 - (smoothIntensity * 10), 258.1875 - (smoothIntensity * 10));
+vertex(229, 256.1875 - (smoothIntensity * 10));
+vertex(233 + (smoothIntensity * 10), 257.1875 - (smoothIntensity * 10));
+vertex(237 + (smoothIntensity * 10), 260.1875 - (smoothIntensity * 10));
+vertex(240 + (smoothIntensity * 10), 267.1875 + (smoothIntensity * 5));
+vertex(237 + (smoothIntensity * 5), 271.1875 + (smoothIntensity * 10));
+vertex(229, 274.1875 + (smoothIntensity * 10));
+vertex(220 - (smoothIntensity * 10), 271.1875 + (smoothIntensity * 5));
 endShape();
   
   //Fill
   beginShape();
-  fill(240, 215, 175);
-vertex(247, 262.1875);
-vertex(229, 261.1875);
-vertex(224, 260.1875);
-vertex(220, 273.1875);
-vertex(229, 298.1875);
-vertex(244, 331.1875);
-vertex(269, 362.1875);
-vertex(272, 386.1875);
-vertex(280, 403.1875);
-vertex(285, 448.1875);
-vertex(289, 489.1875);
-vertex(287, 530.1875);
-vertex(284, 537.1875);
-vertex(284, 549.1875);
-vertex(292, 560.1875);
-vertex(295, 562.1875);
-vertex(297, 582.1875);
-vertex(301, 607.1875);
-vertex(303, 620.1875);
-vertex(309, 642.1875);
-vertex(313, 651.1875);
-vertex(315, 662.1875);
-vertex(317, 678.1875);
-vertex(317, 694.1875);
-vertex(317, 710.1875);
-vertex(324, 725.1875);
-vertex(326, 734.1875);
-vertex(326, 747.1875);
-vertex(324, 761.1875);
-vertex(330, 768.1875);
-vertex(342, 771.1875);
-vertex(346, 768.1875);
-vertex(347, 751.1875);
-vertex(348, 733.1875);
-vertex(348, 712.1875);
-vertex(344, 678.1875);
-vertex(340, 652.1875);
-vertex(335, 633.1875);
-vertex(333, 611.1875);
-vertex(330, 587.1875);
-vertex(330, 574.1875);
-vertex(333, 568.1875);
-vertex(334, 556.1875);
-vertex(334, 556.1875);
-vertex(337, 565.1875);
-vertex(343, 570.1875);
-vertex(347, 581.1875);
-vertex(347, 600.1875);
-vertex(343, 621.1875);
-vertex(342, 638.1875);
-vertex(345, 651.1875);
-vertex(348, 665.1875);
-vertex(348, 679.1875);
-vertex(346, 697.1875);
-vertex(346, 716.1875);
-vertex(346, 736.1875);
-vertex(348, 752.1875);
-vertex(352, 763.1875);
-vertex(359, 766.1875);
-vertex(366, 766.1875);
-vertex(371, 760.1875);
-vertex(372, 750.1875);
-vertex(375, 732.1875);
-vertex(378, 714.1875);
-vertex(382, 698.1875);
-vertex(381, 682.1875);
-vertex(374, 670.1875);
-vertex(371, 659.1875);
-vertex(371, 644.1875);
-vertex(374, 630.1875);
-vertex(379, 614.1875);
-vertex(379, 600.1875);
-vertex(382, 585.1875);
-vertex(382, 578.1875);
-vertex(386, 568.1875);
-vertex(389, 554.1875);
-vertex(389, 547.1875);
-vertex(389, 530.1875);
-vertex(386, 526.1875);
-vertex(382, 515.1875);
-vertex(378, 509.1875);
-vertex(379, 457.1875);
-vertex(385, 415.1875);
-vertex(395, 398.1875);
-vertex(399, 382.1875);
-vertex(401, 366.1875);
-vertex(396, 357.1875);
-vertex(388, 347.1875);
-vertex(380, 344.1875);
-vertex(373, 343.1875);
-vertex(368, 336.1875);
-vertex(353, 326.1875);
-vertex(342, 319.1875);
-vertex(334, 318.1875);
-vertex(323, 319.1875);
-vertex(315, 321.1875);
-vertex(301, 321.1875);
-vertex(293, 309.1875);
-vertex(282, 299.1875);
-vertex(268, 286.1875);
-vertex(258, 271.1875);
+vertex(307, 324.1875);
+vertex(331, 324.1875);
+vertex(352, 328.1875);
+vertex(379, 346.1875);
+vertex(393, 355.1875);
+vertex(398, 369.1875);
+vertex(397, 381.1875);
+vertex(392, 401.1875);
+vertex(382, 421.1875);
+vertex(379, 444.1875);
+vertex(378, 481.1875);
+vertex(377, 521.1875);
+vertex(384, 536.1875);
+vertex(391, 559.1875);
+vertex(391, 569.1875);
+vertex(387, 578.1875);
+vertex(383, 586.1875);
+vertex(379, 602.1875);
+vertex(379, 617.1875);
+vertex(379, 636.1875);
+vertex(378, 650.1875);
+vertex(378, 664.1875);
+vertex(378, 675.1875);
+vertex(378, 689.1875);
+vertex(381, 706.1875);
+vertex(379, 721.1875);
+vertex(376, 733.1875);
+vertex(374, 750.1875);
+vertex(374, 760.1875);
+vertex(362, 766.1875);
+vertex(352, 766.1875);
+vertex(352, 756.1875);
+vertex(352, 744.1875);
+vertex(352, 724.1875);
+vertex(350, 707.1875);
+vertex(350, 686.1875);
+vertex(349, 669.1875);
+vertex(351, 649.1875);
+vertex(351, 637.1875);
+vertex(350, 628.1875);
+vertex(347, 612.1875);
+vertex(345, 594.1875);
+vertex(346, 582.1875);
+vertex(341, 572.1875);
+vertex(337, 562.1875);
+vertex(337, 574.1875);
+vertex(333, 583.1875);
+vertex(336, 594.1875);
+vertex(339, 611.1875);
+vertex(341, 625.1875);
+vertex(341, 637.1875);
+vertex(344, 652.1875);
+vertex(344, 667.1875);
+vertex(346, 678.1875);
+vertex(347, 691.1875);
+vertex(347, 708.1875);
+vertex(347, 721.1875);
+vertex(347, 739.1875);
+vertex(347, 757.1875);
+vertex(341, 762.1875);
+vertex(331, 761.1875);
+vertex(332, 747.1875);
+vertex(331, 726.1875);
+vertex(323, 716.1875);
+vertex(317, 703.1875);
+vertex(317, 676.1875);
+vertex(317, 665.1875);
+vertex(316, 656.1875);
+vertex(307, 612.1875);
+vertex(304, 589.1875);
+vertex(303, 571.1875);
+vertex(294, 561.1875);
+vertex(291, 542.1875);
+vertex(284, 503.1875);
+vertex(285, 491.1875);
+vertex(285, 470.1875);
+vertex(285, 455.1875);
+vertex(285, 444.1875);
+vertex(282, 419.1875);
+vertex(283, 386.1875);
+vertex(282, 403.1875);
+vertex(282, 425.1875);
+vertex(281, 433.1875);
+vertex(279, 458.1875);
+vertex(271, 477.1875);
+vertex(258, 477.1875);
+vertex(255, 456.1875);
+vertex(254, 442.1875);
+vertex(254, 425.1875);
+vertex(256, 403.1875);
+vertex(258, 382.1875);
+vertex(265, 347.1875);
+vertex(278, 333.1875);
 endShape();
   
-  //Llagrimes
-  beginShape();
-  fill(34, 189, 235);
-  beginShape();
-vertex(190, 226.1875);
-vertex(193, 251.1875);
-vertex(197, 268.1875);
-vertex(207, 291.1875);
-vertex(210, 281.1875);
-vertex(198, 242.1875);
-vertex(199, 229.1875);
-vertex(198, 220.1875);
-endShape();
-  beginShape();
-vertex(200, 1025.1875);
-vertex(193, 987.1875);
-vertex(284, 971.1875);
-vertex(304, 1001.1875);
-vertex(254, 1040.1875);
-vertex(206, 1036.1875);
-endShape();
-  beginShape();
-vertex(241, 203.1875);
-vertex(259, 217.1875);
-vertex(268, 224.1875);
-vertex(269, 241.1875);
-vertex(275, 266.1875);
-vertex(279, 275.1875);
-vertex(282, 257.1875);
-vertex(278, 235.1875);
-vertex(274, 215.1875);
-vertex(263, 207.1875);
-vertex(256, 200.1875);
-endShape();
-  beginShape();
-vertex(211, 323.1875);
-vertex(209, 333.1875);
-vertex(205, 350.1875);
-vertex(217, 360.1875);
-vertex(228, 353.1875);
-vertex(227, 337.1875);
-vertex(219, 322.1875);
-endShape();
-  beginShape();
-vertex(215, 382.1875);
-vertex(211, 394.1875);
-vertex(210, 405.1875);
-vertex(219, 407.1875);
-vertex(225, 399.1875);
-vertex(221, 383.1875);
-endShape();
-  beginShape();
-vertex(238, 305.1875);
-vertex(239, 285.1875);
-vertex(248, 275.1875);
-vertex(252, 295.1875);
-vertex(252, 319.1875);
-vertex(262, 334.1875);
-vertex(257, 344.1875);
-vertex(248, 332.1875);
-vertex(239, 317.1875);
-endShape();
-  beginShape();
-vertex(266, 286.1875);
-vertex(271, 313.1875);
-vertex(283, 333.1875);
-vertex(292, 350.1875);
-vertex(299, 340.1875);
-vertex(301, 330.1875);
-vertex(304, 323.1875);
-vertex(300, 317.1875);
-vertex(293, 311.1875);
-vertex(286, 305.1875);
-vertex(279, 297.1875);
-vertex(270, 290.1875);
-endShape();
+  //Sang
   beginShape();
   fill(139, 0, 0);
 vertex(377, 404.1875);
@@ -1115,21 +2822,7 @@ vertex(389, 357.1875);
 vertex(392, 368.1875);
 vertex(390, 390.1875);
 vertex(382, 403.1875);
-endShape();
-  beginShape();
-vertex(345, 343.1875);
-vertex(319, 363.1875);
-vertex(303, 374.1875);
-vertex(303, 374.1875);
-vertex(295, 387.1875);
-vertex(295, 402.1875);
-vertex(311, 402.1875);
-vertex(324, 386.1875);
-vertex(337, 369.1875);
-vertex(353, 352.1875);
-vertex(366, 343.1875);
-vertex(354, 334.1875);
-endShape();  
+endShape(); 
   
     //Braç esquerra saturn
   beginShape();
@@ -1226,18 +2919,12 @@ vertex(578, 434.1875);
 vertex(571, 407.1875);
 vertex(558, 363.1875);
 endShape();
-}
-          break;
+            break;
 
-        case 'angry':
-          function setup() {
-  createCanvas(600, 1099);
-}
-
-function draw() {
-  stroke(0)
+          case 'disgusted':
+          stroke(0)
   //SATURN
-  background(90, 64, 66);
+  background(65, 127, 76);
   strokeWeight(3);
   fill(200, 175, 135);
   beginShape();
@@ -1484,6 +3171,40 @@ vertex(199, 254.1875);
 vertex(199, 249.1875);
 endShape();
   
+//Vomito
+beginShape();
+fill(2, 214, 23);
+vertex(212, 289.1875);
+vertex(214, 300.1875);
+vertex(220, 294.1875);
+vertex(220, 307.1875);
+vertex(222, 300.1875);
+vertex(227, 308.1875);
+vertex(227, 298.1875);
+vertex(234, 316.1875);
+vertex(235, 309.1875);
+vertex(235, 297.1875);
+vertex(209, 287.1875);
+endShape();
+beginShape();
+vertex(207, 308.1875);
+vertex(207, 327.1875);
+vertex(207, 347.1875 + (smoothIntensity * 10));
+vertex(214, 357.1875 + (smoothIntensity * 10));
+vertex(226, 363.1875 + (smoothIntensity * 10));
+vertex(232, 363.1875 + (smoothIntensity * 10));
+vertex(235, 353.1875 + (smoothIntensity * 10));
+vertex(240, 360.1875 + (smoothIntensity * 10));
+vertex(242, 373.1875 + (smoothIntensity * 10));
+vertex(246, 366.1875 + (smoothIntensity * 10));
+vertex(246, 351.1875 + (smoothIntensity * 10));
+vertex(250, 315.1875);
+vertex(250, 303.1875);
+vertex(234, 308.1875);
+vertex(220, 302.1875);
+vertex(211, 302.1875);
+endShape();
+
   //Fill
   beginShape();
   fill(240, 215, 175);
@@ -1592,7 +3313,7 @@ endShape();
   
   //Sang
   beginShape();
-  fill(139, 0, 0);
+  fill(2, 214, 23);
   beginShape();
 vertex(238, 305.1875);
 vertex(239, 285.1875);
@@ -1605,6 +3326,7 @@ vertex(248, 332.1875);
 vertex(239, 317.1875);
 endShape();
   beginShape();
+  fill(139, 0, 0);
 vertex(266, 286.1875);
 vertex(271, 313.1875);
 vertex(283, 333.1875);
@@ -1737,52 +3459,10 @@ vertex(578, 434.1875);
 vertex(571, 407.1875);
 vertex(558, 363.1875);
 endShape();
-}
-          break;
+            break;
 
-        case 'fearful':
-          stroke(0,0,0,150); // gris
-          beginShape();
-          for (let x = 0; x <= VIRTUAL_W; x += 10) {
-            let y = VIRTUAL_H/2 + 50 * sin((x - VIRTUAL_W/2) * 0.05) * intensity;
-            vertex(x, y);
-          }
-          endShape();
-          break;
-
-        case 'surprised':
-          stroke(0,0,0,150); // blau clar
-          beginShape();
-          for (let i = 0; i < 20; i++) {
-            let angle = random(TWO_PI);
-            let r = 50 + 100 * intensity;
-            let x = VIRTUAL_W/2 + r * cos(angle);
-            let y = VIRTUAL_H/2 + r * sin(angle);
-            vertex(x, y);
-          }
-          endShape(CLOSE);
-          break;
-
-        case 'disgusted':
-          stroke(0,0,0,150); // verd
-          beginShape();
-          for (let i = 0; i < 12; i++) {
-            let angle = map(i, 0, 12, 0, TWO_PI);
-            let r = 75 + random(-50, 50) * intensity;
-            let x = VIRTUAL_W/2 + r * cos(angle);
-            let y = VIRTUAL_H/2 + r * sin(angle);
-            vertex(x, y);
-          }
-          endShape(CLOSE);
-          break;
-
-        default:
-          function setup() {
-  createCanvas(600, 1099);
-}
-
-function draw() {
-  stroke(0)
+          default:
+          stroke(0)
   //SATURN
   background(205, 205, 205);
   strokeWeight(3);
@@ -1906,7 +3586,7 @@ endShape();
   
   //Pupila
   beginShape();
-  fill(0);
+  fill(0 + (smoothIntensity * 255), 0 + (smoothIntensity * 200), 0 + (smoothIntensity * 155));
 vertex(196, 215.1875);
 vertex(191, 210.1875);
 vertex(191, 205.1875);
@@ -1919,7 +3599,7 @@ endShape();
   
   //Pupila
   beginShape();
-  fill(0);
+  fill(0 + (smoothIntensity * 255), 0 + (smoothIntensity * 200), 0 + (smoothIntensity * 155));
 vertex(242, 194.1875);
 vertex(243, 191.1875);
 vertex(247, 191.1875);
@@ -2263,8 +3943,68 @@ vertex(578, 434.1875);
 vertex(571, 407.1875);
 vertex(558, 363.1875);
 endShape();
-}}
+}
       }
-  </script>
-</body>
+
+      //--------------------------------------------------
+      // FUNCIÓ drawHUD
+      //--------------------------------------------------
+      function drawHUD() {
+        // Aquesta funció dibuixa el Heads-Up Display que mostra un emoticon i el percentatge d'intensitat.
+        const traduccions = {
+          happy: "😃 Feliç",
+          sad: "😢 Trist",
+          angry: "😡 Enfadat",
+          surprised: "😲 Sorprès",
+          disgusted: "🤢 Fastiguejat",
+          neutral: "😐 Neutral",
+          fearful: "😨 Espantat"
+        };
+        // Objecte que relaciona cada emoció amb un emoticon i text descriptiu en català.
+        const emoticon = traduccions[currentExpression.dominant] || "😐 Neutral";
+        // Selecciona l'emoticon corresponent a l'expressió dominant; per defecte, "Neutral" si no hi ha coincidència.
+        noStroke();
+        // No s'aplica contorn al text.
+        fill(50, 150, 255);
+        // Defineix el color del text com un blau intens (RGB: 50, 150, 255).
+        textSize(map(width, 300, 1200, 16, 24));
+        // La mida del text s'ajusta en funció de l'amplada de la finestra, variant entre 16 i 24 píxels.
+        textAlign(CENTER, TOP);
+        // Centra el text horitzontalment i l'alinea a la part superior del canvas.
+        text(`${emoticon} (${floor(smoothIntensity * 100)}%)`, width / 2, 20);
+        // Dibuixa el text al centre superior amb l'emoticon i el percentatge d'intensitat, calculat com smoothIntensity * 100 arrodonit cap avall.
+      }
+
+      //--------------------------------------------------
+      // FUNCIÓ drawVideoPreview
+      //--------------------------------------------------
+      function drawVideoPreview() {
+        // Aquesta funció dibuixa una petita previsualització del vídeo de la càmera a la cantonada inferior dreta.
+        const previewSize = min(width, height) * 0.15;
+        // Calcula la mida de la previsualització com el 15% de la mida mínima (entre amplada i alçada) de la finestra.
+        image(
+          video,
+          width - previewSize - 10,  /* Coordenada X: col·loca la imatge a la dreta, deixant un marge de 10 píxels */
+          height - previewSize - 10, /* Coordenada Y: col·loca la imatge a la part inferior amb un marge de 10 píxels */
+          previewSize,               /* Amplada de la previsualització */
+          previewSize                /* Alçada de la previsualització */
+        );
+      }
+
+      //--------------------------------------------------
+      // GESTIÓ D'ERRORS AMB LA CÀMERA
+      //--------------------------------------------------
+      // Demana accés a la càmera del dispositiu.
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .catch(err => {
+          // Si hi ha error (per exemple, si l'usuari denega l'accés), actualitza la pantalla de càrrega per mostrar un missatge d'error.
+          document.getElementById('loading-screen').innerHTML = `
+            <p style="color: red; text-align: center">
+              Error de càmera!<br>
+              Permet l'accés a la càmera i actualitza.
+            </p>
+          `;
+        });
+    </script>
+  </body>
 </html>
