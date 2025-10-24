@@ -1,166 +1,207 @@
-   
-        /* Global styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
+/* Global styles */
+body {
+    /* Usamos una pila de fuentes moderna y un fondo más limpio */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f8f9fa; /* Un gris casi blanco */
+    color: #212529; /* Texto principal más oscuro */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
 
-        h2 {
-            text-align: center;
-            margin: 20px 0;
-            color: #2c3e50;
-        }
+h2 {
+    text-align: center;
+    margin: 20px 0;
+    color: #004a99; /* Un azul oscuro para el título */
+    font-weight: 700;
+}
 
-        /* Container */
-        #quiz-container {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
+/* Container */
+#quiz-container {
+    max-width: 800px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    /* Una sombra más suave y moderna */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
 
-        /* Labels and select boxes */
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-            margin-top: 20px;
-            color: #34495e;
-        }
+/* Labels and select boxes */
+label {
+    font-weight: 600; /* Ligeramente menos pesado que 'bold' */
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    color: #34495e; /* Mantenemos este azul-gris oscuro */
+}
 
-        select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #ecf0f1;
-            font-size: 16px;
-        }
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da; /* Borde gris claro */
+    border-radius: 6px;
+    background-color: #fff; /* Fondo blanco limpio */
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-        /* Question and answer styling */
-        p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
+/* Añadimos un efecto 'focus' moderno */
+select:focus {
+    border-color: #3a86ff; /* Azul primario al seleccionar */
+    box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.25); /* Resplandor azul */
+    outline: none;
+}
 
-        strong {
-            color: #2c3e50;
-        }
+/* Question and answer styling */
+p {
+    margin: 10px 0;
+    font-size: 17px; /* Un poco más grande para legibilidad */
+}
 
-        ul {
-            padding: 0;
-            list-style: none;
-        }
+strong {
+    color: #2c3e50;
+}
 
-        li {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-        }
+ul {
+    padding: 0;
+    list-style: none;
+    margin-top: 15px;
+}
 
-        .option-letter {
-            font-weight: bold;
-            margin-right: 10px;
-        }
+li {
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+}
 
-        li button {
-            flex-grow: 1;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
+/* Estilo mejorado para la letra de la opción (A, B, C...) */
+.option-letter {
+    font-weight: bold;
+    margin-right: 12px;
+    background-color: #eaf6ff; /* Fondo azul muy claro */
+    color: #004a99; /* Letra en azul oscuro */
+    border-radius: 50%; /* Círculo */
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Para que no se encoja */
+}
 
-        li button:hover {
-            background-color: #2980b9;
-        }
+/* Botones de opción con nuevo estilo (outline) */
+li button {
+    flex-grow: 1;
+    background-color: #fff; /* Fondo blanco */
+    color: #3a86ff; /* Texto azul */
+    border: 2px solid #3a86ff; /* Borde azul */
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-align: left; /* Alineamos texto a la izquierda */
+}
 
-        .correcta {
-            background-color: transparent;
-            padding: 10px;
-            border-radius: 4px;
-            color: green;
-        }
+li button:hover {
+    background-color: #3a86ff; /* Se rellena de azul al pasar el ratón */
+    color: #fff; /* Texto blanco */
+}
 
-        .incorrecta {
-            background-color: transparent;
-            padding: 10px;
-            border-radius: 4px;
-            color: red;
-        }
+/* Estilos de feedback (Correcto/Incorrecto) como alertas */
+.correcta, .incorrecta {
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-weight: bold;
+    border: 1px solid;
+}
 
-        .solution-button {
-            width: 100%;
-            background-color: #e67e22;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-        }
+.correcta {
+    background-color: #e8f5e9; /* Fondo verde claro */
+    color: #2e7d32; /* Texto verde oscuro */
+    border-color: #a5d6a7;
+}
 
-        .solution-button:hover {
-            background-color: #d35400;
-        }
+.incorrecta {
+    background-color: #ffebee; /* Fondo rojo claro */
+    color: #c62828; /* Texto rojo oscuro */
+    border-color: #ef9a9a;
+}
 
-        .ocult {
-            display: none;
-        }
+/* Botón de solución con un naranja más vivo */
+.solution-button {
+    width: 100%;
+    background-color: #fd7e14; /* Naranja vibrante */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
 
-        .visible {
-            display: block;
-        }
+.solution-button:hover {
+    background-color: #e37012; /* Naranja más oscuro */
+}
 
-        /* Responsive design */
-        @media (max-width: 768px) {
-            #quiz-container {
-                padding: 15px;
-            }
+.ocult {
+    display: none;
+}
 
-            li button,
-            .solution-button {
-                font-size: 14px;
-                padding: 8px;
-            }
+.visible {
+    display: block;
+}
 
-            select {
-                font-size: 14px;
-                padding: 8px;
-            }
-        }
+/* Responsive design (mantenemos tus reglas, ajustando padding) */
+@media (max-width: 768px) {
+    #quiz-container {
+        padding: 20px;
+        margin: 20px 15px;
+    }
 
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 24px;
-            }
+    li button,
+    .solution-button {
+        font-size: 14px;
+        padding: 10px;
+    }
 
-            li button,
-            .solution-button {
-                font-size: 12px;
-                padding: 6px;
-            }
+    select {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
 
-            select {
-                font-size: 12px;
-                padding: 6px;
-            }
-
-            #quiz-container {
-                padding: 10px;
-            }
-        }
+@media (max-width: 480px) {
+    h2 {
+        font-size: 24px;
+    }
     
+    #quiz-container {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .option-letter {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    li button,
+    .solution-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    select {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
