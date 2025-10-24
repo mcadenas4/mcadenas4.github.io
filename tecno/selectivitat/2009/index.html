@@ -6,30 +6,53 @@
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
     <script src="questions.js" defer></script>
     <link rel="stylesheet" href="styles.css">
-    <!--style>
-        .ocult { display: none; }
-        .visible { display: block; }
-        .correcta { color: green; }
-        .incorrecta { color: red; }
-        .solution-button { margin-top: 10px; }
-    </style-->
+    
+    <style>
+        #filter-controls {
+            /* Copiem els estils del teu quiz-container (del styles.css blau) */
+            /* Això afegeix els marges laterals automàticament */
+            max-width: 800px;
+            margin: 30px auto 0 auto; /* 30px superior, centrat, 0px inferior */
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Ajust per reduir l'espai entre la nova caixa de filtres i el quiz */
+        /* Això sobreescriu el 'margin-top: 30px' del teu styles.css */
+        #quiz-container {
+            margin-top: 20px; 
+        }
+
+        /* Les teves regles comentades (les deixem com estaven) */
+        /*
+         .ocult { display: none; }
+         .visible { display: block; }
+         .correcta { color: green; }
+         .incorrecta { color: red; }
+         .solution-button { margin-top: 10px; }
+        */
+    </style>
 </head>
 <body>
     <h2>Problemes de Tecnologia i Enginyeria: Test</h2>
 
-    <label for="type-select">Tipus de preguntes:</label>
-    <select id="type-select" onchange="renderQuiz()">
-        <option value="totes">Totes</option>
-        <option value="questions">Qüestions</option>
-        <option value="exercicis">Exercicis</option>
-    </select>
-
-    <label for="category-select">Tria una categoria:</label>
-    <select id="category-select" onchange="renderQuiz()">
-        <option value="tot">Tot</option>
-        <option value="energia">Energia</option>
-        <option value="materials">Materials</option>
-    </select>
+    <div id="filter-controls">
+        <label for="type-select">Tipus de preguntes:</label>
+        <select id="type-select" onchange="renderQuiz()">
+            <option value="totes">Totes</option>
+            <option value="questions">Qüestions</option>
+            <option value="exercicis">Exercicis</option>
+        </select>
+    
+        <label for="category-select">Tria una categoria:</label>
+        <select id="category-select" onchange="renderQuiz()">
+            <option value="tot">Tot</option>
+            <option value="energia">Energia</option>
+            <option value="materials">Materials</option>
+        </select>
+    </div>
 
     <div id="quiz-container"></div>
 
@@ -39,6 +62,8 @@
         });
 
         function renderQuiz() {
+            // (El teu script JavaScript continua igual...)
+// ... (la resta del teu script) ...
             const quizContainer = document.getElementById("quiz-container");
             const selectedCategory = document.getElementById("category-select").value;
             const selectedType = document.getElementById("type-select").value;
