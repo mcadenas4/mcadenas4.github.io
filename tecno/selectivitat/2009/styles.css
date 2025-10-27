@@ -156,7 +156,18 @@ body.dark-mode {
     100% { background-position: 0% 50%; }
 }
 
-body.dark-mode h2 { color: #f0f0ff; }
+body.dark-mode h2 {
+    text-align: center;
+    margin: 40px 20px; /* Más margen vertical para que respire */
+    font-size: 2.5rem; /* Título un poco MÁS GRANDE */
+    font-weight: 700; /* Mantenemos el grosor */
+    
+    /* TÍTULO: Efecto de texto con degradado */
+    background: linear-gradient(90deg, #3a86ff, #6d28d9); /* De azul (botones) a morado */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* Muestra el degradado a través del texto */
+}
 body.dark-mode #quiz-container { 
     background: #1f1f3a; 
     color: #e0e0ff; 
