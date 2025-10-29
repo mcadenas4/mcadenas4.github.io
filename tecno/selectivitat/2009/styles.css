@@ -157,7 +157,7 @@ body.dark-mode {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
-
+body.dark-mode strong { color: #f0f0ff; }
 body.dark-mode h2 { color: #f0f0ff; }
 body.dark-mode #quiz-container { 
     background: #1f1f3a; 
