@@ -17,7 +17,7 @@
             background: linear-gradient(120deg, #4a90e2, #c299e8); 
             
             /* --- MARGEN: Espacio alrededor del cuerpo de la página --- */
-            margin: 20px; 
+            margin: 0; /* Eliminado el margin de 20px */
             padding: 0;
             
             /* Color del texto del cuerpo (para el párrafo) */
@@ -27,22 +27,30 @@
             font-size: 1.1em; 
             line-height: 1.7;
             
-            /* --- CAMBIO CLAVE: Se elimina el centrado vertical para que el contenido fluya desde arriba --- */
-            /* Se ha quitado 'display: flex', 'justify-content', 'align-items' */
+            /* --- NUEVO: Centrado total del contenido en la pantalla (vertical y horizontal) --- */
+            /* Ocupar el 100% de la altura de la ventana */
+            min-height: 100vh;
+            display: flex; /* Habilitar Flexbox */
+            flex-direction: column; /* Apilar elementos verticalmente */
+            justify-content: center; /* Centrar verticalmente */
+            align-items: center; /* Centrar horizontalmente */
             text-align: center;
             transition: background 0.6s, color 0.6s;
         }
+        
+        /* Contenedor opcional para limitar el ancho del contenido centrado */
+        .main-content {
+            padding: 20px;
+            max-width: 90%; /* Máximo ancho de contenido */
+        }
 
         h1 {
-            /* --- TÍTULO ARRIBA: Aseguramos el margen superior para que esté arriba --- */
-            margin-top: 0; 
-            padding-top: 20px; /* Pequeño espacio del borde de la página */
-            
             /* Estilos del título */
             color: #ffffff; 
             margin-bottom: 30px;
-            font-size: 3em; /* Aumentamos el tamaño del título */
-            font-weight: 700; /* Negrita para Montserrat */
+            margin-top: 0; /* Aseguramos que no haya margen superior si está centrado */
+            font-size: 3em; 
+            font-weight: 700; 
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3); 
         }
 
@@ -51,6 +59,7 @@
             color: #ffffff;
             margin-bottom: 25px;
             max-width: 800px; /* Limita el ancho del párrafo para mejor lectura */
+            /* El centrado con 'margin-left: auto; margin-right: auto;' ya no es estrictamente necesario gracias al 'align-items: center' del body, pero lo dejamos por si acaso */
             margin-left: auto;
             margin-right: auto;
         }
@@ -78,16 +87,16 @@
     </style>
 </head>
 <body>
+    <div class="main-content">
+        <h1>Tecnología</h1>
 
-    <h1>Tecnología</h1>
+        <p>
+            Aquest és l'espai dedicat a allotjar i mostrar tots els meus projectes, exercicis i treballs realitzats en l'àmbit de la tecnologia.
+        </p>
 
-    <p>
-        Aquest és l'espai dedicat a allotjar i mostrar tots els meus projectes, exercicis i treballs realitzats en l'àmbit de la tecnologia.
-    </p>
-
-    <a href="mcadenas4.github.io/tecno/selectivitat/2009/" class="btn">
-        Selectivitat 2009
-    </a>
-    
+        <a href="/tecno/selectivitat/2009/" class="btn">
+            Selectivitat 2009
+        </a>
+    </div>
 </body>
 </html>
