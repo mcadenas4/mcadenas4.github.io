@@ -1,20 +1,22 @@
 /* ===== GLOBAL STYLES ===== */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(120deg, #f4f4f4, #e8e8ff);
+    /* --- CAMBIO DE FONDO: Degradado de Azul Claro a Blanco --- */
+    /* 1. Un azul muy claro (#cfe2f3) que se mezcla con blanco puro (#ffffff) */
+    background: linear-gradient(120deg, #ffffff, #cfe2f3);
     color: #333;
-    margin: 0;
+    
+    /* --- MARGEN AÑADIDO: Añade un espacio alrededor de todo el contenido --- */
+    margin: 20px; /* Puedes ajustar este valor, 20px es un buen inicio */
+    
     padding: 0;
     line-height: 1.6;
     transition: background 0.6s, color 0.6s;
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
-}
 
-@keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    /* NOTA: He eliminado las propiedades de 'background-size' y 'animation' 
+       junto con la regla '@keyframes gradientShift' 
+       para usar una gradiente de fondo simple y fija,
+       como el color azul hacia blanco que pediste. */
 }
 
 h2 {
