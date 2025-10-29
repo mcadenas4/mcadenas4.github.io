@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnología</title>
+    
+    <style>
+        /* ===== ESTILOS GLOBALES (CSS) ===== */
+        body {
+            font-family: 'Arial', sans-serif;
+            /* --- FONDO: Degradado de Azul a Morado Claro --- */
+            /* #4a90e2 (Azul vibrante) a #c299e8 (Morado Claro/Lavanda) */
+            background: linear-gradient(120deg, #4a90e2, #c299e8); 
+            
+            color: #333;
+            
+            /* --- MARGEN: Espacio alrededor del cuerpo de la página --- */
+            margin: 20px; 
+            padding: 0;
+            line-height: 1.6;
+            
+            /* Propiedades para centrar el contenido en la página */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 40px);
+            text-align: center;
+            flex-direction: column; 
+            transition: background 0.6s, color 0.6s;
+        }
 
+        h1 {
+            /* El color del texto del título puede ser blanco para contrastar mejor con el fondo */
+            color: #ffffff; 
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            /* Se añade una sombra de texto suave para mejor visibilidad */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); 
+        }
+
+        p {
+             /* El color del texto del párrafo también a blanco */
+            color: #ffffff;
+            margin-bottom: 25px;
+        }
+
+        /* Estilos para el botón */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            /* --- BOTÓN: Naranja Brillante --- */
+            background-color: #ff9900; 
+            /* --- LETRAS: Blanco --- */
+            color: #ffffff; 
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            /* Sombra para darle un efecto más "levantado" y brillante */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ff8c00; /* Un naranja ligeramente más oscuro al pasar el ratón */
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tecnología</h1>
+
+    <p>
+        Aquest és lespai dedicat a albergar i mostrar tots els meus projectes, exercicis i treballs realitzats en làmbit de la tecnologia.
+    </p>
+
+    <a href="mcadenas4.github.io/tecno/selectivitat/2009/" class="btn">
+        Selectivitat 2009
+    </a>
+    
+</body>
+</html>
