@@ -11,6 +11,11 @@ body {
     animation: gradientShift 15s ease infinite;
 }
 
+/* CENTRADO DE TÍTULOS */
+h1, h2 {
+    text-align: center;
+}
+
 @keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -36,7 +41,7 @@ body {
     max-width: 900px;
     background-color: #ffffff;
     padding: 40px;
-    border-radius: 16px; /* Bordes un poco más suaves */
+    border-radius: 16px;
     box-shadow: 0 20px 40px rgba(9, 132, 227, 0.08);
     border-top: 8px solid #0984e3;
     animation: fadeIn 1.2s ease-in-out;
@@ -44,13 +49,13 @@ body {
 
 /* ===== FILTER BUTTONS (CENTRADO) ===== */
 .filter-group-container {
-    text-align: center; /* Centra el título del filtro */
+    text-align: center;
     margin-bottom: 25px;
 }
 
 .filter-group {
     display: flex;
-    justify-content: center; /* Centra los botones horizontalmente */
+    justify-content: center;
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 15px;
@@ -61,7 +66,7 @@ body {
     color: #0984e3;
     border: 2px solid #0984e3;
     padding: 10px 22px;
-    border-radius: 50px; /* Estilo cápsula moderno */
+    border-radius: 50px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -101,7 +106,7 @@ li button:hover {
     background-color: #ffffff;
     color: #0984e3;
     border-color: #0984e3;
-    transform: translateX(8px); /* Efecto de desplazamiento lateral moderno */
+    transform: translateX(8px);
     box-shadow: 0 4px 15px rgba(9, 132, 227, 0.1);
 }
 
@@ -155,7 +160,14 @@ li button.selected {
 
 /* ===== DARK MODE (Deep Ocean) ===== */
 body.dark-mode { background: #0a192f; color: #ccd6f6; }
-body.dark-mode .content-container { background: #112240; border-color: #00d2ff; }
+
+/* Contenedor más oscuro en modo noche */
+body.dark-mode .content-container, body.dark-mode #quiz-container { 
+    background: #0d1b2a; 
+    border-color: #00d2ff; 
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
 body.dark-mode li button { background-color: #172a45; border-color: #233554; color: #8892b0; }
 body.dark-mode li button:hover { border-color: #00d2ff; color: #00d2ff; }
 
