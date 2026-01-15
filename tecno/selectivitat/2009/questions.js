@@ -1,15 +1,15 @@
 const questions = [
     {
         type: "questions", // Tipus de pregunta
-        category: "electrics",
-        text: `La velocitat de sincronisme n<sub>s</sub>, d’un motor asíncron de corrent altern, que està connectat a la xarxa de tensió U = 230 V i freqüència &#402 = 50 Hz, és n<sub>s</sub> = 600 min<sup>–1</sup>. Quants parells de pols té el motor?`,
+        category: "materials",
+        text: `La tensió de ruptura d’un llautó és 550 MPa. Quina força axial cal per a provocar eltrencament d’un eix massís de 6 mm de diàmetre?`,
         options: [
-            { text: "2", value: "a" },
-            { text: "4", value: "b" },
-            { text: "5", value: "c" },
-            { text: "10", value: "d" }
+            { text: "10,37 kN", value: "a" },
+            { text: "15,55 kN", value: "b" },
+            { text: "19,80 kN", value: "c" },
+            { text: "62,20 kN", value: "d" }
         ],
-        correctAnswer: "c",
+        correctAnswer: "b", //Contestada sin mathjax
         steps: `
             \\[
             600 \\, \\frac{\\text{rev}}{\\text{min}} \\cdot \\frac{1 \\, \\text{min}}{60 \\, \\text{seg}}  = 10 \\, \\frac{\\text{rev}}{\\text{seg}}
@@ -25,15 +25,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "metrologia",
-        text: `Un dinamòmetre digital mostra el valor de la mesura amb cinc dígits i permet fer mesuraments entre 0 N i 10 000 N. La precisió és el valor més gran entre ± 0,1 % de la mesura i ± 5 N. Si la lectura del dinamòmetre és 3 500 N, el valor real de la mesura està comprès entre`,
+        category: "organitzacio",
+        text: `En una línia de producció hi ha tres estacions i les operacions que es duen a termesobre cada unitat produïda requereixen, respectivament, 15 s, 30 s i 20 s. En règim esta-cionari i amb la línia funcionant a màxim rendiment, cada quants segons surt una uni-tat de la línia?`,
         options: [
-            { text: "3500 N i 3505 N", value: "a" },
-            { text: "3496,5 N i 3503,5 N", value: "b" },
-            { text: "3495 N i 3505 N", value: "c" },
-            { text: "3497,5 N i 3502,5 N", value: "d" }
+            { text: "20 s", value: "a" },
+            { text: "30 s", value: "b" },
+            { text: "15 s", value: "c" },
+            { text: "65 s", value: "d" }
         ],
-        correctAnswer: "c",
+        correctAnswer: "b", //Contestada sin mathjax
         steps: `
             \\[
             0{,}1 \\, \\% = 0{,}001
@@ -58,15 +58,15 @@ const questions = [
     },
     {
         type: "questions", 
-        category: "materials",
-        text: `El <i>zamak</i> és un aliatge amb bones propietats mecàniques que s’utilitza en els sectors de l’automoció i de la construcció. Conté un 4 % d’alumini (Al), un 1 % de coure (Cu), un 0,05 % de magnesi (Mg) i la resta és zinc (Zn). En l’obtenció d’aquest aliatge, quina quantitat d’alumini cal per a aliar-lo amb 400 kg de zinc?`,
+        category: "energia",
+        text: `En un estudi de mobilitat sobre l’assistència a un esdeveniment públic en autocar,un  dels  resultats  obtinguts  és  que  cada  passatger  ha  consumit  0,24  MJ  d’energia  perkilòmetre recorregut. Si de mitjana un autocar consumeix 27 L/(100 km) i el gasoil queempra té un poder calorífic de 35,56 MJ/L, quina ha estat l’ocupació mitjana que s’haconsiderat per a obtenir els resultats?`,
         options: [
-            { text: "16 kg", value: "a" },
-            { text: "4 kg ", value: "b" },
-            { text: "421,3 kg ", value: "c" },
-            { text: "16,85 kg", value: "d" }
+            { text: "43", value: "a" },
+            { text: "42", value: "b" },
+            { text: "41", value: "c" },
+            { text: "40", value: "d" }
         ],
-        correctAnswer: "d",
+        correctAnswer: "d", //Contestada sin mathjax
         steps: `
             \\[
             \\text{% de Zinc} = 100 - \\text{Al} -\\, \\text{Cu} -\\, \\text{Mg} = 100 - 4 - 1 - 0{,}05 = 94{,}95 \\%
@@ -82,15 +82,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "metrologia",
-        text: `En l’ajust 25 H7/g6, la tolerància H7 del forat és (<sup>+ 21</sup><sub>0</sub>) μm i la g6 de l’eix és (<sup>- 7</sup><sub>- 20</sub>) μm.Quins són els jocs màxim i mínim?`,
+        category: "energia",
+        text: `Un panell solar està format per 36 cèl·lules fotovoltaiques rectangulars les mides deles quals són 198 mm ×90 mm. Quina és la superfície mínima del panell solar?`,
         options: [
-            { text: "El joc màxim és 41 μm i el mínim és 7 μm", value: "a" },
-            { text: "El joc màxim és 21 μm i el mínim és 0 μm", value: "b" },
-            { text: "El joc màxim és 41 μm i el mínim és 20 μm", value: "c" },
-            { text: "El joc màxim és 20 μm i el mínim és 7 μm", value: "d" }
+            { text: "6,415 · 10<sup>–3</sup> m<sup>2<sup>", value: "a" },
+            { text: "64,15 · 10<sup>–3</sup> m<sup>2<sup>", value: "b" },
+            { text: "641,5 · 10<sup>–3</sup> m<sup>2<sup>", value: "c" },
+            { text: "64,15 · 10<sup>–6</sup> m<sup>2<sup>", value: "d" }
         ],
-        correctAnswer: "a",
+        correctAnswer: "c", //Contestada sin mathjax
         steps: `
             \\[
             
@@ -106,15 +106,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "organitzacio",
-        text: `La fabricació d’una peça metàl·lica es duu a terme en dos processos. En primer lloc, la peça es mecanitza en una fresadora i, posteriorment, se’n millora l’acabat superficial mitjançant una rectificadora. Després de cada procés, es controla la qualitat de les peces i es desestimen les que no són correctes. Si les taxes de rebuig del fresatge i la rectificació són del 4 % i el 3 %, respectivament, quin percentatge de les peces inicials s’acaba produint correctament?`,
+        category: "materials",
+        text: `El  permalloy  és  un  aliatge  de  composició  78,5 %  Ni  (níquel)  i  21,5 %  Fe  (ferro)emprat en la fabricació de nuclis de transformadors elèctrics. Quant níquel es necessitaper a aliar-lo amb 275 kg de ferro?`,
         options: [
-            { text: "88 %", value: "a" },
-            { text: "93,12 %", value: "b" },
-            { text: "96 %", value: "c" },
-            { text: "93 %", value: "d" }
+            { text: "753,2 kg", value: "a" },
+            { text: "1 004 kg", value: "b" },
+            { text: "1 040 kg", value: "c" },
+            { text: "1 400 kg", value: "d" }
         ],
-        correctAnswer: "b",
+        correctAnswer: "b", //Contestada sin mathjax
         steps: `
             \\[
             \\text{Rebuig al fresatge:} \\, 4 \\, \\% \\; \\text{&#8594} \\; \\text{Peces bones:} \\, 96 \\%
@@ -130,15 +130,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "organitzacio",
-        text: `Un tren d'alta velocitat ha transportat durant un any 3,2 milions de passatgers. El tren està format per 8 vagons i té una capacitat nominal total de 405 passatgers. Si el tren fa 28 trajectes diaris, quin ha estat el percentatge d’ocupació mitjana del tren?`,
+        category: "energia",
+        text: `Una  estratègia  de  lluita  contra  el  canvi  climàtic  planteja  reduir  l’emissió  de  gasosd’efecte d’hivernacle. A qui ha d’anar adreçada aquest tipus d’estratègia per a obtenir lamàxima eficàcia?`,
         options: [
-            { text: "9,7 %", value: "a" },
-            { text: "77,3 %", value: "b" },
-            { text: "37 %", value: "c" },
-            { text: "39,1 %", value: "d" }
+            { text: "Només als sectors del transport i de la mobilitat perquè són els principals emis-sors d’aquests gasos.", value: "a" },
+            { text: "Només a la indústria perquè utilitza energies fòssils que emeten una gran quan-titat d’aquests gasos.", value: "b" },
+            { text: "Només al sector ramader perquè és el causant dels excessos de purins que pro-voquen emissions d’aquests gasos.", value: "c" },
+            { text: "A tots els sectors de la població mundial perquè el canvi climàtic afecta tothomi tots en som, en més o menys grau, responsables.", value: "d" }
         ],
-        correctAnswer: "b",
+        correctAnswer: "d", //Contestada sin mathjax
         steps: `
             \\[
             405 \\, \\cdot \\; 28 \\, \\cdot \\; 365 = 4139100 \\, \\text{passatgers}
@@ -152,14 +152,14 @@ const questions = [
     {
         type: "questions", // Tipus de pregunta
         category: "organitzacio",
-        text: `En un any, 2,931 milions de vehicles van passar la inspecció tècnica de vehicles (ITV) a Catalunya. El 82 % dels vehicles van superar la revisió sense defectes o amb defectes lleus, i els altres tenien defectes greus o molt greus que els van obligar a passar una segona revisió un cop reparats. Aquesta segona revisió va ser superada pel 85 % dels vehicles. Quants vehicles no van superar la ITV?`,
+        text: `El procés de fabricació d’un producte consta de dues operacions. La taxa de quali-tat de cadascuna d’elles, mesurada com a percentatge de peces obtingudes sense defec-tes, és 95 % i 98 %. Si només passen a l’operació següent les peces sense defectes, d’unlot de 2 000 unitats, quantes se’n rebutjaran per defectuoses?`,
         options: [
-            { text: "79137 vehicles", value: "a" },
-            { text: "377761 vehicles", value: "b" },
-            { text: "2042907 vehicles", value: "c" },
-            { text: "483615 vehicles", value: "d" }
+            { text: "186", value: "a" },
+            { text: "138", value: "b" },
+            { text: "100", value: "c" },
+            { text: "40", value: "d" }
         ],
-        correctAnswer: "a",
+        correctAnswer: "b", //Contestada sin mathjax
         steps: `
             \\[
             0{,}18 \\, \\cdot \\; 2931000 = 527580 \\; \\text{vehicles}
@@ -172,15 +172,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "electrics",
-        text: `Una resistència de 4,7 Ω està feta de fil de constantà de 0,61 mm de diàmetre i una resistivitat de 0,49 μΩ·m. Quina és la longitud del fil de constantà utilitzat?`,
+        category: "organitzacio",
+        text: `Un  vehicle  circula  entre  dues  poblacions  properes  per  una  carretera  de  15  km  delongitud a una velocitat de 45 km/h. El cost directe del vehicle s’estima que és 0,20 € /kmi se sap que el cost econòmic de tot el trajecte és 6 € . Quin s’ha estimat que és el costeconòmic, en € /h, del temps emprat per a fer el trajecte?`,
         options: [
-            { text: "9,592 m", value: "a" },
-            { text: "1,121 m", value: "b" },
-            { text: "2,803 m", value: "c" },
-            { text: "3,569 m", value: "d" }
+            { text: "3 € /h", value: "a" },
+            { text: "6 € /h", value: "b" },
+            { text: "9 € /h", value: "c" },
+            { text: "18 € /h", value: "d" }
         ],
-        correctAnswer: "c",
+        correctAnswer: "c", //Contestada sin mathjax
         steps: `
             \\[
             A = \\pi r^2 = \\pi (3{,}05 \\cdot 10^{-4})^2 = 2{,}922 \\cdot 10^{-7}
@@ -193,15 +193,15 @@ const questions = [
     },
     {
         type: "questions", 
-        category: "organitzacio",
-        text: `Un estudi sobre el transport d’una mercaderia conclou que el cost del transport marítim és de 0,87 €/km, el del transport per carretera és d’1,69 €/km i el del transport ferroviari és d'1,03 €/km. En el cas del transport marítim, la velocitat mitjana és de 33 km/h i la distància que cal recórrer és de 1 760 km; en el del transport per carretera, la velocitat mitjana és de 35 km/h i la distància és de 1 050 km; en el del transport ferroviari, la velocitat mitjana és de 50 km/h i la distància és de 1 160 km. Quin dels tres transports és més ràpid i quin és més econòmic?`,
+        category: "electrics",
+        text: `Una resistència de 5 Ωestà feta amb fil de nicrom de 0,8 mm de diàmetre i de 2 mde llargada. Quina és la resistivitat d’aquest nicrom?`,
         options: [
-            { text: "El més ràpid és el transport per carretera i el més econòmic és el ferroviari", value: "a" },
-            { text: "El més ràpid és el transport per carretera i el més econòmic és el marítim", value: "b" },
-            { text: "El transport ferroviari és el més ràpid i també el més econòmic", value: "c" },
-            { text: "El més ràpid és el transport ferroviari i el més econòmic és el marítim", value: "d" }
+            { text: "3,142 μΩ · m", value: "a" },
+            { text: "1,257 μΩ · m", value: "b" },
+            { text: "2,513 μΩ · m", value: "c" },
+            { text: "5,027 μΩ · m", value: "d" }
         ],
-        correctAnswer: "c",
+        correctAnswer: "b", //Contestado sin mathjax
         steps: `
             \\[
             t_{marítim} = \\frac{1760}{33} = 53,3 \\, \\text{h}
@@ -233,15 +233,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "electrics",
-        text: `La velocitat de sincronisme d’un motor asíncron, que està connectat a una xarxa de tensió U = 230 V i freqüència f = 50 Hz, és de 750 min<sup>–1</sup>. Quina serà la velocitat de sincronisme si es connecta a una xarxa de tensió U = 120 V i freqüència f = 60 Hz?`,
+        category: "organitzacio",
+        text: `Un tramvia té una capacitat nominal de transport de 218 passatgers. La freqüènciade pas entre dues estacions concretes és de 5 minuts durant 15 hores al dia. Quin és elmàxim nombre de passatgers diaris que pot transportar el tramvia entre aquestes duesestacions i durant aquestes 15 hores?`,
         options: [
-            { text: "900 min<sup>–1</sup>", value: "a" },
-            { text: "552 min<sup>–1</sup>", value: "b" },
-            { text: "750 min<sup>–1</sup>", value: "c" },
-            { text: "391 min<sup>–1</sup>", value: "d" }
+            { text: "2616", value: "a" },
+            { text: "13 080", value: "b" },
+            { text: "16 350", value: "c" },
+            { text: "39 240", value: "d" }
         ],
-        correctAnswer: "a",
+        correctAnswer: "d", //Contestado sin mathjax
         steps: `
             \\[	
             {n_{s}} = \\frac{120 \\cdot \\text{&#402}}{\\text{p}} \\; \\text{&#8594} \\; \\text{p} = \\frac{120 cdot \\text{&#402}}{{n_{s}}}
@@ -257,15 +257,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "materials",
-        text: `El límit elàstic d'un aliatge d'alumini és σ<sub>e</sub> = 85 MPa. Si una peça cilíndrica d'aquest material està sotmesa a una força de tracció de 1 400 N, quin és el diàmetre mínim que ha de tenir la secció perquè no es produeixi deformació plàstica?`,
+        category: "organitzacio",
+        text: `Un  vehicle  circula  entre  dues  poblacions  properes  per  una  carretera  de  7,5 km  delongitud a una velocitat de 30 km/h. El cost econòmic del temps emprat per a fer aquestviatge s’estima que és 8€/h i el cost directe del vehicle, 0,20 € /km. Quin és el cost eco-nòmic del trajecte?`,
         options: [
-            { text: "3,24 mm", value: "a" },
-            { text: "16,47 mm", value: "b" },
-            { text: "4,58 mm", value: "c" },
-            { text: "2,29 mm", value: "d" }
+            { text: "1,5€", value: "a" },
+            { text: "2€", value: "b" },
+            { text: "3€", value: "c" },
+            { text: "3,5€", value: "d" }
         ],
-        correctAnswer: "c",
+        correctAnswer: "d", //Contestada sin mathjax
         steps: `
             \\[	
             {σ_{e}} = \\frac{\\text{F}}{\\text{A}} \\; \\text{&#8594} \\; \\text{A} = \\frac{\\text{F}}{{σ_{e}}}            
@@ -284,15 +284,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "organitzacio",
-        text: `Dues terminals d'un aeroport estan comunicades per un tren autònom que en un trajecte pot transportar fins a tres-centes persones. El temps del trajecte és de 3 min i 15 s; i el temps d'espera entre dos trajectes és de 45 s de les 5.30 h a les 23.30 h, i d'1 min i 15 s de les 23.30 h a les 5.30 h. Quin és el nombre màxim de viatgers que pot transportar un tren durant tot un dia?`,
+        category: "metrologia",
+        text: `Es  disposa  d’un  voltímetre  de  quatre  dígits  per  a  fer-hi  la  lectura  en  V.  El  full  decaracterístiques  del  voltímetre  indica  que,  per  a  un  fons  d’escala  de  2  V,  la  precisió  és± 1 mV ± 1 % de la lectura. L’error absolut màxim en una lectura d’1,2 V és`,
         options: [
-            { text: "105 000", value: "a" },
-            { text: "96 000", value: "b" },
-            { text: "108 000", value: "c" },
-            { text: "101 647", value: "d" }
+            { text: "± 12 mV", value: "a" },
+            { text: "± 13 mV", value: "b" },
+            { text: "± 24 mV", value: "c" },
+            { text: "± 26 mV", value: "d" }
         ],
-        correctAnswer: "a",
+        correctAnswer: "b", //Contestado sin mathjax
         steps: `
             \\[	
             \\text{Temps per trajecte:}\\; 3 \\; \\text{min} \\; 15 \\; \\text{s} = 195 \\; \\text{s}   
@@ -344,15 +344,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "metrologia",
-        text: `En un circuit elèctric, es connecten en paral·lel dues resistències de 30 Ω cadascuna i toleràncies de ± 2 % i ± 5 %, respectivament. Entre quins valors es troba la resistència equivalent?`,
+        category: "organitzacio",
+        text: `Un telefèric té una capacitat nominal de transport de 25 persones. L’interval entresortides consecutives és de 10 minuts i el temps del trajecte és de 5 minuts. Quin és elmàxim nombre de passatgers per hora que pot transportar el telefèric?`,
         options: [
-            { text: "57,90 Ω i 62,10 Ω", value: "a" },
-            { text: "14,47 Ω i 15,52 Ω", value: "b" },
-            { text: "14,25 Ω i 15,75 Ω", value: "c" },
-            { text: "57 Ω i 63 Ω", value: "d" }
+            { text: "100", value: "a" },
+            { text: "150", value: "b" },
+            { text: "200", value: "c" },
+            { text: "250", value: "d" }
         ],
-        correctAnswer: "b",
+        correctAnswer: "b", //Contestado sin mathjax
         steps: `
             \\[	
             R_{1_{min}} = 30 - 2\\; \\% = 30(100 - 2)\\; \\% = 30 \\; \\cdot \\; 98 \\;\\% = 30 \\; \\cdot \\; 0{,}98 = 29{,}4 \\; \\text{Ω}
@@ -380,15 +380,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "pneumatica",
-        text: `Un cotxe té un motor de combustió V6 amb sis cilindres. La cilindrada és de 2 792 cm<sup>3</sup> i la cursa dels cilindres és de 90 mm. Quant fa el diàmetre dels cilindres?`,
+        category: "energia",
+        text: `Segons càlculs de la Unió Europea, un avió emet una quantitat de 132 g de CO2percada kilòmetre de trajecte i cada passatger que transporta. En un recorregut en avió de9 000  km  hi  viatgen  350  passatgers.  Quina  és  la  quantitat  de  CO2emesa  a  l’atmosferadurant aquest vol?`,
         options: [
-            { text: "70,32 mm", value: "a" },
-            { text: "40,57 mm", value: "b" },
-            { text: "198,74 mm", value: "c" },
-            { text: "81,14 mm", value: "d" }
+            { text: "297,0 · 10<sup>3</sup>kg", value: "a" },
+            { text: "339,4 · 10<sup>3</sup>kg", value: "b" },
+            { text: "387,5 · 10<sup>3</sup>kg", value: "c" },
+            { text: "415,8 · 10<sup>3</sup>kg", value: "d" }
         ],
-        correctAnswer: "d",
+        correctAnswer: "d", //Contestada sin mathjax
         steps: `
             \\[	
             {V_{Cilindre}} = \\frac{C_{total}}{N_{cilindres}} = \\frac{2792}{6} = 465,33 \\; \\text{cm}^{3}
@@ -404,15 +404,15 @@ const questions = [
     },
     {
         type: "questions", // Tipus de pregunta
-        category: "energia",
-        text: `En un gran premi de Fórmula 1, un vehicle ha tingut un consum mitjà de combustible per volta c<sub>m</sub> = 2,9 kg. El combustible utilitzat té una densitat ρ = 0,75 kg/L. Si el circuit té una longitud d = 5,543 km, quin ha estat el consum del vehicle en L/(100 km)?`,
+        category: "materials",
+        text: `Una empresa de fabricació de bigues de fusta en comercialitza un model de densi-tat 510 kg/m3en conjunts de 25 bigues, que mesuren 240 mm ×5 000 mm ×70 mm cadauna. Quant pesen les 25 bigues? (g= 10 m/s2)`,
         options: [
-            { text: "75 L/(100 km)", value: "a" },
-            { text: "52,32 L/(100 km)", value: "b" },
-            { text: "254,9 L/(100 km)", value: "c" },
-            { text: "69,76 L/(100 km)", value: "d" }
+            { text: "1,071 kN", value: "a" },
+            { text: "10,71 kN", value: "b" },
+            { text: "107,1 kN", value: "c" },
+            { text: "1071 kN", value: "d" }
         ],
-        correctAnswer: "d",
+        correctAnswer: "b", //Contestada sinn mathjax
         steps: `
             \\[	
             V = \\frac{m}{\\rho} = \\frac{2,9}{0,75} = 3,57 \\; \\text{L/Volta}
