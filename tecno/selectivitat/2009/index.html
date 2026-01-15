@@ -13,26 +13,27 @@
     <span id="dark-toggle" style="cursor:pointer; margin-left:10px;">🌙</span>
 </h2>
 
-<label for="type-select">Tipus de preguntes:</label>
-<select id="type-select" onchange="renderQuiz()">
-    <option value="totes">Totes</option>
-    <option value="questions">Qüestions</option>
-    <option value="exercicis">Exercicis</option>
-</select>
+<div class="filter-group-container">
+    <label>Tipus de preguntes:</label>
+    <div id="type-filter-buttons" class="filter-group">
+        <button class="filter-button active" data-filter="totes" onclick="selectFilter(this, 'type')">Totes</button>
+        <button class="filter-button" data-filter="questions" onclick="selectFilter(this, 'type')">Qüestions</button>
+        <button class="filter-button" data-filter="exercicis" onclick="selectFilter(this, 'type')">Exercicis</button>
+    </div>
 
-<label for="category-select">Tria una categoria:</label>
-<select id="category-select" onchange="renderQuiz()">
-<option value="tot">Tot</option>
-<option value="energia">Energia</option>
-<option value="materials">Materials i assaigs</option>
-<option value="metrologia">Metrologia i normalització</option>
-<option value="pneumatica">Sistemes pneumàtics i oleohidràulics</option>
-<option value="motors">Motors reductors</option>
-<option value="maquines">Principis de les màquines</option>
-<option value="electrics">Màquines i sistemes elèctrics i electrotècnics</option>
-<option value="control">Control lògic i funcions lògiques</option>
-<option value="organitzacio">Organització industrial</option>
-
+<label>Tria una categoria:</label>
+    <div id="category-filter-buttons" class="filter-group">
+        <button class="filter-button active" data-filter="tot" onclick="selectFilter(this, 'category')">Tot</button>
+        <button class="filter-button" data-filter="energia" onclick="selectFilter(this, 'category')">Energia</button>
+        <button class="filter-button" data-filter="materials" onclick="selectFilter(this, 'category')">Materials i assaigs</button>
+        <button class="filter-button" data-filter="metrologia" onclick="selectFilter(this, 'category')">Metrologia i normalització</button>
+        <button class="filter-button" data-filter="pneumatica" onclick="selectFilter(this, 'category')">Sistemes pneumàtics i oleohidràulics</button>
+        <button class="filter-button" data-filter="motors" onclick="selectFilter(this, 'category')">Motors reductors</button>
+        <button class="filter-button" data-filter="maquines" onclick="selectFilter(this, 'category')">Principis de les màquines</button>
+        <button class="filter-button" data-filter="electrics" onclick="selectFilter(this, 'category')">Màquines i sistemes elèctrics i electrotècnics</button>
+        <button class="filter-button" data-filter="control" onclick="selectFilter(this, 'category')">Control lògic i funcions lògiques</button>
+        <button class="filter-button" data-filter="organitzacio" onclick="selectFilter(this, 'category')">Organització industrial</button>
+    </div>
 </select>
 
 <div id="quiz-container"></div>
