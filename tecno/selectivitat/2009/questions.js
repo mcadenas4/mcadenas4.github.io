@@ -83,17 +83,24 @@ const questions = [
             { text: "641,5 · 10<sup>–3</sup> m<sup>2<sup>", value: "c" },
             { text: "64,15 · 10<sup>–6</sup> m<sup>2<sup>", value: "d" }
         ],
-        correctAnswer: "c", //Contestada sin mathjax
+        correctAnswer: "c", //Contestada
         steps: `
-            \\[
-            
-            \\]
-            \\[
-            \\text{JMax} =  \\text{ds} - \\text{di}^{'} = 21 - (-20) = 41 \\; \\text{µm}
-            \\]
-            \\[
-            \\text{Jmin} =  \\text{di} - \\text{ds}^{'} = 0 - (-7) = 7 \\; \\text{µm}            
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Passem les mides a metres per obtenir el resultat en m<sup>2</sup>:</span>
+                \\[ 198  \\text{mm} = 0{,}198  \\text{m}  ; \\quad 90  \\text{mm} = 0{,}090  \\text{m} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">2) Àrea d'una cèl·lula:</span>
+                \\[ A_{\\text{cèl}} = 0{,}198  \\text{m} \\cdot 0{,}090  \\text{m} = 0{,}01782  \\text{m}^2 \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">3) Àrea total:</span>
+                \\[ A_{\\text{total}} = 36 \\cdot 0{,}01782  \\text{m}^2 = 0{,}64152  \\text{m}^2 \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">4) Expressem en notació científica coincidint amb les opcions (10<sup>-3</sup>):</span>
+                \\[ 0{,}64152  \\text{m}^2 = 641{,}52 \\cdot 10^{-3}  \\text{m}^2 \\]
+            </div>
             <br><br>
             `,
     },
