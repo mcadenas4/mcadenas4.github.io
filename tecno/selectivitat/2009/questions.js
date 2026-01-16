@@ -275,20 +275,14 @@ const questions = [
             { text: "3€", value: "c" },
             { text: "3,5€", value: "d" }
         ],
-        correctAnswer: "d", //Contestada sin mathjax
+        correctAnswer: "d", //Contestada
         steps: `
-            \\[	
-            {σ_{e}} = \\frac{\\text{F}}{\\text{A}} \\; \\text{&#8594} \\; \\text{A} = \\frac{\\text{F}}{{σ_{e}}}            
-            \\]
-            \\[
-            \\text{A} = \\frac{\\text{F}}{{σ_{e}}} = \\frac{1400}{85} = 16{,}47 \\; \\text{mm}^2
-            \\]
-            \\[
-            A = \\frac{\\pi \\cdot \\text{d}^2}{4} \\; \\text{&#8594} \\; \\text{d} = \\sqrt{\\frac{\\text{A} \\cdot 4}{\\pi}}
-            \\]
-            \\[
-            d = \\sqrt{\\frac{16{,}47 \\cdot 4}{\\pi}} = 4{,}58 \\; \\text{mm}
-            \\]
+            <div class="step-block">
+                \\[ \\text{Temps} = \\frac{\\text{distància}}{\\text{velocitat}} = \\frac{7{,}5  \\text{km}}{30  \\text{km/h}} = 0{,}25  \\text{h} \\] 
+                \\[ \\text{Cost del temps} = 0{,}25  \\text{h} \\cdot 8  \\text{€/h} = 2{,}00  \\text{€} \\]
+                \\[ \\text{Cost del vehicle} = 7{,}5  \\text{km} \\cdot 0{,}20  \\text{€/km} = 1{,}50  \\text{€} \\]
+                \\[ \\text{Cost total} = 2{,}00  \\text{€} + 1{,}50  \\text{€} = 3{,}50 \\]
+            </div>
             <br><br>
             `,
     },
@@ -302,53 +296,14 @@ const questions = [
             { text: "± 24 mV", value: "c" },
             { text: "± 26 mV", value: "d" }
         ],
-        correctAnswer: "b", //Contestado sin mathjax
+        correctAnswer: "b", //Contestado
         steps: `
-            \\[	
-            \\text{Temps per trajecte:}\\; 3 \\; \\text{min} \\; 15 \\; \\text{s} = 195 \\; \\text{s}   
-            \\]
-            \\[
-            \\text{Cicle dia:}\\; 195 \\; \\text{s} + 45 \\; \\text{s}  = 240 \\; \\text{s} = 4 \\; \\text{min}
-            \\]
-            \\[
-            \\text{Cicle nit:}\\; 195 \\; \\text{s} + 75 \\; \\text{s}  = 270 \\; \\text{s} = 4,5 \\; \\text{min}
-            \\]
-            \\[
-
-            \\]
-            \\[
-            Viatges \\; dia
-            \\]
-            \\[
-            \\text{Temps funcionant:}\\; 18 \\; \\text{h} = 18 \\; \\cdot \\; 60 = 1080 \\; \\text{s}
-            \\]
-            \\[
-            \\frac{1080}{4} = 270 \\; \\text{viatges}
-            \\]
-            \\[
-
-            \\]
-            \\[
-            Viatges \\; nit
-            \\]
-            \\[
-            \\text{Temps funcionant:}\\; 6 \\; \\text{h} = 6 \\; \\cdot \\; 60 = 360 \\; \\text{s}
-            \\]
-            \\[
-            \\frac{360}{4,5} = 80 \\; \\text{viatges}
-            \\]
-            \\[
-
-            \\]
-            \\[
-            \\text{Viatges totals:}\\; 270 + 80 = 350 \\; \\text{viatges}
-            \\]
-            \\[
-
-            \\]
-            \\[
-            \\textbf{Total viatgers:}\\; 350 \\; \\cdot \\; 300 = 105000 \\; \\text{viatgers}
-            \\]
+            <div class="step-block">
+            \\[ \\text{Error fix} = 1  \\text{mV} \\]
+            \\[ \\text{Error percentual} = 1{,}2  \\text{V} \\cdot 1  % = 1{,}2  \\text{V} \\cdot 0{,}01 = 0{,}012  \\text{V} \\]
+            \\[ 0{,}012  \\text{V} = 12  \\text{mV} \\]
+            \\[ \\text{Error total} = \\pm (1  \\text{mV} + 12  \\text{mV}) = \\pm 13  \\text{mV} \\]
+            </div>
             <br><br>
             `,
     },
@@ -362,29 +317,12 @@ const questions = [
             { text: "200", value: "c" },
             { text: "250", value: "d" }
         ],
-        correctAnswer: "b", //Contestado sin mathjax
+        correctAnswer: "b", //Contestado
         steps: `
-            \\[	
-            R_{1_{min}} = 30 - 2\\; \\% = 30(100 - 2)\\; \\% = 30 \\; \\cdot \\; 98 \\;\\% = 30 \\; \\cdot \\; 0{,}98 = 29{,}4 \\; \\text{Ω}
-            \\]
-            \\[
-            R_{1_{max}} = 30 + 2\\; \\% = 30(100 + 2)\\; \\% = 30 \\; \\cdot \\; 102 \\;\\% = 30 \\; \\cdot \\; 1{,}02 = 30{,}6 \\; \\text{Ω}
-            \\]
-            \\[
-            R_{2_{min}} = 30 - 5\\; \\% = 30(100 - 5)\\; \\% = 30 \\; \\cdot \\; 95 \\;\\% = 30 \\; \\cdot \\; 0{,}95 = 28{,}5 \\; \\text{Ω}
-            \\]
-            \\[
-            R_{2_{max}} = 30 + 5\\; \\% = 30(100 + 5)\\; \\% = 30 \\; \\cdot \\; 105 \\;\\% = 30 \\; \\cdot \\; 1{,}05 = 31{,}5 \\; \\text{Ω}
-            \\]
-            \\[
-
-            \\]
-            \\[
-            R_{min} = \\frac{R_{1_{min}} \\cdot R_{2_{min}}}{R_{1_{min}} + R_{2_{min}}} = \\frac{29,4 \\cdot 28,5}{29,4 + 28,5} = 14,47 \\; \\Omega
-            \\]
-            \\[
-            R_{max} = \\frac{R_{1_{max}} \\cdot R_{2_{max}}}{R_{1_{max}} + R_{2_{max}}} = \\frac{30,6 \\cdot 31,5}{30,6 + 31,5} = 15,52 \\; \\Omega
-            \\]
+            <div class="step-block">
+            \\[ \\text{Sortides per hora} = \\frac{60  \\text{min}}{10  \\text{min/sortida}} = 6  \\text{sortides/h} \\]
+            \\[ \\text{Passatgers per hora} = 6  \\text{sortides/h} \\cdot 25  \\text{passatgers/sortida} = 150  \\text{passatgers/h} \\]
+            </div>
             <br><br>
             `,
     },
@@ -398,17 +336,13 @@ const questions = [
             { text: "387,5 · 10<sup>3</sup>kg", value: "c" },
             { text: "415,8 · 10<sup>3</sup>kg", value: "d" }
         ],
-        correctAnswer: "d", //Contestada sin mathjax
+        correctAnswer: "d", //Contestada
         steps: `
-            \\[	
-            {V_{Cilindre}} = \\frac{C_{total}}{N_{cilindres}} = \\frac{2792}{6} = 465,33 \\; \\text{cm}^{3}
-            \\]
-            \\[
-            V = \\frac{\\pi \\cdot D^{2}}{4} \\cdot C \\; \\text{&#8594} \\; D = \\sqrt{\\frac{V \\cdot 4}{\\pi \\cdot C}}
-            \\]
-            \\[
-            D = \\sqrt{\\frac{V \\cdot 4}{\\pi \\cdot C}} = \\sqrt{\\frac{465,33 \\cdot 4}{\\pi \\cdot 9}} = 8,114 \\; \\text{cm} = 81{,}14 \\; \\text{mm}
-            \\]
+            <div class="step-block">
+            \\[ \\text{Emissions totals} = 132  \\frac{\\text{g}}{\\text{km} \\cdot \\text{pax}} \\cdot 9000  \\text{km} \\cdot 350  \\text{pax} \\]
+            \\[ \\text{Emissions totals} = 415.800.000  \\text{g} \\]
+            \\[ 415.800.000  \\text{g} \\cdot \\frac{1  \\text{kg}}{1000  \\text{g}} = 415.800  \\text{kg} = 415{,}8 \\cdot 10^3  \\text{kg} \\]
+            </div>
             <br><br>
             `,
     },
@@ -422,44 +356,66 @@ const questions = [
             { text: "107,1 kN", value: "c" },
             { text: "1071 kN", value: "d" }
         ],
-        correctAnswer: "b", //Contestada sinn mathjax
+        correctAnswer: "b", //Contestada
         steps: `
-            \\[	
-            V = \\frac{m}{\\rho} = \\frac{2,9}{0,75} = 3,57 \\; \\text{L/Volta}
-            \\]
-            \\[
-            C_{1\\; \\text{km}} = \\frac{V}{d} = \\frac{3,87 \\; \\text{L/Volta}}{5,543 \\; \\text{km}} = 0,698 \\; \\text{L/km}
-            \\]
-            \\[
-            C_{100\\; \\text{km}} = 0,698 \\; \\cdot \\; 100 = 69,8 \\; \\text{L/100 km}
-            \\]
+            <div class="step-block">
+            \\[ \\text{Volum d'una biga} = 0{,}24  \\text{m} \\cdot 5{,}00  \\text{m} \\cdot 0{,}07  \\text{m} = 0{,}084  \\text{m}^3 \\]
+            \\[ \\text{Massa total} = 25  \\text{bigues} \\cdot 0{,}084  \\frac{\\text{m}^3}{\\text{biga}} \\cdot 510  \\frac{\\text{kg}}{\\text{m}^3} = 1071  \\text{kg} \\]
+            \\[ \\text{Pes (Força)} = m \\cdot g = 1071  \\text{kg} \\cdot 10  \\text{m/s}^2 = 10.710  \\text{N} \\]
+            \\[ 10.710  \\text{N} = 10{,}71  \\text{kN} \\]
+            </div>
             <br><br>
             `,
     },  
 {
         type: "exercicis",
         category: "control",
-        text: `Per a controlar la velocitat dels vehicles a l'entrada d'una població s'ha instaŀlat un semàfor que generalment és verd, però que canvia a vermell quan es detecta un vehicle que s'hi
-        apropa a una velocitat superior o igual a \\(60 \\; \\text{km/h}\\). Perquè els vianants puguin travessar la
-        carretera, el semàfor dels cotxes també canvia a vermell si com a mínim fa un minut que és
-        verd i, a més, un vianant prem el polsador que incorpora el mateix semàfor. Responeu a les
-        qüestions que hi ha a continuació utilitzant les variables d'estat següents:
-               <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s1p2.png" alt="Imatge relacionada amb la pregunta" width="900">
+        text: `Per a mantenir la pressió d’un dipòsit d’aire comprimit entre 6 bar i 8 bar, es dis-posa d’un compressor que es posa en marxa per sota de 6 bar, si estava aturat, i s’aturaper sobre de 8 bar, si estava en marxa. Entre 6 bar i 8 bar no modifica el seu estat de fun-cionament. Utilitzant les variables d’estat:
+               <img src="https://mcadenas4.github.io/tecno/selectivitat/2009/images/2009s1p2.png" alt="Imatge relacionada amb la pregunta" width="900">
               
-               <br><strong>a)</strong> Elaboreu la taula de veritat del sistema. [1 punt]
+               <br><strong>a)</strong> Escriviu la taula de veritat del sistema i indiqueu quins casos no són possibles. [1 punt]
                <br><strong>b)</strong> Determineu la funció lògica entre aquestes variables i, si escau, simplifiqueu-la. [1 punt]
-               <br><strong>c)</strong> Dibuixeu l’esquema de portes lògiques equivalent. [0,5 punts]
+               <br><strong>c)</strong> Dibuixeu l’esquema de contactes equivalent. [0,5 punts]
                <br><br>
                `, 
         correctAnswer: "",  // No és necessari aquí perquè es tracta d'un exercici obert
         steps: `
-            <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s1r2.png" alt="Imatge relacionada amb la resposta" width="900">`,  // Imatge opcional al final de la resposta
+            <div class="step-block">
+                <span class="step-header">a) Taula de veritat i casos no possibles:</span>
+                <img src="https://mcadenas4.github.io/tecno/selectivitat/2009/images/2009s1p2a.png" alt="Imatge relacionada amb la resposta" width="900">
+                <img src="https://mcadenas4.github.io/tecno/selectivitat/2009/images/2009s1p2a2.png" alt="Imatge relacionada amb la resposta" width="900">
+            </div>
+            <div class="step-block">
+                <span class="step-header">b) Funció lògica i simplificació:</span>
+                <img src="https://mcadenas4.github.io/tecno/selectivitat/2009/images/2009s1p2b.png" alt="Imatge relacionada amb la resposta" width="900">
+            </div>
+            <div class="step-block">
+                <span class="step-header">c) Esquema de contactes equivalent</span>
+                <img src="https://mcadenas4.github.io/tecno/selectivitat/2009/images/2009s1p2c.png" alt="Imatge relacionada amb la resposta" width="900">
+            </div>
+            `,
     },
     {
         type: "exercicis",
-        category: "materials",
+        category: "energia",
         text: `
-        <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s1p3a.png" alt="Imatge relacionada amb la pregunta" width="900">
+        <div class="step-block">
+                <span class="step-header">a) Potència i par a la sortida del motor:</span>
+                \\[ P_{mot} = P_{el} \\cdot \\eta_{mot} = 12{,}6  \\text{kW} \\cdot 0{,}87 = 10{,}962  \\text{kW} \\]
+                \\[ n_{mot} = \\frac{n_s}{\tau} = \\frac{62{,}5}{1/24} = 62{,}5 \\cdot 24 = 1500  \\text{min}^{-1} \\]
+                \\[ \omega_{mot} = 1500  \\frac{\\text{rev}}{\\text{min}} \\cdot \\frac{2\\pi}{60} = 157{,}08  \\text{rad/s} \\]
+                \\[ \\Gamma_{mot} = \\frac{P_{mot}}{\\omega_{mot}} = \\frac{10962  \\text{W}}{157{,}08  \\text{rad/s}} = 69{,}79  \\text{N}\\cdot\\text{m} \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">b) Potència i par a la sortida del reductor:</span>
+                \\[ P_{red} = P_{mot} \cdot \eta_{red} = 10{,}962 , \text{kW} \cdot 0{,}95 = 10{,}414 , \text{kW} \]\[ P_{red} = P_{mot} \cdot \eta_{red} = 10{,}962 , \text{kW} \cdot 0{,}95 = 10{,}414 , \text{kW} \]
+                \\[ \\omega_{s} = 62{,}5 \\cdot \\frac{2\\pi}{60} = 6{,}545  \\text{rad/s} \\]
+                \\[ \\Gamma_{red} = \\frac{P_{red}}{\\omega_{s}} = \\frac{10414  \\text{W}}{6{,}545  \\text{rad/s}} = 1591{,}1  \\text{N}\\cdot\\text{m} \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">c) Potència total dissipada:</span>
+                \\[ P_{diss} = P_{el} - P_{red} = 12{,}6  \\text{kW} - 10{,}414  \\text{kW} = 2{,}186  \\text{kW} \\]
+            </div>
 
         Es vol construir una estrella de sis puntes com la de la figura a partir d'un tauler de fusta.
 L'estrella es pot construir a partir de triangles equilàters o de rombes com els que es mostren
@@ -592,7 +548,7 @@ passives a l'elevador es consideren negligibles, determineu:
         type: "exercicis",
         category: "maquines",
         text: `
-        <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s1p3b.png" alt="Imatge relacionada amb la pregunta" width="900">
+        <img src="https://mcadenas4.github.io/tecno/selectivitat/2017/images/201706s1p3b.png" alt="Imatge relacionada amb la pregunta" width="900">
         La placa d’alumini de la figura, de gruix
 \\(e = 5 \\; \\text{mm}\\), està articulada a terra en el punt
 O. Per a mantenir-la en repòs s’utilitza un
@@ -612,7 +568,7 @@ densitat de l’alumini és \\(ρ_{alumini} = 2 710 kg/m^{3}\\) i el mòdul elà
         correctAnswer: "",  // No és necessari aquí perquè es tracta d'un exercici obert
         steps: `
             <strong>a) Diagrama del cos lliure:</strong>
-            <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s1r3b.png" alt="Imatge relacionada amb la resposta" width="900">
+            <img src="https://mcadenas4.github.io/tecno/selectivitat/2017/images/201706s1r3b.png" alt="Imatge relacionada amb la resposta" width="900">
 
             <strong>b) Massa de la placa:</strong>
             <br>
@@ -681,7 +637,7 @@ densitat de l’alumini és \\(ρ_{alumini} = 2 710 kg/m^{3}\\) i el mòdul elà
         type: "exercicis",
         category: "electrics",
         text: `
-        <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s1p4b.png" alt="Imatge relacionada amb la pregunta" width="900">
+        <img src="https://mcadenas4.github.io/tecno/selectivitat/2017/images/201706s1p4b.png" alt="Imatge relacionada amb la pregunta" width="900">
         Un fanal per a exteriors consta de quinze LED connectats tal com mostra el circuit de
 la figura. La caiguda de tensió de cada LED és \\(U_{LED} = 3,4 \\; \\text{V}\\). Per a regular la il·luminació, el
 fanal es pot alimentar amb \\(n\\) = 3 o 4 bateries connectades en sèrie. Cada bateria proporciona una tensió \\(U_{bat} = 12 \\; \\text{V}\\) i té una capacitat \\(c_{bat} = 10 000 \\; \\text{mAh}\\). Entre les bateries i els LED hi ha
@@ -755,7 +711,7 @@ una resistència \\(R\\). Quan hi ha \\(n\\) = 4 bateries connectades, per cada 
         Un cotxe amb un motor de quatre cilindres en línia té un sistema automàtic per a desconnectar dos d’aquests cilindres a partir de la lectura d’un sensor en l’accelerador. El sistema
 manté els quatre cilindres connectats, i permet desconnectar-ne dos si la demanda d’acceleració és baixa i s’ha mantingut baixa en el darrer kilòmetre. Els dos cilindres només es desconnecten si la velocitat del motor és 1 400 \\(min^{–1}\\) < n < 4 000 \\(min^{–1}\\). Responeu a les qüestions
 que hi ha a continuació utilitzant les variables d’estat següents:
-        <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s5p2.png" alt="Imatge relacionada amb la pregunta" width="900">
+        <img src="https://mcadenas4.github.io/tecno/selectivitat/2017/images/201706s5p2.png" alt="Imatge relacionada amb la pregunta" width="900">
 
               
                 <br><strong>a)</strong> Elaboreu la taula de veritat del sistema. [1 punt]
@@ -764,7 +720,7 @@ que hi ha a continuació utilitzant les variables d’estat següents:
                 `, 
         correctAnswer: "",  // No és necessari aquí perquè es tracta d'un exercici obert
         steps: `
-                <img src="https://ecastro4.github.io/tecno/selectivitat/2017/images/201706s5r2.png" alt="Imatge relacionada amb la pregunta" width="900">
+                <img src="https://mcadenas4.github.io/tecno/selectivitat/2017/images/201706s5r2.png" alt="Imatge relacionada amb la pregunta" width="900">
 
             `
     },
