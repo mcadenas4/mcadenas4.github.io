@@ -87,7 +87,7 @@ const questions = [
         steps: `
             <div class="step-block">
                 <span class="step-header">1) Passem les mides a metres per obtenir el resultat en m<sup>2</sup>:</span>
-                \\[ 198  \\text{mm} = 0{,}198  \\text{m}  ; \\quad 90  \\text{mm} = 0{,}090  \\text{m} \\] 
+                \\[ 198  \\text{mm} = 0{,}198  \\text{m}   \\quad 90  \\text{mm} = 0{,}090  \\text{m} \\] 
             </div>
             <div class="step-block">
                 <span class="step-header">2) Àrea d'una cèl·lula:</span>
