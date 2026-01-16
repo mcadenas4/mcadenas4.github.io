@@ -151,12 +151,19 @@ const questions = [
         ],
         correctAnswer: "b", //Contestada sin mathjax
         steps: `
-            \\[
-            0{,}18 \\, \\cdot \\; 2931000 = 527580 \\; \\text{vehicles}
-            \\]
-            \\[
-            0{,}15 \\, \\cdot \\; 527580 = 79137 \\; \\text{vehicles}
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Operació 1:</span>
+                \\[ \\text{Rebutjats}_1 = 2000 \\cdot 0{,}05 = 100  \\text{unitats} \\] 
+                \\[ \text{Acceptats}_1 = 2000 - 100 = 1900  \text{unitats} \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">2) Operació 2 (només hi entren els acceptats de l'1):</span> 
+                \\[ \\text{Rebutjats}_2 = 1900 \\cdot 0{,}02 = 38  \\text{unitats} \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">3) Total rebutjats:</span> 
+                \\[ \\text{Total} = \\text{Rebutjats}_1 + \\text{Rebutjats}_2 = 100 + 38 = 138 \\]
+            </div>
             <br><br>
             `,
     },
