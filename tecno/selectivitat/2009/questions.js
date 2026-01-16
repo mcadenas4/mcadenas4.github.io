@@ -9,11 +9,23 @@ const questions = [
             { text: "19,80 kN", value: "c" },
             { text: "62,20 kN", value: "d" }
         ],
-        correctAnswer: "b", //Contestada sin mathjax
+        correctAnswer: "b", //Contestada
         steps: `
-            \[ A = \frac{\pi \cdot d^2}{4} = \frac{\pi \cdot 6^2}{4} = 28{,}27 \, \text{mm}^2 \]
-            \[ F = \sigma \cdot A = 550 \, \frac{\text{N}}{\text{mm}^2} \cdot 28{,}27 \, \text{mm}^2 = 15548{,}5 \, \text{N} \]
-            [ 15548{,}5 \, \text{N} \cdot \frac{1 \, \text{kN}}{1000 \, \text{N}} = 15{,}55 \, \text{kN} \]
+            <div class="step-block">
+                <span class="step-header">A) Calculem l'àrea de la secció transversal de l'eix (A):</span>
+                \\[ A = \\pi \\cdot \\left(\\frac{d}{2}\\right)^2 = \\pi \\cdot \\left(\\frac{6 , \\text{mm}}{2}\\right)^2 \\] 
+                \\[ A = \\pi \\cdot 3^2 , \\text{mm}^2 \\approx 28{,}27 , \\text{mm}^2 \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">B) Apliquem la fórmula de la tensió (σ = F/A) per trobar la força:</span>
+                \\[ F = σ \\cdot A \\] 
+                \\[ F = 550 , \\frac{\\text{N}}{\\text{mm}^2} \\cdot 28{,}27 , \\text{mm}^2 \\] 
+                \\[ F \\approx 15548{,}5 , \\text{N} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">C) Convertim a kilonewtons (kN):</span>
+                \\[ F = 15548{,}5 , \\text{N} \\cdot \\frac{1 , \\text{kN}}{1000 , \\text{N}} \\approx 15{,}55 , \\text{kN} \\]
+            </div>
             <br><br>
             `
     },
@@ -132,13 +144,10 @@ const questions = [
             { text: "Només al sector ramader perquè és el causant dels excessos de purins que pro-voquen emissions d’aquests gasos.", value: "c" },
             { text: "A tots els sectors de la població mundial perquè el canvi climàtic afecta tothomi tots en som, en més o menys grau, responsables.", value: "d" }
         ],
-        correctAnswer: "d", //Contestada sin mathjax
+        correctAnswer: "d", //Contestada
         steps: `
             \\[
-            405 \\, \\cdot \\; 28 \\, \\cdot \\; 365 = 4139100 \\, \\text{passatgers}
-            \\]
-            \\[
-            \\frac{3200000}{4139100} = 77{,}3 \\%
+            \\text{El canvi climàtic és un problema global causat per l'acumulació de gasos de múltiples fonts (transport, indústria, agricultura, consum domèstic). Per tant, l'estratègia més eficaç ha d'implicar tothom.}
             \\]
             <br><br>
             `,
