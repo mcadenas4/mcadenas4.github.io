@@ -111,8 +111,8 @@ const questions = [
         steps: `
             <div class="step-block">
                 <span class="step-header">1) Establim una proporció:</span>
-                \\[ \\frac{m_{\\text{Ni}}}{% \\text{Ni}} = \\frac{m_{\\text{Fe}}}{% \\text{Fe}} \\] 
-                \\[ m_{\\text{Ni}} = m_{\\text{Fe}} \\cdot \\frac{% \\text{Ni}}{% \\text{Fe}} \\] 
+                \\[ \\frac{m_{\\text{Ni}}}{ \\text{Ni}} = \\frac{m_{\\text{Fe}}}{ \\text{Fe}} \\] 
+                \\[ m_{\\text{Ni}} = m_{\\text{Fe}} \\cdot \\frac{ \\text{Ni}}{ \\text{Fe}} \\] 
                 \\[ m_{\\text{Ni}} = 275  \\text{kg} \\cdot \\frac{78{,}5}{21{,}5} \\] 
                 \\[ m_{\\text{Ni}} = 275 \\cdot 3{,}6511... \\approx 1004{,}06  \\text{kg} \\]
             </div>
