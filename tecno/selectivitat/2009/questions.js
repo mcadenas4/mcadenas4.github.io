@@ -182,7 +182,7 @@ const questions = [
             </div>
             <div class="step-block">
                 <span class="step-header">3) Calculem el temps que ha trigat el viatge (t = d/v):</span>
-                \\[ t = \\frac{15  \\text{km}}{45  \\text{km/h}} = \\frac{1}{3}  \text{h} \\approx 0{,}333  \\text{h} \\]
+                \\[ t = \\frac{15  \\text{km}}{45  \\text{km/h}} = \\frac{1}{3}  \\text{h} \\approx 0{,}333  \\text{h} \\]
             </div>
             <div class="step-block">
                 <span class="step-header">4) Finalment, calculem el cost per hora:</span>
@@ -201,32 +201,23 @@ const questions = [
             { text: "2,513 μΩ · m", value: "c" },
             { text: "5,027 μΩ · m", value: "d" }
         ],
-        correctAnswer: "b", //Contestado sin mathjax
+        correctAnswer: "b", //Contestado
         steps: `
-            \\[
-            t_{marítim} = \\frac{1760}{33} = 53,3 \\, \\text{h}
-            \\]
-            \\[
-            C_{marítim} = 1760 \\cdot 0,87 = 1531,2 \\, \\text{&#8364}
-            \\]
-            \\[
-            t_{carretera} = \\frac{1050}{35} = 30 \\, \\text{h}
-            \\]
-            \\[
-            C_{carretera} = 1050 \\cdot 1,69 = 1774,5 \\, \\text{&#8364}
-            \\]
-            \\[
-            t_{ferroviari} = \\frac{1160}{50} = 23,2 \\, \\text{h}
-            \\]
-            \\[
-            C_{ferroviari} = 1160 \\cdot 1,03 = 1194,8 \\, \\text{&#8364}
-            \\]
-            \\[
-            \\text{Més ràpid: transport ferroviari}
-            \\]
-            \\[
-            \\text{Més econòmic: transport ferroviari}
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Calculem l'àrea de la secció (A):</span>
+                \\[ r = \\frac{d}{2} = 0{,}4 \\cdot 10^{-3}  \\text{m} \\] 
+                \\[ A = \\pi \\cdot r^2 = \\pi \\cdot (0{,}4 \\cdot 10^{-3})^2 \\approx 5{,}027 \\cdot 10^{-7}  \\text{m}^2 \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">2) Aïllem la resistivitat de la fórmula R = L/A:</span>
+                \\[ \\rho = \\frac{R \\cdot A}{L} \\]
+                \\[ \\rho = \\frac{5  \\Omega \\cdot 5{,}027 \\cdot 10^{-7}  \\text{m}^2}{2  \\text{m}} \\]
+                \\[ \\rho \\approx 12{,}566 \\cdot 10^{-7}  \\Omega \\cdot \\text{m} \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">3) Convertim a \\mu\\Omega \\cdot \\text{m} (10^{-6}):</span>
+                \\[ \\rho = 1{,}257 \\cdot 10^{-6}  \\Omega \\cdot \\text{m} = 1{,}257  \\mu \\Omega \\cdot \\text{m} \\]
+            </div>
             <br><br>
 
             `,
