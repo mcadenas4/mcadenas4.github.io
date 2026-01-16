@@ -59,17 +59,21 @@ const questions = [
             { text: "41", value: "c" },
             { text: "40", value: "d" }
         ],
-        correctAnswer: "d", //Contestada sin mathjax
+        correctAnswer: "d", //Contestada
         steps: `
-            \\[
-            \\text{% de Zinc} = 100 - \\text{Al} -\\, \\text{Cu} -\\, \\text{Mg} = 100 - 4 - 1 - 0{,}05 = 94{,}95 \\%
-            \\]
-            \\[
-            \\text{Massa total} = 400 \\, \\text{kg} \\cdot \\frac{94{,}95}{100} = 421{,}3 \\, \\text{kg}
-            \\]
-            \\[
-            \\text{Al necessari} = 421{,}3 \\cdot \\frac{4}{100} = 16{,}85 \\, \\text{kg}
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Calculem l'energia que gasta l'autocar per cada quilòmetre:</span>
+                \\[ E_{\\text{bus/km}} = 0{,}27  \\text{L/km} \\cdot 35{,}56  \\text{MJ/L} \\] \\[ E_{\\text{bus/km}} \\approx 9{,}6012  \\text{MJ/km} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">2) Sabem que aquesta energia és la suma del consum dels passatgers (N és el nombre de passatgers):</span>
+                \\[E_{\\text{bus/km}} = N \\cdot 0{,}24  \\text{MJ/(pax} \\cdot \\text{km)}\\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">3) Aïllem N:</span>
+                \\[ N = \\frac{9{,}6012}{0{,}24} \\] 
+                \\[ N = 40{,}005 \\approx 40 , \\text{passatgers} \\]
+            </div>
             <br><br>
             `,
     },
@@ -244,17 +248,20 @@ const questions = [
             { text: "16 350", value: "c" },
             { text: "39 240", value: "d" }
         ],
-        correctAnswer: "d", //Contestado sin mathjax
+        correctAnswer: "d", //Contestado
         steps: `
-            \\[	
-            {n_{s}} = \\frac{120 \\cdot \\text{&#402}}{\\text{p}} \\; \\text{&#8594} \\; \\text{p} = \\frac{120 cdot \\text{&#402}}{{n_{s}}}
-            \\]
-            \\[
-            p = \\frac{120 \\cdot 50 \\, \\text{Hz}}{750 \\; \\text{min}^{-1}} \\, = 8 \\, pols
-            \\]
-            \\[
-            {n_{s}} = \\frac{120 \\cdot 60 \\, \\text{Hz}}{8} = 900 \\; \\text{min}^{-1}
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Viatges per hora:</span>
+                \\[ \\text{Viatges/h} = \\frac{60  \\text{min}}{5  \\text{min}} = 12  \\text{viatges/h} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">2) Total de viatges al dia:</span>
+                \\[ \\text{Viatges totals} = 12  \\text{viatges/h} \\cdot 15  \\text{h} = 180  \\text{viatges} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">3) Màxim nombre de passatgers:</span>
+                \\[ \\text{Pax totals} = 180 \\cdot 218 = 39240  \\text{passatgers} \\] 
+            </div>
             <br><br>
             `,
     },
