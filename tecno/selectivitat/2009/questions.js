@@ -215,7 +215,7 @@ const questions = [
                 \\[ \\rho \\approx 12{,}566 \\cdot 10^{-7}  \\Omega \\cdot \\text{m} \\]
             </div>
             <div class="step-block">
-                <span class="step-header">3) Convertim a \\mu\\Omega \\cdot \\text{m} (10^{-6}):</span>
+                <span class="step-header">3) Convertim a µΩ · m:</span>
                 \\[ \\rho = 1{,}257 \\cdot 10^{-6}  \\Omega \\cdot \\text{m} = 1{,}257  \\mu \\Omega \\cdot \\text{m} \\]
             </div>
             <br><br>
