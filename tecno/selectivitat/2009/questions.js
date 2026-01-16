@@ -11,15 +11,9 @@ const questions = [
         ],
         correctAnswer: "b", //Contestada sin mathjax
         steps: `
-            \\[
-            600 \\, \\frac{\\text{rev}}{\\text{min}} \\cdot \\frac{1 \\, \\text{min}}{60 \\, \\text{seg}}  = 10 \\, \\frac{\\text{rev}}{\\text{seg}}
-            \\]
-            \\[	
-            {n_{s}} = \\frac{\\text{&#402}}{\\text{p}} \\; \\text{&#8594} \\; \\text{p} = \\frac{\\text{&#402}}{{n_{s}}}
-            \\]
-            \\[
-            p = \\frac{50 \\, \\text{Hz}}{10\\, \\frac{\\text{rev}}{\\text{seg}}} \\, = 5 \\, p
-            \\]
+            \[ A = \frac{\pi \cdot d^2}{4} = \frac{\pi \cdot 6^2}{4} = 28{,}27 \, \text{mm}^2 \]
+            \[ F = \sigma \cdot A = 550 \, \frac{\text{N}}{\text{mm}^2} \cdot 28{,}27 \, \text{mm}^2 = 15548{,}5 \, \text{N} \]
+            [ 15548{,}5 \, \text{N} \cdot \frac{1 \, \text{kN}}{1000 \, \text{N}} = 15{,}55 \, \text{kN} \]
             <br><br>
             `
     },
