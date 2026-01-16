@@ -107,17 +107,15 @@ const questions = [
             { text: "1 040 kg", value: "c" },
             { text: "1 400 kg", value: "d" }
         ],
-        correctAnswer: "b", //Contestada sin mathjax
+        correctAnswer: "b", //Contestada 
         steps: `
-            \\[
-            \\text{Rebuig al fresatge:} \\, 4 \\, \\% \\; \\text{&#8594} \\; \\text{Peces bones:} \\, 96 \\%
-            \\]
-            \\[
-            \\text{Rebuig a la rectificació:} \\, 3 \\, \\% \\; \\text{&#8594} \\; \\text{Peces bones:} \\, 97 \\%
-            \\]
-            \\[
-            0,96 \\cdot 0,97 = 0,9312 = 93,12 \\, \\%
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Establim una proporció:</span>
+                \\[ \\frac{m_{\\text{Ni}}}{% \\text{Ni}} = \\frac{m_{\\text{Fe}}}{% \\text{Fe}} \\] 
+                \\[ m_{\\text{Ni}} = m_{\\text{Fe}} \\cdot \\frac{% \\text{Ni}}{% \\text{Fe}} \\] 
+                \\[ m_{\\text{Ni}} = 275  \\text{kg} \\cdot \\frac{78{,}5}{21{,}5} \\] 
+                \\[ m_{\\text{Ni}} = 275 \\cdot 3{,}6511... \\approx 1004{,}06  \\text{kg} \\]
+            </div>
             <br><br>
             `,
     },
@@ -149,12 +147,12 @@ const questions = [
             { text: "100", value: "c" },
             { text: "40", value: "d" }
         ],
-        correctAnswer: "b", //Contestada sin mathjax
+        correctAnswer: "b", //Contestada
         steps: `
             <div class="step-block">
                 <span class="step-header">1) Operació 1:</span>
                 \\[ \\text{Rebutjats}_1 = 2000 \\cdot 0{,}05 = 100  \\text{unitats} \\] 
-                \\[ \text{Acceptats}_1 = 2000 - 100 = 1900  \text{unitats} \\]
+                \\[ \\text{Acceptats}_1 = 2000 - 100 = 1900  \\text{unitats} \\]
             </div>
             <div class="step-block">
                 <span class="step-header">2) Operació 2 (només hi entren els acceptats de l'1):</span> 
