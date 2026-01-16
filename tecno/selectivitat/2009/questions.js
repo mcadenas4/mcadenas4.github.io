@@ -12,18 +12,18 @@ const questions = [
         correctAnswer: "b", //Contestada
         steps: `
             <div class="step-block">
-                <span class="step-header">A) Calculem l'àrea de la secció transversal de l'eix (A):</span>
+                <span class="step-header">1) Calculem l'àrea de la secció transversal de l'eix (A):</span>
                 \\[ A = \\pi \\cdot \\left(\\frac{d}{2}\\right)^2 = \\pi \\cdot \\left(\\frac{6  \\text{mm}}{2}\\right)^2 \\] 
                 \\[ A = \\pi \\cdot 3^2  \\text{mm}^2 \\approx 28{,}27  \\text{mm}^2 \\]
             </div>
             <div class="step-block">
-                <span class="step-header">B) Apliquem la fórmula de la tensió (σ = F/A) per trobar la força:</span>
+                <span class="step-header">2) Apliquem la fórmula de la tensió (σ = F/A) per trobar la força:</span>
                 \\[ F = σ \\cdot A \\] 
                 \\[ F = 550  \\frac{\\text{N}}{\\text{mm}^2} \\cdot 28{,}27  \\text{mm}^2 \\] 
                 \\[ F \\approx 15548{,}5 \\text{N} \\] 
             </div>
             <div class="step-block">
-                <span class="step-header">C) Convertim a kilonewtons (kN):</span>
+                <span class="step-header">3) Convertim a kilonewtons (kN):</span>
                 \\[ F = 15548{,}5  \\text{N} \\cdot \\frac{1  \\text{kN}}{1000  \\text{N}} \\approx 15{,}55  \\text{kN} \\]
             </div>
             <br><br>
@@ -41,24 +41,11 @@ const questions = [
         ],
         correctAnswer: "b", //Contestada sin mathjax
         steps: `
-            \\[
-            0{,}1 \\, \\% = 0{,}001
-            \\]
-            \\[
-            3500 \\, \\text{N} \\cdot 0{,}001 = 3{,}5 \\, \\text{N}
-            \\]
-            \\[
-            3{,}5 \\, \\text{N} \\, \\text{<} \\, 5 \\, \\text{N}
-            \\]
-            \\[
-            \\text{Mesurament mínim} = 3500 \\text{N} - 5 \\, \\text{N} = 3495 \\, \\text{N}
-            \\]
-            \\[
-            \\text{Mesurament màxim} = 3500 \\text{N} + 5 \\, \\text{N} = 3505 \\, \\text{N}
-            \\]
-            \\[
-            \\text{Interval} : [3495 \\, \\text{N} \\, {,} \\, 3505 \\, \\text{N}]
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) El ritme de sortida no pot ser més ràpid que l'operació més lenta</span>
+                \\[ \text{Temps de cicle} = \\max(15  \\text{s}, , 30  \\text{s}, , 20  \\text{s}) \\] 
+                \\[ \text{Temps de cicle} = 30  \text{s} \\]
+            </div>
             <br><br>
             `,
     },
