@@ -43,8 +43,8 @@ const questions = [
         steps: `
             <div class="step-block">
                 <span class="step-header">1) El ritme de sortida no pot ser més ràpid que l'operació més lenta</span>
-                \\[ \text{Temps de cicle} = \\max(15  \\text{s}, , 30  \\text{s}, , 20  \\text{s}) \\] 
-                \\[ \text{Temps de cicle} = 30  \text{s} \\]
+                \\[ \\text{Temps de cicle} = \\max(15  \\text{s},  30  \\text{s},  20  \\text{s}) \\] 
+                \\[ \\text{Temps de cicle} = 30  \\text{s} \\]
             </div>
             <br><br>
             `,
