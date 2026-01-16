@@ -13,18 +13,18 @@ const questions = [
         steps: `
             <div class="step-block">
                 <span class="step-header">A) Calculem l'àrea de la secció transversal de l'eix (A):</span>
-                \\[ A = \\pi \\cdot \\left(\\frac{d}{2}\\right)^2 = \\pi \\cdot \\left(\\frac{6 , \\text{mm}}{2}\\right)^2 \\] 
-                \\[ A = \\pi \\cdot 3^2 , \\text{mm}^2 \\approx 28{,}27 , \\text{mm}^2 \\]
+                \\[ A = \\pi \\cdot \\left(\\frac{d}{2}\\right)^2 = \\pi \\cdot \\left(\\frac{6  \\text{mm}}{2}\\right)^2 \\] 
+                \\[ A = \\pi \\cdot 3^2  \\text{mm}^2 \\approx 28{,}27  \\text{mm}^2 \\]
             </div>
             <div class="step-block">
                 <span class="step-header">B) Apliquem la fórmula de la tensió (σ = F/A) per trobar la força:</span>
                 \\[ F = σ \\cdot A \\] 
-                \\[ F = 550 , \\frac{\\text{N}}{\\text{mm}^2} \\cdot 28{,}27 , \\text{mm}^2 \\] 
-                \\[ F \\approx 15548{,}5 , \\text{N} \\] 
+                \\[ F = 550  \\frac{\\text{N}}{\\text{mm}^2} \\cdot 28{,}27  \\text{mm}^2 \\] 
+                \\[ F \\approx 15548{,}5 \\text{N} \\] 
             </div>
             <div class="step-block">
                 <span class="step-header">C) Convertim a kilonewtons (kN):</span>
-                \\[ F = 15548{,}5 , \\text{N} \\cdot \\frac{1 , \\text{kN}}{1000 , \\text{N}} \\approx 15{,}55 , \\text{kN} \\]
+                \\[ F = 15548{,}5  \\text{N} \\cdot \\frac{1  \\text{kN}}{1000  \\text{N}} \\approx 15{,}55  \\text{kN} \\]
             </div>
             <br><br>
             `
