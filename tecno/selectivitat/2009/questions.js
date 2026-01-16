@@ -39,7 +39,7 @@ const questions = [
             { text: "15 s", value: "c" },
             { text: "65 s", value: "d" }
         ],
-        correctAnswer: "b", //Contestada sin mathjax
+        correctAnswer: "b", //Contestada
         steps: `
             <div class="step-block">
                 <span class="step-header">1) El ritme de sortida no pot ser més ràpid que l'operació més lenta</span>
@@ -170,14 +170,24 @@ const questions = [
             { text: "9 € /h", value: "c" },
             { text: "18 € /h", value: "d" }
         ],
-        correctAnswer: "c", //Contestada sin mathjax
+        correctAnswer: "c", //Contestada
         steps: `
-            \\[
-            A = \\pi r^2 = \\pi (3{,}05 \\cdot 10^{-4})^2 = 2{,}922 \\cdot 10^{-7}
-            \\]
-            \\[
-            L = \\frac{R\\cdot A}{\\rho} = \\frac{4{,}7 \\cdot 2{,}922\\cdot 10^{−7}}{0{,}49 \\cdot 10^{-6}} = 2{,}803 \\; \\text{m}
-            \\]
+            <div class="step-block">
+                <span class="step-header">1) Calculem el cost directe del vehicle:</span>
+                \\[ C_{\\text{vehicle}} = 15  \\text{km} \\cdot 0{,}20  \\text{€/km} = 3  \\text{€} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">2) Deduïm el cost imputable al temps:</span>
+                \\[ C_{\\text{temps}} = C_{\\text{total}} - C_{\\text{vehicle}} = 6  \\text{€} - 3  \\text{€} = 3  \\text{€} \\] 
+            </div>
+            <div class="step-block">
+                <span class="step-header">3) Calculem el temps que ha trigat el viatge (t = d/v):</span>
+                \\[ t = \\frac{15  \\text{km}}{45  \\text{km/h}} = \\frac{1}{3}  \text{h} \\approx 0{,}333  \\text{h} \\]
+            </div>
+            <div class="step-block">
+                <span class="step-header">4) Finalment, calculem el cost per hora:</span>
+                \\[ \\text{Cost horari} = \\frac{C_{\\text{temps}}}{t} = \\frac{3  \\text{€}}{1/3  \\text{h}} = 9  \\text{€/h} \\]
+            </div>
             <br><br>
             `,
     },
